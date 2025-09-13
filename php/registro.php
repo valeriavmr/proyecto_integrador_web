@@ -18,7 +18,7 @@
 <body>
 <main>
         <h1>Nueva cuenta</h1>
-    <form action="" id="form_cuenta">
+    <form action="crud/insert_persona.php" id="form_cuenta" method="POST">
         <fieldset>
             <h2>Datos personales</h2>
         <label for="nombre_persona"></label>

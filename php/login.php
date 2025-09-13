@@ -17,7 +17,7 @@
 </head>
 <body>
     <main>
-        <form action="" id="form_cuenta_login">
+        <form action="crud/select_login.php" id="form_cuenta_login" method="POST">
         <fieldset>
         <h2>Ingresar a la cuenta</h2>
         <label for="username">Nombre de usuario</label><br>
