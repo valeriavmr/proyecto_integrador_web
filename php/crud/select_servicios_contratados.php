@@ -22,12 +22,12 @@ if ($result->num_rows > 0) {
         <h3>" . $row['tipo_de_servicio'] . "</h3>
         <p>Mascota: " . $nombre_mascota . "</p>
         <p>Fecha y Hora: " . $row['horario'] . "</p>
-        <button class='cancelar_turno_btn'><a href='eliminar_servicio.php?id_servicio=" . $row['id_servicio'] . "'>Cancelar turno</a></button>
+        <button class='cancelar_turno_btn'><a href='crud/eliminar_servicio.php?id_servicio=" . $row['id_servicio'] . "'>Cancelar turno</a></button>
         </article>";
     }
 } else {
     echo "<br>No hay citas pendientes en este momento.<br>";
-    echo "<br><a href='#' title='Pedir cita'><img src='../recursos/add_img.png' alt='Pedir cita'></a><br>";
+    echo "<br><a href='solicitar_turno.php' title='Pedir cita'><img src='../recursos/add_img.png' alt='Pedir cita'></a><br>";
 }
 
 $conn->close();
