@@ -1,0 +1,120 @@
+/*Configuraciones generales*/
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+h1{
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 28px;
+    text-align: center;
+    color:#2E6009;
+}
+
+h2{
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 20px;
+    text-align: center;
+    color:#2E6009;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  min-height: 100vh;
+  color: #4b4b4b;
+}
+
+main {
+  flex: 1;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  background-color:#F4F4F4;
+  text-align: center;
+}
+
+#solicitar_turno_btn{
+    background-color: #2E6009;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2.5rem 1rem;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+main section{
+    margin: 2rem;
+}
+
+#servicios_contratados{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.servicio{
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    background-color: #e0f7e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 25vw;
+}
+
+.tabla_servicios {
+    width: 80%;
+    margin: 1rem auto;
+    border-collapse: collapse;
+}
+
+.tabla_servicios th, .tabla_servicios td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.tabla_servicios th {
+    background-color: #f4f4f4;
+}
+
+.cancelar_turno_btn{
+    background-color:red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 1rem;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.cancelar_turno_btn > a{
+    color: white;
+    text-decoration: none;
+}

@@ -16,6 +16,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
 </head>
 <body>
+    <?php
+    if (session_status() == PHP_SESSION_ACTIVE) {
+        session_destroy();
+    }
+    ?>
     <main>
         <form action="crud/select_login.php" id="form_cuenta_login" method="POST">
         <fieldset>

@@ -12,9 +12,22 @@ $barrio = $_POST['barrio'];
 $calle = $_POST['calle'];
 $altura_calle = $_POST['altura_calle'];
 
+include_once('consultas_varias.php');
+
+#Verificaciones de unicidad
+if(verificarNombreUsuario($conn, $username)) {
+    echo "El nombre de usuario ya existe. Por favor, elija otro.";
+    exit;
+}
+
+if(verificarCorreo($conn, $correo_persona)) {
+    echo "El correo ya está registrado. Por favor, utilice otro.";
+    exit;
+}
+
 #Insert en tabla persona
 
-$sql_persona = "INSERT INTO persona (nombre, apellido, nombre_de_usuario, correo, password, telefono) VALUES ('$nombre_persona', '$apellido_persona', '$username', '$correo_persona', '$pass', '$tel_persona')";
+$sql_persona = "INSERT INTO persona (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES ('$nombre_persona', '$apellido_persona', '$username', '$correo_persona', '$pass', 'cliente', '$tel_persona')";
 
 if ($conn->query($sql_persona) === TRUE) {
     echo "Nuevo registro creado exitosamente";

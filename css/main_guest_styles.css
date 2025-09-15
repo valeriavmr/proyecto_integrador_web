@@ -157,6 +157,15 @@ main > #hero > article > div > p{
     padding: 1rem;
 }
 
+#tarjetas_s > article > img{
+    height: 45px;
+}
+
+#tarjetas_s > article > a{
+    text-decoration: none;
+    color:#4b4b4b;
+}
+
 #tarjetas_s > article:hover{
     cursor: pointer;
 }
