@@ -66,12 +66,21 @@ main section{
     margin: 2rem;
 }
 
-#servicios_contratados{
-    text-align: center;
+#turnos_main{
+    display: flex;
+    gap: 2rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.sin_turnos{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    text-align: center;
+    gap: 2rem;
 }
 
 .servicio{

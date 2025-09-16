@@ -22,7 +22,8 @@
     <main id="servicios_main">
         <section id="servicios_contratados">
             <h2>Turnos pendientes</h2>
-            <?php include_once('crud/select_servicios_contratados.php'); ?>
+            <br>
+                <?php include_once('crud/select_servicios_contratados.php'); ?>
         </section>
         <hr>
         <section>

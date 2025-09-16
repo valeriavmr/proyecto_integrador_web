@@ -18,8 +18,8 @@ if (empty($detalles)) {
 $sql = "INSERT INTO servicio (tipo_de_servicio, id_mascota, id_trabajador, horario, comentarios) VALUES ('$tipo_servicio', '$id_mascota', '$id_trabajador','$fecha $hora', '$detalles')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Nuevo servicio solicitado exitosamente";
     header("Location: ../servicios_cliente.php");
+    exit;
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

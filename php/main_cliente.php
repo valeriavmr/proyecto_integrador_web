@@ -20,10 +20,11 @@
     <?php include('header_cliente.php'); ?>
     <main>
         <section id="servicios_contratados">
-            <h2>Próximas citas agendadas</h2>
+            <h2>Turnos pendientes</h2>
+            <br>
             <?php include_once('crud/select_servicios_contratados.php'); ?>
         </section>
-        <section>
+        <section id="mis_mascotas_main">
             <h2>Mis mascotas</h2>
             <?php 
             require('crud/conexion.php');
@@ -38,6 +39,7 @@
             if (empty($mascotas)) {
                 echo "<p>No tienes mascotas registradas.</p>";
             } else {
+                echo "<div id='mascotas_main_container'>";
                 foreach ($mascotas as $mascota) {
                     echo "<article class='mascotas_main'>
                     <h3>" . $mascota['nombre'] . "</h3>
@@ -46,6 +48,7 @@
                     <p>Edad: " . $mascota['edad'] . " años</p>
                     </article>";
                 }
+                echo "</div>";
             }
             ?>
             <button id='agregar_mascota_btn' class='btn'>Agregar mascota</button>

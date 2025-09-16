@@ -17,11 +17,13 @@ include_once('consultas_varias.php');
 #Verificaciones de unicidad
 if(verificarNombreUsuario($conn, $username)) {
     echo "El nombre de usuario ya existe. Por favor, elija otro.";
+    echo "<a href='../registro.php'>Volver al formulario de registro</a>";
     exit;
 }
 
 if(verificarCorreo($conn, $correo_persona)) {
     echo "El correo ya está registrado. Por favor, utilice otro.";
+    echo "<a href='../registro.php'>Volver al formulario de registro</a>";
     exit;
 }
 
