@@ -143,13 +143,19 @@ function info_servicio($conn, $id_servicio) {
 }
 
 function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
+    date_default_timezone_set('America/Argentina/Buenos_Aires'); // Ajusta a tu zona
+
+    // Normalizar fecha
+    $fecha = date('Y-m-d', strtotime($fecha));
+
+    // Generar horarios de 9 a 18
     $horarios = [];
-    for ($h = 9; $h <= 17; $h++) {
+    for ($h = 9; $h <= 18; $h++) {
         $hora = sprintf('%02d:00:00', $h);
         $horarios[] = $hora;
     }
 
-    // Buscar los datetime ocupados ese día
+    // Obtener horarios ocupados
     $sql = "SELECT horario FROM servicio WHERE id_trabajador = '$id_trabajador' AND DATE(horario) = '$fecha'";
     $result = $conn->query($sql);
 
@@ -159,14 +165,28 @@ function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
         $ocupadas[] = $hora_ocupada;
     }
 
+    // Es hoy?
+    $esHoy = ($fecha === date('Y-m-d'));
+    $horaActualInt = (int)date('H'); // Solo la hora, como entero
+
     // Filtrar
-    $disponibles = array_filter($horarios, function ($hora) use ($ocupadas) {
-        return !in_array($hora, $ocupadas);
+    $disponibles = array_filter($horarios, function ($hora) use ($ocupadas, $esHoy, $horaActualInt) {
+        $horaTurno = (int)substr($hora, 0, 2); // 09:00:00 → 9
+
+        if (in_array($hora, $ocupadas)) {
+            return false;
+        }
+
+        if ($esHoy && $horaTurno <= $horaActualInt) {
+            return false;
+        }
+
+        return true;
     });
 
-    // Convertir a formato HH:MM para mostrar en el select
+    // Formatear salida
     return array_map(function ($h) {
-        return substr($h, 0, 5); // "10:00:00" → "10:00"
+        return substr($h, 0, 5); // 10:00:00 → 10:00
     }, $disponibles);
 }
 
