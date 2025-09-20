@@ -143,14 +143,14 @@ function info_servicio($conn, $id_servicio) {
 }
 
 function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
-    date_default_timezone_set('America/Argentina/Buenos_Aires'); // Ajusta a tu zona
+    date_default_timezone_set('America/Argentina/Buenos_Aires'); // Ajusta a la hora de Bs. Aires
 
     // Normalizar fecha
     $fecha = date('Y-m-d', strtotime($fecha));
 
-    // Generar horarios de 9 a 18
+    // Generar horarios de 9 a 17
     $horarios = [];
-    for ($h = 9; $h <= 18; $h++) {
+    for ($h = 9; $h <= 17; $h++) {
         $hora = sprintf('%02d:00:00', $h);
         $horarios[] = $hora;
     }
@@ -171,7 +171,7 @@ function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
 
     // Filtrar
     $disponibles = array_filter($horarios, function ($hora) use ($ocupadas, $esHoy, $horaActualInt) {
-        $horaTurno = (int)substr($hora, 0, 2); // 09:00:00 → 9
+        $horaTurno = (int)substr($hora, 0, 2);
 
         if (in_array($hora, $ocupadas)) {
             return false;
@@ -186,7 +186,7 @@ function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
 
     // Formatear salida
     return array_map(function ($h) {
-        return substr($h, 0, 5); // 10:00:00 → 10:00
+        return substr($h, 0, 5); // 10:00:00 -> 10:00
     }, $disponibles);
 }
 

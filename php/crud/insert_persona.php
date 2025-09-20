@@ -16,14 +16,21 @@ include_once('consultas_varias.php');
 
 #Verificaciones de unicidad
 if(verificarNombreUsuario($conn, $username)) {
-    echo "El nombre de usuario ya existe. Por favor, elija otro.";
-    echo "<a href='../registro.php'>Volver al formulario de registro</a>";
-    exit;
+    echo "<script>
+    onsubmit.preventDefault();
+    var popover = document.getElementById('popover-username');
+    popover.style.display = 'block';
+    </script>";
 }
 
 if(verificarCorreo($conn, $correo_persona)) {
-    echo "El correo ya está registrado. Por favor, utilice otro.";
-    echo "<a href='../registro.php'>Volver al formulario de registro</a>";
+    echo "<script>
+    onsubmit.preventDefault();
+    document.addEventListener('DOMContentLoaded', function() {
+        var popover = document.getElementById('popover-correo');
+        popover.style.display = 'block';
+    });
+    </script>";
     exit;
 }
 

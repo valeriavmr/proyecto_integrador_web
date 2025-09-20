@@ -23,7 +23,7 @@
     ?>
 <main>
         <h1>Nueva cuenta</h1>
-        <form action="crud/insert_persona.php" id="form_cuenta" method="POST">
+        <form action="" id="form_cuenta" method="POST">
         <fieldset>
             <h2>Datos personales</h2>
             <label for="nombre_persona"></label>
@@ -32,13 +32,67 @@
             <label for="apellido_persona"></label>
             <input type="text" name="apellido_persona" id="apellido_persona" 
             placeholder="Ingrese su apellido" required size="50"><br>
-            <label for="username"></label>
+            <div class="username-validado">
+              <label for="username"></label>
             <input type="text" name="username" id="username" 
-            placeholder="Ingrese un nombre de usuario" required size="50"><br>
+            placeholder="Ingrese un nombre de usuario" required size="50" value="<?php echo $_POST['username'] ?? '' ?>" onchange="this.form.submit()"><br>
+            <p id='popover-username'>El nombre de usuario ya existe. Por favor, elija otro.</p>
+            
+            <?php
+            #Avisa que el username ya existe
+              $username = $_POST['username'] ?? '';
+              include_once('crud/conexion.php');
+              include_once('crud/consultas_varias.php');
+
+              if(verificarNombreUsuario($conn, $username)) {
+                  echo "<script>
+                  let popover = document.getElementById('popover-username');
+                  popover.style.display='block';
+                  </script>";
+              }
+              ?>   
+                <script>
+                  //Agrego un evento al input para que el mensaje se esconda si hay cambios en el input
+                  let inp_user = document.getElementById("username");
+
+                  inp_user.addEventListener("input", ()=>{
+                    if(popover.style.display=='block'){
+                      popover.style.display = 'none';
+                    }
+                  });
+                </script>
+            </div>
+            <div class="correo-validado">
             <label for="correo_persona"></label>
             <input type="email" name="correo_persona" id="correo_persona" 
             placeholder="Ingrese su correo electrónico" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-            required size="50"><br>
+            required size="50" value="<?php echo $_POST['correo_persona'] ?? '' ?>" onchange="this.form.submit()"><br>
+            <p id='popover-correo'>El correo ya está registrado. Por favor, utilice otro.</p>
+
+            <?php
+            #Avisa que el correo ya existe
+              $correo = $_POST['correo_persona'] ?? '';
+              include_once('crud/conexion.php');
+              include_once('crud/consultas_varias.php');
+
+              if(verificarCorreo($conn, $correo)) {
+                  echo "<script>
+                  let popover_correo = document.getElementById('popover-correo');
+                  popover_correo.style.display='block';
+                  </script>";
+              }
+              ?>   
+                <script>
+                  //Agrego un evento al input para que el mensaje se esconda si hay cambios en el input
+                  let inp_correo = document.getElementById("correo_persona");
+
+                  inp_user.addEventListener("input", ()=>{
+                    if(popover_correo.style.display=='block'){
+                      popover_correo.style.display = 'none';
+                    }
+                  });
+                </script>
+            </div>
             <label for="pass"></label>
             <input type="password" name="pass" id="pass" minlength="8"
             maxlength="16" placeholder="Ingrese una contraseña" required size="50"><br>
@@ -66,7 +120,7 @@
             <label for="altura_calle"></label>
             <input type="number" name="altura_calle" id="altura_calle"
             placeholder="Ingrese la altura de su dirección" required min="1" max="20000"><br>
-            <input type="submit" value="Crear cuenta" id="btn_crear_cuenta">
+            <input type="submit" value="Crear cuenta" formaction="crud/insert_persona.php" id="btn_crear_cuenta">
         </fieldset><br>
     </form>
     <div id="seccion_volver">

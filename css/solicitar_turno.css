@@ -18,6 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  color: #4b4b4b;
 }
 
 main {
@@ -55,7 +56,8 @@ fieldset{
     margin: 2rem;
     border-radius: 1rem;
     background-color: #F0E8DD;
-    border-color:#a7866D;
+    border-style: none;
+    box-shadow: #a7866D 0px 0px 5px;
 }
 
 fieldset > form > input,select,textarea{

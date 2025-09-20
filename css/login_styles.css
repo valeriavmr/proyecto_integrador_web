@@ -56,10 +56,11 @@ form > fieldset{
     margin-bottom: 1rem;
     border-radius: 1rem;
     background-color: #F0E8DD;
-    border-color:#a7866D;
+    border-style: none;
+    box-shadow: #a7866D 0px 0px 5px;
 }
 
-form > fieldset > input,select,textarea{
+form > fieldset > input,select{
     border-style: none;
     border-radius: 0.5rem;
     margin: 0.5rem;

@@ -46,7 +46,7 @@
     <select name="tipo_servicio" id="tipo_servicio" required>
         <option value="" disabled selected>Seleccione un servicio</option>
         <?php
-        $servicios = ["Adiestramiento canino", "Paseo canino", "Banio y peluqueria"];
+        $servicios = ["Adiestramiento canino", "Paseo canino", "Baño y peluqueria"];
         foreach ($servicios as $servicio) {
             $selected = ($_POST['tipo_servicio'] ?? '') == $servicio ? 'selected' : '';
             echo "<option value='$servicio' $selected>$servicio</option>";

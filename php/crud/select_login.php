@@ -18,5 +18,6 @@ if ($result->num_rows > 0) {
 } else {
     // Credenciales inválidas, redirigir al formulario de login con un mensaje de error
     echo "Nombre de usuario o contraseña incorrectos.<br>";
+    echo "<a href='javascript:history.back()'>Volver al login</a>";
 }
 ?>
