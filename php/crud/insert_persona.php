@@ -12,28 +12,6 @@ $barrio = $_POST['barrio'];
 $calle = $_POST['calle'];
 $altura_calle = $_POST['altura_calle'];
 
-include_once('consultas_varias.php');
-
-#Verificaciones de unicidad
-if(verificarNombreUsuario($conn, $username)) {
-    echo "<script>
-    onsubmit.preventDefault();
-    var popover = document.getElementById('popover-username');
-    popover.style.display = 'block';
-    </script>";
-}
-
-if(verificarCorreo($conn, $correo_persona)) {
-    echo "<script>
-    onsubmit.preventDefault();
-    document.addEventListener('DOMContentLoaded', function() {
-        var popover = document.getElementById('popover-correo');
-        popover.style.display = 'block';
-    });
-    </script>";
-    exit;
-}
-
 #Insert en tabla persona
 
 $sql_persona = "INSERT INTO persona (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES ('$nombre_persona', '$apellido_persona', '$username', '$correo_persona', '$pass', 'cliente', '$tel_persona')";
