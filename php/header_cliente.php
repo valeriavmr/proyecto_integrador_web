@@ -51,7 +51,6 @@
     icono.addEventListener('click', (event) => {
             event.stopPropagation();
             menu.classList.toggle('menu_desplegado');
-            console.log(menu.classList);
         });
 
     document.addEventListener('click', (event) => {
