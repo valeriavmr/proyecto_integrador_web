@@ -27,11 +27,10 @@ if ($result->num_rows > 0) {
     exit;
     }else {
     // Credenciales inválidas, redirigir al formulario de login con un mensaje de error
-    echo "Nombre de usuario o contraseña incorrectos.<br>";
-    echo "<a href='../login.php'>Volver al login</a>";
-}
+    header("Location: ../login.php?error=Nombre de usuario o contraseña incorrectos");
+    }
 }else{
-    echo "Usuario inexistente.";
-    echo "<a href='../login.php'>Volver al login</a>";
+    header("Location: ../login.php?error=Usuario inexistente");
+    exit;
 }
 ?>
