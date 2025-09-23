@@ -47,7 +47,7 @@ $usuario1 = $result->fetch_assoc();
   <p>Rol: <?php echo htmlspecialchars($usuario1['rol']); ?></p>
 
   <a href="editar_perfil.php">Editar Perfil</a> 
-  <a href="eliminar_perfil.php" onclick="return confirm('¿Seguro que deseas eliminar tu cuenta :)?')">Eliminar cuenta</a>
+  <a href="eliminar_perfil.php" onclick="return confirm('¿Seguro que deseas eliminar tu cuenta ?')">Eliminar cuenta</a>
   <?php include('../footer.php'); ?>
   
   
