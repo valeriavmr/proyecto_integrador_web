@@ -1,0 +1,163 @@
+/*General*/
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin: 0;
+  background: url('../recursos/fondoparalaspantallas.png');
+}
+
+
+/*Titulos y subtitulos*/
+
+h1{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    text-align: center;
+    padding: 0.5rem;
+    color:#2E6009;
+}
+
+h2{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color:#2E6009;
+}
+
+/*Para los forms*/
+
+
+main {
+    flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#form_cuenta{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin: 0 auto; 
+    text-align: center;
+    max-width: 600px;
+}
+
+#form_cuenta > fieldset{
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    background-color: #F0E8DD;
+    box-sizing: border-box;
+    box-shadow: #a7866D 0px 0px 5px;
+    border-style: none;
+}
+
+#form_cuenta > fieldset > input,select{
+    border-style: none;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+    width: 100%;
+    max-width: 340px;
+    height: 2em;
+}
+
+#form_cuenta > fieldset > div > input{
+    border-style: none;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+    width: 100%;
+    max-width: 340px;
+    height: 2em;
+}
+
+#btn_crear_cuenta{
+    border-radius: 0.7rem;
+    border-style:none;
+    background-color: #2E6009;
+    font-weight: bold;
+    color: #F4F4F4;
+}
+
+#btn_crear_cuenta:hover{
+    background-color: #a7866D;
+    cursor: pointer;
+}
+
+/*Seccion volver-cancelar*/
+#seccion_volver{
+    text-align: center;
+    padding-top: 1.5rem; 
+}
+#seccion_volver > a{
+    text-align: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    text-decoration: none;
+}
+
+#link_login{
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    color: #2E6009;
+    font-weight: bold;
+}
+
+#link_main{
+    color: red;
+}
+
+/*Popovers*/
+
+.username-validado{
+    position: relative;
+    width: 100%;
+    display: block; 
+}
+
+#popover-username{
+    display:none;
+    padding: 10px 8px;
+    border-radius: 6px;
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+.correo-validado{
+    position: relative;
+    width: 100%;
+    display: block; 
+}
+
+#popover-correo{
+    display:none;
+    padding: 10px 8px;
+    border-radius: 6px;
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }

@@ -1,0 +1,69 @@
+/*Generales*/
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+/*Titulos y subtitulos*/
+
+h1{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    text-align: center;
+    padding: 0.5rem;
+    color:#2E6009;
+}
+
+h2{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color:#2E6009;
+    padding: 1rem;
+}
+
+/*Detalles del turno*/
+
+main > .servicio_detalle{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #ccc;
+    border-radius: 1rem;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 2rem;
+    background-color: #F4F4F4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+.servicio_detalle > a{
+    text-decoration: none;
+    font-weight: bold;
+    color: #2E6009;
+}

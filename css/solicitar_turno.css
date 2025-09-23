@@ -1,0 +1,91 @@
+/*Generales*/
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  color: #4b4b4b;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  background-image: url('../recursos/fondoparalaspantallas.png');
+  background-size: cover;
+}
+
+/*Titulos y subtitulos*/
+
+h1{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    text-align: center;
+    padding: 0.5rem;
+    color:#2E6009;
+}
+
+h2{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color:#2E6009;
+    padding: 1rem;
+}
+
+/*Formulario*/
+
+fieldset{
+    text-align: center;
+    padding: 0.5rem;
+    margin: 2rem;
+    border-radius: 1rem;
+    background-color: #F0E8DD;
+    border-style: none;
+    box-shadow: #a7866D 0px 0px 5px;
+}
+
+fieldset > form > input,select,textarea{
+    border-style: none;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+    width: 100%;
+    max-width: 340px;
+    height: 2rem;
+}
+
+textarea{
+    height: 100px;
+}
+
+input#solicitar_turno_btn{
+    background-color: #2E6009;
+    color: white;
+    cursor: pointer;
+    margin:0;
+}
+
+input#solicitar_turno_btn:hover{
+    background-color: #a7866D;
+}
+
+fieldset > a{
+    text-decoration: none;
+    color: #2E6009;
+    font-weight: bold;
+}

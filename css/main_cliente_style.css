@@ -1,0 +1,100 @@
+/*Configuraciones generales*/
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+h1{
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 28px;
+    text-align: center;
+    color:#2E6009;
+}
+
+h2{
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 20px;
+    text-align: center;
+    color:#2E6009;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  min-height: 100vh;
+  color: #4b4b4b;
+  background-color:#F4F4F4;
+}
+
+main {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/*Main y sections*/
+main > section{
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+#servicios_contratados{
+    text-align: center;
+}
+
+.btn{
+    background-color: #2E6009;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 1rem 0.5rem;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.mascotas_main{
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    background-color: #F4F4F4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 25vw;
+}
+
+#mis_mascotas_main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#mis_mascotas_main > div{
+    display: flex;
+    gap: 2rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
