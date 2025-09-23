@@ -2,12 +2,12 @@
 session_start();
 require 'conexion.php';
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$username = $_SESSION['username'];
 $msg = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirmar = $_POST['confirmar'];
 
     // 1. Traer la contraseña actual del usuario
-    $sql = "SELECT password FROM usuarios WHERE id=?";
+    $sql = "SELECT password FROM persona WHERE nombre_de_usuario = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
@@ -30,9 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hash = password_hash($nueva, PASSWORD_DEFAULT);
 
             // 4. Guardar en la BD
-            $sql = "UPDATE usuarios SET password=? WHERE id=?";
+            $sql = "UPDATE persona SET password=? WHERE nombre_de_usuario=?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $hash, $user_id);
+            $stmt->bind_param("ss", $hash, $username);
 
             if ($stmt->execute()) {
                 $msg = "Contraseña actualizada correctamente.";
@@ -70,6 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit">Actualizar</button>
   </form>
   <br>
-  <a href="perfil.php">Volver al perfil</a>
+  perfil.phpVolver al perfil</a>
 </body>
 </html>

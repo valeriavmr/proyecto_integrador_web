@@ -2,21 +2,22 @@
 session_start();
 require 'conexion.php';
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$username = $_SESSION['username'];
 
-// Borrar usuario
-$sql = "DELETE FROM usuarios WHERE id=?";
+// Eliminar el usuario de la tabla persona
+$sql = "DELETE FROM persona WHERE nombre_de_usuario = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("s", $username);
 
 if ($stmt->execute()) {
+    session_unset();
     session_destroy();
-    header("Location: registro.php");
+    header("Location: ../main_guest.php"); // Redirige al visitante
     exit();
 } else {
     echo "Error al eliminar la cuenta.";
