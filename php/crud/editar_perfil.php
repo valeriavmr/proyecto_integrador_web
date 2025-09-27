@@ -1,14 +1,22 @@
 <?php
-session_start();
-require 'conexion.php';
+// 1. Incluir la configuración al principio de todo
+require_once __DIR__ . '/../../config.php';
 
+// 2. Iniciar la sesión
+session_start();
+
+// 3. Incluir la conexión a la BD usando la ruta absoluta
+require_once(BASE_PATH . '/php/crud/conexion.php');
+
+// 4. Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
+    header('Location: ' . BASE_URL . '/php/login.php');
     exit();
 }
 
 $username = $_SESSION['username'];
 
+// 5. Lógica para procesar el formulario cuando se envía (método POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
@@ -21,88 +29,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("ssssss", $nombre, $apellido, $nombre_de_usuario, $correo, $telefono, $username);
 
     if ($stmt->execute()) {
+        // Si la actualización es exitosa, actualiza la sesión y redirige al perfil
         $_SESSION['username'] = $nombre_de_usuario;
-        header("Location: perfil.php");
+        // CORRECCIÓN: Usar la ruta absoluta para la redirección
+        header('Location: ' . BASE_URL . '/php/crud/perfil.php');
         exit();
     } else {
-        echo "Error al actualizar.";
+        $error_message = "Error al actualizar el perfil.";
     }
 }
 
-$sql = "SELECT * FROM persona WHERE nombre_de_usuario=?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
+// 6. Lógica para obtener los datos actuales del usuario y mostrarlos en el formulario
+$sql_select = "SELECT * FROM persona WHERE nombre_de_usuario=?";
+$stmt_select = $conn->prepare($sql_select);
+$stmt_select->bind_param("s", $username);
+$stmt_select->execute();
+$result = $stmt_select->get_result();
 $datos_usuario = $result->fetch_assoc();
 
-if (!$datos_usuario || !is_array($datos_usuario)) {
+if (!$datos_usuario) {
     echo "No se pudo cargar la información del usuario.";
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perfil</title>    
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
-    <link rel="stylesheet" href="../css/main_cliente_style.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="../css/servicios_cliente.css?v=<?= time() ?>">
-    
+    <title>Editar Perfil</title>
 
-    <!-- Fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/2C2025/proyecto_integrador_web/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/2C2025/proyecto_integrador_web/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/2C2025/proyecto_integrador_web/favicon_io/favicon-16x16.png">
-
-    <!-- Estilos -->
-    <link rel="stylesheet" href="/2C2025/proyecto_integrador_web/css/main_cliente_style.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="../css/footer_styles.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/2C2025/proyecto_integrador_web/css/servicios_cliente.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/main_cliente_style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/perfil_style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/menu_style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/footer_styles.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/form_style.css?v=<?= time() ?>">
 </head>
 <body>
 
-<?php include('../header_cliente.php'); ?>
+    <?php 
+        
+        include_once(BASE_PATH . '/php/crud/header_perfil.php');
+    ?>
 
-<main>
-    <section class="formulario-edicion">
-        <h1>Editar Perfil</h1>
-        <form method="POST">
-            <label>Usuario:</label>
-            <input type="text" name="usuario" value="<?php echo htmlspecialchars($datos_usuario['nombre_de_usuario']); ?>" required><br>
+    <main class="perfil-container">
+        <section class="formulario-edicion">
+            <h1>Editar Perfil</h1>
 
-            <label>Nombre:</label>
-            <input type="text" name="nombre" value="<?php echo htmlspecialchars($datos_usuario['nombre']); ?>" required><br>
+            <?php if (isset($error_message)): ?>
+                <p class="error"><?php echo $error_message; ?></p>
+            <?php endif; ?>
 
-            <label>Apellido:</label>
-            <input type="text" name="apellido" value="<?php echo htmlspecialchars($datos_usuario['apellido']); ?>" required><br>
+            <form method="POST" action="editar_perfil.php">
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" value="<?php echo htmlspecialchars($datos_usuario['nombre_de_usuario']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($datos_usuario['nombre']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" value="<?php echo htmlspecialchars($datos_usuario['apellido']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="correo">Correo:</label>
+                    <input type="email" id="correo" name="correo" value="<?php echo htmlspecialchars($datos_usuario['correo']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" value="<?php echo htmlspecialchars($datos_usuario['telefono']); ?>" required>
+                </div>
+                
+                <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            </form>
+        </section>
+    </main>
 
-            <label>Correo:</label>
-            <input type="email" name="correo" value="<?php echo htmlspecialchars($datos_usuario['correo']); ?>" required><br>
+    <?php 
+        // Incluimos el footer
+        include_once(BASE_PATH . '/php/footer.php');
+    ?>
 
-            <label>Teléfono:</label>
-            <input type="text" name="telefono" value="<?php echo htmlspecialchars($datos_usuario['telefono']); ?>" required><br><br>
-
-            <button type="submit">Guardar cambios</button>
-        </form>
-    </section>
-</main>
-
-<?php include '../footer.php'; ?>
-
-<link rel="stylesheet" href="../../css/footer_styles.css?v=<?= time() ?>">
+                
 
 </body>
 </html>

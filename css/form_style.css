@@ -1,0 +1,107 @@
+/* --- Estilos para el Contenedor del Formulario --- */
+.formulario-edicion {
+     
+    max-height: 255px;
+    
+}
+
+.formulario-edicion h1 {
+    text-align: center;
+    font-family: var(--fuente-titulos);
+    margin-bottom: 20px;
+}
+
+
+.formulario-password {
+    max-height: 190px;
+}
+
+/* --- Estilos para los Grupos del Formulario (label + input) --- */
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block; /* Pone el label en su propia línea */
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-texto-secundario);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"], 
+.form-group input[type="password"]
+{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: var(--fuente-texto);
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto visual al hacer clic en un campo */
+.form-group input:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* --- Estilo para el Botón de Guardar --- */
+.btn-guardar {
+    display: block; /* Ocupa todo el ancho */
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-family: var(--fuente-titulos);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-guardar:hover {
+    background-color: var(--color-primario-hover);
+}
+/* --- Estilos para Mensajes de Éxito/Error --- */
+.mensaje {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-family: var(--fuente-texto);
+}
+
+.mensaje.exito {
+    background-color: #d4edda; /* Verde claro */
+    color: #155724; /* Verde oscuro */
+    border: 1px solid #c3e6cb;
+}
+
+.mensaje.error {
+    background-color: #f8d7da; /* Rojo claro */
+    color: #721c24; /* Rojo oscuro */
+    border: 1px solid #f5c6cb;
+}
+
+/* --- Estilo para el enlace de "Volver" --- */
+.link-volver {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: var(--color-primario);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.link-volver:hover {
+    text-decoration: underline;
+}
+
