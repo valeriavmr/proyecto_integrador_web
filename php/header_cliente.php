@@ -35,7 +35,7 @@
                 <hr>
                 <li><a href="./main_cliente.php"><img src="../recursos/home_icon.png" alt="" class="iconos">Home</a></li>
                 <li><a href="main_guest.php" title="Cerrar sesión" id="link_logout_menu">
-                <img src="../recursos/logout_img.png" alt="Cerrar sesión"></a></li>
+                    <img src="../recursos/logout_img.png" alt="Cerrar sesión"></a></li>
             </ul>
         </nav>
     </header>
@@ -51,7 +51,6 @@
     icono.addEventListener('click', (event) => {
             event.stopPropagation();
             menu.classList.toggle('menu_desplegado');
-            console.log(menu.classList);
         });
 
     document.addEventListener('click', (event) => {

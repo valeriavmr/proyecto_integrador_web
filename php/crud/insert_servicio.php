@@ -15,7 +15,8 @@ if (empty($detalles)) {
     $detalles = "N/A";
 }
 
-$sql = "INSERT INTO servicio (tipo_de_servicio, id_mascota, id_trabajador, horario, comentarios) VALUES ('$tipo_servicio', '$id_mascota', '$id_trabajador','$fecha $hora', '$detalles')";
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['solicitar_turno_btn'])){
+    $sql = "INSERT INTO servicio (tipo_de_servicio, id_mascota, id_trabajador, horario, comentarios) VALUES ('$tipo_servicio', '$id_mascota', '$id_trabajador','$fecha $hora', '$detalles')";
 
 if ($conn->query($sql) === TRUE) {
     header("Location: ../servicios_cliente.php");
@@ -23,5 +24,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
+}
+
 $conn->close();
 ?>

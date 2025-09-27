@@ -104,7 +104,7 @@
         <textarea id="detalles" name="detalles" rows="4" cols="50"><?= $_POST['detalles'] ?? '' ?></textarea>
         <br><br>
 
-        <input type="submit" value="Solicitar Turno" formaction="crud/insert_servicio.php" id="solicitar_turno_btn">
+        <input type="submit" value="Solicitar Turno" name="solicitar_turno_btn" formaction="crud/insert_servicio.php" id="solicitar_turno_btn">
         </form>
             <br>
             <br>

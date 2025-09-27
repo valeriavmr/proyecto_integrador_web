@@ -29,9 +29,6 @@ $usuario1 = $result->fetch_assoc();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
   <link rel="stylesheet" href="../../css/main_cliente_style.css?v=<?= time() ?>">
   <link rel="stylesheet" href="../../css/servicios_cliente.css?v=<?= time() ?>">
   
@@ -39,7 +36,7 @@ $usuario1 = $result->fetch_assoc();
 </head>
 <body>
   
-  <?php include('../header_cliente.php'); ?>
+  
   <h1>Perfil de <?php echo htmlspecialchars($usuario1['nombre']); ?> <?php echo htmlspecialchars($usuario1['apellido']); ?></h1>
   <p>Usuario: <?php echo htmlspecialchars($usuario1['nombre_de_usuario']); ?></p>
   <p>Email: <?php echo htmlspecialchars($usuario1['correo']); ?></p>
@@ -47,9 +44,12 @@ $usuario1 = $result->fetch_assoc();
   <p>Rol: <?php echo htmlspecialchars($usuario1['rol']); ?></p>
 
   <a href="editar_perfil.php">Editar Perfil</a> 
+  <a href="cambiar_password.php">Cambiar Contraseña</a> 
   <a href="eliminar_perfil.php" onclick="return confirm('¿Seguro que deseas eliminar tu cuenta ?')">Eliminar cuenta</a>
-  <?php include('../footer.php'); ?>
   
+
+  <?php include('../footer.php'); ?>
+  <link rel="stylesheet" href="../../css/footer_styles.css?v=<?= time() ?>">
   
 
   

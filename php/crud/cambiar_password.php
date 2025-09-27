@@ -70,6 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit">Actualizar</button>
   </form>
   <br>
-  perfil.phpVolver al perfil</a>
+
+  <a href="perfil.php">Volver al perfil</a> 
+  <?php include('../footer.php'); ?>
+  <link rel="stylesheet" href="../../css/footer_styles.css?v=<?= time() ?>">
+ 
 </body>
 </html>

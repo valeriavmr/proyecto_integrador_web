@@ -20,6 +20,10 @@
     if (session_status() == PHP_SESSION_ACTIVE) {
         session_destroy();
     }
+
+    // Capturamos un posible mensaje de error desde la URL
+    $error = isset($_GET['error']) ? $_GET['error'] : '';
+
     ?>
     <main>
         <form action="crud/select_login.php" id="form_cuenta_login" method="POST">
@@ -31,6 +35,10 @@
         <label for="pass">Contraseña</label><br>
         <input type="password" name="pass" id="pass" minlength="8"
             maxlength="16" placeholder="Ingrese una contraseña" required size="50"><br>
+            <!-- Mensaje de error -->
+            <?php if($error): ?>
+                <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+            <?php endif; ?>
             <input type="submit" value="Ingresar" id="btn_login"><br><br>
             <div id="seccion_volver">
             <a href="registro.php" id="link_registro">No tengo una cuenta</a><br><br>
