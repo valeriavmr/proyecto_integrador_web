@@ -16,11 +16,14 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
 </head>
 <body>
+<<<<<<< HEAD
     <?php
     if (session_status() == PHP_SESSION_ACTIVE) {
         session_destroy();
     }
     ?>
+=======
+>>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
     <header>
         <a class="img" href="main_guest.php">
             <img src="../recursos/logsinfondo.png" alt="">
@@ -28,7 +31,11 @@
         <nav>
             <ul id="nav_menu">
                 <li><a href="#servicios">Servicios</a></li>
+<<<<<<< HEAD
                 <li><a href="#">Contacto</a></li>
+=======
+                <li><a href="contacto.php">Contacto</a></li>
+>>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
                 <li><a href="#">Trabaja con nosotros</a></li>
             </ul>
         </nav>
@@ -67,5 +74,8 @@
     include('footer.php');
     ?>
 </body>
+<<<<<<< HEAD
 <link rel="stylesheet" href="../css/footer_styles.css">
+=======
+>>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
 </html>

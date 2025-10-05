@@ -190,5 +190,109 @@ function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
     }, $disponibles);
 }
 
+<<<<<<< HEAD
 
+=======
+/*Seccion de administrador*/
+
+//Eliminar direccion por id
+
+function deleteDireccionPorId($conn, $id_persona){
+    $sql = 'DELETE FROM direccion WHERE id_persona = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_persona);
+
+    $stmt->execute();
+
+}
+
+//Eliminar a persona por id
+function deletePersonaPorId($conn, $id_persona){
+    $sql = 'DELETE FROM persona where id_persona = ?';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_persona);
+    
+    //Primero elimino la direccion y luego la persona
+    deleteDireccionPorId($conn, $id_persona);
+    if ($stmt->execute()) {
+        $_SESSION['mensaje'] = "Cuenta eliminada exitosamente";
+    }
+    else{
+        $_SESSION['mensaje'] = "Error al eliminar la cuenta";
+    }
+
+    header('Location: ../admin/tabla_personas.php');
+    exit();
+}
+
+//Select de turnos activos
+function selectTurnosActivosYPasados($conn, $paraActivos){
+    $sql = 'SELECT * FROM servicio';
+
+    if($paraActivos){
+        $sql .=' where horario >= NOW()';
+    }
+
+    $result = $conn->query($sql);
+
+    return $result;
+}
+
+/* Seccion de selects para generar pdfs */
+
+//Select de las personas
+function selectAllPersonas($conn){
+
+    $sql = 'SELECT * FROM persona';
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+            $firstRow = $result->fetch_assoc();
+            $columnNames = array_keys($firstRow);
+
+            $rows = [];
+            $rows[] = $firstRow;
+
+            while ($row = $result->fetch_assoc()) {
+                $rows[] = $row;
+            }
+
+            return [$rows, $columnNames];
+    } else {
+        return [[], []]; // Retorna vacío si no hay personas en la base
+    }
+
+}
+
+//Select de todos los turnos, tanto activos como finalizados
+function selectAllServicios($conn, $turnosActivos){
+
+    $sql = 'SELECT * FROM servicio';
+
+    if($turnosActivos == true){
+        $sql = $sql . ' where horario >= NOW()';
+    }
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+            $firstRow = $result->fetch_assoc();
+            $columnNames = array_keys($firstRow);
+
+            $rows = [];
+            $rows[] = $firstRow;
+
+            while ($row = $result->fetch_assoc()) {
+                $rows[] = $row;
+            }
+
+            return [$rows, $columnNames];
+    } else {
+        return [[], []]; // Retorna vacío si no hay turnos en la base
+    }
+
+}
+>>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
 ?>
