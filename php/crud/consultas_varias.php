@@ -190,9 +190,7 @@ function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
     }, $disponibles);
 }
 
-<<<<<<< HEAD
 
-=======
 /*Seccion de administrador*/
 
 //Eliminar direccion por id
@@ -294,5 +292,4 @@ function selectAllServicios($conn, $turnosActivos){
     }
 
 }
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
 ?>

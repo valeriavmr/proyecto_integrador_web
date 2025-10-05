@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-<?php
-
-echo '<body>
-    <footer id="footer">
-        <p>Valeria Valentina Moreno</p>
-        <p>Yuskeily Avila</p>
-        <p>2025©</p>
-        <br>
-    </footer>';
-
-?>
-=======
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,4 +38,3 @@ echo '<body>
     ?>
 </body>
 </html>
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45

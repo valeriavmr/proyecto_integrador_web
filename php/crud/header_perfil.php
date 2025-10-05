@@ -24,7 +24,7 @@ if (isset($_SESSION['username'])) {
     <nav class="menu">
         <ul>
         <li><a href="<?php echo BASE_URL; ?>/php/main_cliente.php">Home</a></li>
-        <li><a href="<?php echo BASE_URL; ?>/php/mascotas.php">Mis Mascotas</a></li>
+        <li><a href="<?php echo BASE_URL; ?>/php/crud/mascotas.php">Mis Mascotas</a></li>
         <li><a href="<?php echo BASE_URL; ?>/php/servicios_cliente.php">Servicios</a></li>
         <li><a href="<?php echo BASE_URL; ?>/php/main_guest.php">Cerrar Sesión</a></li>
         </ul>

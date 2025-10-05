@@ -6,11 +6,7 @@ $username = $_POST['username'];
 $pass = $_POST['pass'];
 
 #Primero busco al usuarios
-<<<<<<< HEAD
-$sql = "SELECT nombre_de_usuario, password FROM persona WHERE nombre_de_usuario = ?";
-=======
 $sql = "SELECT nombre_de_usuario, password, rol FROM persona WHERE nombre_de_usuario = ?";
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
@@ -27,9 +23,6 @@ if ($result->num_rows > 0) {
     // Credenciales válidas, iniciar sesión
     session_start();
     $_SESSION['username'] = $username;
-<<<<<<< HEAD
-    header("Location: ../main_cliente.php");
-=======
 
     //Recupero el rol del usuario
     $rol = $row['rol'];
@@ -40,7 +33,6 @@ if ($result->num_rows > 0) {
         $_SESSION['rol'] = 'admin';
         header("Location: ../admin/main_admin.php");
     }
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
     exit;
     }else {
     // Credenciales inválidas, redirigir al formulario de login con un mensaje de error

@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 // 1. Incluir la configuración al principio de todo
 require_once __DIR__ . '/../../config.php';
 
@@ -12,35 +11,20 @@ require_once(BASE_PATH . '/php/crud/conexion.php');
 // 4. Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['username'])) {
     header('Location: ' . BASE_URL . '/php/login.php');
-=======
-session_start();
-require 'conexion.php';
-
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
     exit();
 }
 
 $username = $_SESSION['username'];
 $msg = "";
-<<<<<<< HEAD
 $msg_type = ""; // Para saber si el mensaje es de éxito o error
 
 // 5. Lógica para procesar el formulario cuando se envía
-=======
-
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $actual = $_POST['actual'];
     $nueva = $_POST['nueva'];
     $confirmar = $_POST['confirmar'];
 
-<<<<<<< HEAD
     // Traer la contraseña actual del usuario
-=======
-    // 1. Traer la contraseña actual del usuario
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
     $sql = "SELECT password FROM persona WHERE nombre_de_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -48,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-<<<<<<< HEAD
     // Verificar contraseña actual
     if ($user && password_verify($actual, $user['password'])) {
         if (!empty($nueva) && $nueva === $confirmar) {
@@ -126,55 +109,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
-=======
-    // 2. Verificar contraseña actual
-    if ($user && password_verify($actual, $user['password'])) {
-        if ($nueva === $confirmar) {
-            // 3. Hashear la nueva contraseña
-            $hash = password_hash($nueva, PASSWORD_DEFAULT);
-
-            // 4. Guardar en la BD
-            $sql = "UPDATE persona SET password=? WHERE nombre_de_usuario=?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $hash, $username);
-
-            if ($stmt->execute()) {
-                $msg = "Contraseña actualizada correctamente.";
-            } else {
-                $msg = "Error al actualizar la contraseña.";
-            }
-        } else {
-            $msg = "La nueva contraseña y la confirmación no coinciden.";
-        }
-    } else {
-        $msg = "La contraseña actual es incorrecta.";
-    }
-}
-?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Cambiar Contraseña</title>
-</head>
-<body>
-  <h1>Cambiar Contraseña</h1>
-  <?php if ($msg) echo "<p style='color:red;'>$msg</p>"; ?>
-  <form method="POST">
-    <label>Contraseña actual:</label>
-    <input type="password" name="actual" required><br><br>
-
-    <label>Nueva contraseña:</label>
-    <input type="password" name="nueva" required><br><br>
-
-    <label>Confirmar nueva contraseña:</label>
-    <input type="password" name="confirmar" required><br><br>
-
-    <button type="submit">Actualizar</button>
-  </form>
-  <br>
-  perfil.phpVolver al perfil</a>
-</body>
-</html>
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
