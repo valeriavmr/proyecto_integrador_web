@@ -29,7 +29,7 @@
                 </a></li>
                 <hr>
                 <li><a href="crud/perfil.php"><img src="../recursos/perfil_icon.png" alt="" class="iconos">Perfil</a></li>
-                <li><a href="#"><img src="../recursos/mascotas_icon.png" alt="" class="iconos">Mis mascotas</a></li>
+                <li><a href="crud/mascotas.php"><img src="../recursos/mascotas_icon.png" alt="" class="iconos">Mis mascotas</a></li>
                 <hr>
                 <li><a href="./servicios_cliente.php"><img src="../recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
                 <hr>

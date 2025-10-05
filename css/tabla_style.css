@@ -1,0 +1,87 @@
+/* --- Contenedor de la Tabla --- */
+.tabla-container {
+    margin-top: 40px;
+    border-top: 1px solid var(--color-borde);
+    padding-top: 30px;
+}
+
+.tabla-container h2 {
+    text-align: center;
+    font-family: var(--fuente-titulos);
+    margin-bottom: 20px;
+}
+
+/* --- Estilo General de la Tabla --- */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Une los bordes de las celdas */
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden; /* Para que el border-radius afecte a las celdas */
+}
+
+/* --- Estilo de las Celdas (th y td) --- */
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+/* --- Encabezado de la Tabla (thead) --- */
+thead th {
+    background-color: var(--color-fondo-pagina);
+    font-family: var(--fuente-titulos);
+    font-weight: 600;
+    color: var(--color-texto-principal);
+}
+
+/* --- Filas del Cuerpo de la Tabla (tbody) --- */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Color alterno para las filas */
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; /* Efecto al pasar el mouse */
+}
+
+/* --- Celda de Acciones y sus Botones --- */
+td.acciones {
+    text-align: center;
+}
+
+.btn-accion {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0 4px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9em;
+    transition: opacity 0.3s ease;
+}
+
+.btn-accion:hover {
+    opacity: 0.8;
+}
+
+.btn-accion.editar {
+    background-color: var(--color-primario);
+}
+
+.btn-accion.eliminar {
+    background-color: var(--color-peligro);
+}
+
+/* Enlace para cancelar edición */
+.link-cancelar {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    text-decoration: none;
+    color: var(--color-texto-secundario);
+    font-weight: 600;
+}
+.link-cancelar:hover {
+    color: var(--color-primario);
+}

@@ -8,14 +8,14 @@
 // 1. DEFINIR LA RUTA DE LA CARPETA DEL PROYECTO
 // Esta es la parte de la ruta que viene DESPUÉS de 'htdocs'.
 // Basado en tu ruta C:\xampp\htdocs\2C2025\proyecto_integrador_web
-$project_folder_path = '2C2025/proyecto_integrador_web';
+$project_folder_path = 'proyecto_adiestramiento_tahito';
 
 
 // 2. DEFINIR LA RUTA BASE DEL SERVIDOR (PARA INCLUDES DE PHP)
 // Esto crea una ruta física en el disco duro. Es para uso interno de PHP.
 // $_SERVER['DOCUMENT_ROOT'] es 'C:/xampp/htdocs'
 define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/' . $project_folder_path);
-// En tu caso, BASE_PATH será: "C:/xampp/htdocs/2C2025/proyecto_integrador_web"
+// En tu caso, BASE_PATH será: "C:/xampp/htdocs/proyecto_adiestramiento_tahito"
 
 
 // 3. DEFINIR LA URL BASE (PARA ENLACES HTML, CSS, JS, IMÁGENES)
@@ -23,7 +23,7 @@ define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/' . $project_folder_path);
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
 $server_name = $_SERVER['SERVER_NAME']; // Esto será 'localhost' en tu máquina
 define('BASE_URL', $protocol . $server_name . '/' . $project_folder_path);
-// En tu caso, BASE_URL será: "http://localhost/2C2025/proyecto_integrador_web"
+// En tu caso, BASE_URL será: "http://localhost/proyecto_adiestramiento_tahito"
 
 
 
