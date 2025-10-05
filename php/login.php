@@ -51,5 +51,4 @@
     include('footer.php');
     ?>
 </body>
-<link rel="stylesheet" href="../css/footer_styles.css">
 </html>

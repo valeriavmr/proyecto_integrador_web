@@ -16,11 +16,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
 </head>
 <body>
-    <?php
-    if (session_status() == PHP_SESSION_ACTIVE) {
-        session_destroy();
-    }
-    ?>
     <header>
         <a class="img" href="main_guest.php">
             <img src="../recursos/logsinfondo.png" alt="">
@@ -28,7 +23,7 @@
         <nav>
             <ul id="nav_menu">
                 <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="contacto.php">Contacto</a></li>
                 <li><a href="#">Trabaja con nosotros</a></li>
             </ul>
         </nav>
@@ -67,5 +62,4 @@
     include('footer.php');
     ?>
 </body>
-<link rel="stylesheet" href="../css/footer_styles.css">
 </html>

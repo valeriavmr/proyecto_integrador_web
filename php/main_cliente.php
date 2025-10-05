@@ -55,6 +55,5 @@
         </section>
     </main>
     <?php include('footer.php'); ?>
-    <link rel="stylesheet" href="../css/footer_styles.css?v=<?= time() ?>">
 </body>
 </html>

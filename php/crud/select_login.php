@@ -6,7 +6,7 @@ $username = $_POST['username'];
 $pass = $_POST['pass'];
 
 #Primero busco al usuarios
-$sql = "SELECT nombre_de_usuario, password FROM persona WHERE nombre_de_usuario = ?";
+$sql = "SELECT nombre_de_usuario, password, rol FROM persona WHERE nombre_de_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
@@ -23,7 +23,16 @@ if ($result->num_rows > 0) {
     // Credenciales válidas, iniciar sesión
     session_start();
     $_SESSION['username'] = $username;
-    header("Location: ../main_cliente.php");
+
+    //Recupero el rol del usuario
+    $rol = $row['rol'];
+    if($rol == 'cliente'){
+        $_SESSION['rol'] = 'cliente';
+        header("Location: ../main_cliente.php");
+    }elseif($rol=='admin'){
+        $_SESSION['rol'] = 'admin';
+        header("Location: ../admin/main_admin.php");
+    }
     exit;
     }else {
     // Credenciales inválidas, redirigir al formulario de login con un mensaje de error

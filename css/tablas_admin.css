@@ -1,0 +1,40 @@
+main {
+  min-height: 100vh;
+  color: #4b4b4b;
+  background-color:#F4F4F4;
+}
+
+main > section{
+    margin: 2rem;
+}
+
+table {
+    table-layout: fixed; 
+    width: 100%;
+    margin-top: 2rem;
+    border: #2E6009 1px solid;
+}
+
+thead{
+  background-color:#2E6009;
+  color: #F4F4F4;
+}
+
+tbody{
+  background-color: #F0E8DD;
+  color: #4b4b4b;
+}
+
+th,td {
+  white-space: normal;
+  word-wrap: break-word;
+  font-size: 14px;
+  text-align: center;
+  border: #2E6009 1px solid;
+}
+
+.edit_btn, .delete_btn{
+    border-style: none;
+    background-color: transparent;
+    cursor: pointer;
+}

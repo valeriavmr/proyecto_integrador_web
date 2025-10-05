@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
         include_once('consultas_varias.php');
         $nombre_mascota = obtenerNombreMascota($conn, $row['id_mascota']);
 
-        echo "<tr><td>" . $row['tipo_de_servicio'] . "</td><td>" . $row['horario'] . "</td><td>" . $nombre_mascota . "</td></tr>";
+        echo "<tr><td>" . htmlspecialchars($row['tipo_de_servicio']) . "</td><td>" . htmlspecialchars($row['horario']) . "</td><td>" . htmlspecialchars($nombre_mascota) . "</td></tr>";
     }
     echo "</table>";
 } else {
