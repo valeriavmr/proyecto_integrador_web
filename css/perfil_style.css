@@ -15,29 +15,35 @@
 }
 
 /* --- Estilos Generales (Cuerpo de la página) --- */   
-/* Se aplican a toda la página para consistencia */
+
 body {
     background-color: var(--color-fondo-pagina);
     font-family: var(--fuente-texto);
     color: var(--color-texto-principal);
     margin: 0;
-    padding: 0; /* Añade un poco de espacio alrededor */
+    padding: 0; 
     line-height: 1.6;
+    height: auto;
+    min-height: 100vh;   
+    overflow-x: hidden;  
+    background-color: var(--color-fondo-pagina);
 
 }
 
 
-
-
-/* --- Contenedor Principal del Perfil (La "Tarjeta") --- */
-.perfil-container {
-    max-width: 700px; /* Ancho máximo para que no se estire demasiado en pantallas grandes */
-    margin: 40px auto; /* Centra la tarjeta horizontalmente y le da espacio arriba/abajo */
-    padding: 20px;
+/* --- Contenedor Principal del Perfil ---*/
+.perfil-container{
+    max-width: 700px; 
+    margin: 40px auto; 
+    padding: 20px 20px 40px 20px;  
     background-color: var(--color-tarjeta);
-    border-radius: 12px; /* Esquinas redondeadas */
-    box-shadow: 0 4px 15px var(--color-sombra); /* Sombra sutil para darle profundidad */
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px var(--color-sombra); /
     border: 1px solid var(--color-borde);
+    height: auto; 
+    min-height: auto; 
+    min-height: unset;             
+    display: block;
 }
 
 /* --- Título del Perfil --- */
@@ -54,26 +60,30 @@ body {
     margin-bottom: 30px;
     border-top: 1px solid var(--color-borde);
     padding-top: 20px;
+    
 }
 
 .perfil-info p {
     margin: 10px 0;
     font-size: 1.1em;
     color: var(--color-texto-secundario);
+    display: flex;
+    justify-content: center;
+    
 }
 
 .perfil-info p strong {
     color: var(--color-texto-principal);
-    width: 100px; /* Alinea los dos puntos */
+    width: 100px; 
     display: inline-block;
 }
 
 /* --- Sección de Acciones (Botones) --- */
 .perfil-acciones {
-    display: flex; /* Pone los botones en línea */
-    justify-content: center; /* Centra los botones */
-    gap: 15px; /* Espacio entre los botones */
-    flex-wrap: wrap; /* Si no caben, se ponen debajo */
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    flex-wrap: wrap;
     border-top: 1px solid var(--color-borde);
     padding-top: 30px;
 }
@@ -93,20 +103,16 @@ body {
 }
 
 .perfil-acciones a:hover {
-    transform: translateY(-2px); /* Efecto sutil al pasar el mouse */
+    transform: translateY(-2px); 
 }
+
 
 /* Estilo específico para cada botón */
-.btn-editar {
-    background-color: var(--color-primario);    
-}
-.btn-editar:hover {
-    background-color: var(--color-primario-hover);
-}
-
+.btn-editar,
 .btn-password {
-    background-color: var(--color-primario);
+    background-color: var(--color-primario); 
 }
+.btn-editar:hover, 
 .btn-password:hover {
     background-color: var(--color-primario-hover);
 }
@@ -126,16 +132,12 @@ body {
 
   
 }
-  
-
-
 
 .menu ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
   align-items: center;  
   justify-content: space-between;
   width: 100%;
@@ -161,5 +163,94 @@ body {
 }
 
 
-/* --- Estilos para hacer la página adaptable (Responsive) --- */
+
+/* ===== FORMULARIO DE EDICIÓN ===== */
+
+
+.formulario-edicion h1 {
+    text-align: center;
+    color: var(--color-primario, #2E6009);
+    margin-bottom: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-group input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+    border-color: var(--color-primario, #2E6009);
+    box-shadow: 0 0 4px rgba(46, 96, 9, 0.3);
+    outline: none;
+}
+
+/* ===== BOTONES ===== */
+.botones-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.btn-guardar,
+.btn-volver {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-guardar {
+    background-color: var(--color-primario, #2E6009);
+    color: #fff;
+}
+
+.btn-guardar:hover {
+    background-color: var(--color-primario-hover, #1f4007);
+}
+
+.btn-volver {
+    background-color: #ccc;
+    color: #333;
+}
+
+.btn-volver:hover {
+    background-color: #aaa;
+}
+
+  /* --- Estilos para hacer la página adaptable (Responsive) --- */
+
+@media (max-width: 600px) {
+  .perfil-container {
+    padding: 15px;
+    margin: 20px;
+  }
+  .perfil-acciones {
+    flex-direction: column;
+  }
+  .menu ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .menu ul li a {
+    padding: 10px 0;
+  }
+}
 /* Para pantallas pequeñas como móviles */
