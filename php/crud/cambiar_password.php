@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/perfil_style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/menu_style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/footer_styles.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/form_style.css?v=<?= time() ?>">
+
 </head>
 <body>
 
@@ -100,8 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 
                 <button type="submit" class="btn-guardar">Actualizar Contraseña</button>
+                <button type="button" class="btn-volver" onclick="window.location.href='<?php echo BASE_URL; ?>/php/crud/perfil.php'">
+        Volver al Perfil</button>
+        
             </form>
-            <a href="<?php echo BASE_URL; ?>/php/crud/perfil.php" class="link-volver">Volver al perfil</a>
+            
+            
+
+
         </section>
     </main>
 

@@ -11,7 +11,6 @@ if (!isset($_SESSION['username'])) {
 }
 
 // 3. OBTENER EL ID DEL USUARIO LOGUEADO
-// Es crucial para asociar las mascotas con su dueño
 $username = $_SESSION['username'];
 $sql_user = "SELECT id_persona FROM persona WHERE nombre_de_usuario = ?";
 $stmt_user = $conn->prepare($sql_user);
@@ -25,12 +24,11 @@ $mensaje = "";
 $mensaje_tipo = "";
 
 // 4. MANEJO DE ACCIONES (CREAR, ACTUALIZAR, BORRAR)
-// Esta sección se ejecuta si se envía un formulario (POST) o se hace clic en un enlace de acción (GET)
 $accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
 
 // --- ACCIÓN: AGREGAR MASCOTA ---
 if ($accion === 'agregar') {
-    $nombre = $_POST['nombre'];
+    $nombre = $_POST['nombre']; 
     $fecha_nac = $_POST['fecha_de_nacimiento'];
     $edad = $_POST['edad'];
     $raza = $_POST['raza'];
@@ -87,7 +85,6 @@ if ($accion === 'eliminar') {
 }
 
 // 5. LÓGICA PARA EL MODO EDICIÓN DEL FORMULARIO
-// Si la acción es 'editar', buscamos los datos de esa mascota para rellenar el formulario
 $mascota_a_editar = null;
 if ($accion === 'editar') {
     $id_mascota_editar = $_GET['id'];
@@ -123,7 +120,7 @@ $lista_mascotas = $stmt_select->get_result();
 </head>
 <body>
 
-    <?php include_once(BASE_PATH . '/php/crud/header_perfil.php'); ?>
+    <?php include_once(BASE_PATH . '/php/crud/header_mascota.php'); ?>
 
     <main class="perfil-container">
         
@@ -134,20 +131,35 @@ $lista_mascotas = $stmt_select->get_result();
                 <div class="mensaje <?php echo $mensaje_tipo; ?>"><?php echo $mensaje; ?></div>
             <?php endif; ?>
 
+            <?php
+            $fecha_formateada = '';
+            if ($mascota_a_editar && !empty($mascota_a_editar['fecha_de_nacimiento'])) {
+                $fecha_formateada = date('Y-m-d', strtotime($mascota_a_editar['fecha_de_nacimiento']));
+            }
+            ?>
+
             <form method="POST" action="mascotas.php">
                 <input type="hidden" name="accion" value="<?php echo $mascota_a_editar ? 'actualizar' : 'agregar'; ?>">
                 <?php if ($mascota_a_editar): ?>
-                    <input type="hidden" name="id_mascota" value="<?php echo $mascota_a_editar['id']; ?>">
+                    <input type="hidden" name="id_mascota" value="<?php echo $mascota_a_editar['id_mascota']; ?>">
                 <?php endif; ?>
 
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($mascota_a_editar['nombre'] ?? ''); ?>" required>
                 </div>
+                
                 <div class="form-group">
                     <label for="fecha_de_nacimiento">Fecha de Nacimiento:</label>
-                    <input type="date" id="fecha_de_nacimiento" name="fecha_de_nacimiento" value="<?php echo htmlspecialchars($mascota_a_editar['fecha_de_nacimiento'] ?? ''); ?>" required>
+                    <input 
+                    type="date" 
+                    id="fecha_de_nacimiento" 
+                    name="fecha_de_nacimiento" 
+                    value="<?php echo $mascota_a_editar ? $fecha_formateada : ''; ?>" 
+                    required
+                  >
                 </div>
+
                 <div class="form-group">
                     <label for="edad">Edad:</label>
                     <input type="number" id="edad" name="edad" value="<?php echo htmlspecialchars($mascota_a_editar['edad'] ?? ''); ?>" required>
