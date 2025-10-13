@@ -30,7 +30,7 @@
     <?php
     echo'
         <article>
-        <p>Valeria Moreno - Yuskeily Avila</p>
+        <p>Valeria Moreno - Yuske Avila</p>
         <p>2025©</p>
         <br>
         </article>

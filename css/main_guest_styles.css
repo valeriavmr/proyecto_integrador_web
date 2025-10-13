@@ -106,11 +106,8 @@ main > #hero{
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
     padding: 2rem;
-<<<<<<< HEAD
-=======
     margin: 2rem;
     margin-bottom: 0;
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
     justify-items: center;
 }
 
@@ -150,10 +147,7 @@ main > #hero > article > div > p{
 
 #servicios{
     text-align: center;
-<<<<<<< HEAD
-=======
     margin: 2rem;
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
 }
 
 #tarjetas_s{
@@ -167,11 +161,7 @@ main > #hero > article > div > p{
 }
 
 #tarjetas_s > article > img{
-<<<<<<< HEAD
-    height: 45px;
-=======
     max-height: 45px;
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
 }
 
 #tarjetas_s > article > a{

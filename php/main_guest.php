@@ -24,7 +24,7 @@
             <ul id="nav_menu">
                 <li><a href="#servicios">Servicios</a></li>
                 <li><a href="contacto.php">Contacto</a></li>
-                <li><a href="#">Trabaja con nosotros</a></li>
+                <li><a href="trabaja_con_nosotros.php">Trabaja con nosotros</a></li>
             </ul>
         </nav>
         <div id="nav_registro">

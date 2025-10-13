@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    font-size: 16px;
+    color: #4b4b4b;
+    background-color: #f4f4f9;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 28px;
+    text-align: center;
+    color: #2E6009;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 20px;
+    text-align: center;
+    color: #2E6009;
+}
+
+
+
+header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 30px; 
+    background-color: #F0E8DD;
+    font-weight: bold;
+}
+
+header > .img > img {
+    height: 100px; 
+    display: block;
+}
+
+
+header nav {
+    flex-grow: 1; 
+    text-align: right; 
+}
+
+
+ul {
+    list-style: none;
+    display: flex;
+
+    justify-content: space-evenly; /* Distribuye el espacio entre los elementos */
+    align-items: center;
+    padding: 0 40px; 
+    margin: 0;
+}
+
+ul > li > a {
+    text-decoration: none;
+    color: #2E6009;
+    font-weight: bold;
+}
+
+ul > li > a:hover {
+    color: #a7866D;
+}
+
+
+/* ================================================= */
+/* 3. CONTENIDO PRINCIPAL (MAIN) - SIMPLIFICADO */
+/* ================================================= */
+
+main {
+    display: block;
+    width: 100%;
+    padding: 0 20px; 
+    background-color: #F4F4F4; 
+    flex-grow: 1; 
+}
+
+/* ================================================= */
+/* 4. TARJETAS DE VACANTES Y MODAL */
+/* ================================================= */
+
+.vacantes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tarjeta-vacante {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.tarjeta-vacante img {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.boton-aplicar {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 1em;
+}
+
+/* --- Estilos del Modal (Formulario) --- */
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-contenido {
+    background-color: #fefefe;
+    margin: 10% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.cerrar-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.cerrar-modal:hover,
+.cerrar-modal:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos de formulario */
+.modal-contenido form label, .modal-contenido form input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.modal-contenido form input[type="text"],
+.modal-contenido form input[type="email"],
+.modal-contenido form input[type="file"] {
+    width: 95%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
