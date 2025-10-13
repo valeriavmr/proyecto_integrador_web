@@ -49,7 +49,7 @@ $vacantes = [
         </a>
         <nav>
             <ul id="nav_menu"   >
-                <li><a href="servicios_cliente.php">Servicios</a></li>
+                <li><a href="servicios.php">Servicios</a></li>
                 <li><a href="contacto.php">Contacto</a></li>
                 <li><a href="registro.php">Registrase</a></li>
                 <li><a href="login.php">Ingresar</a></li>
