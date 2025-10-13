@@ -6,6 +6,7 @@ $apellido_persona= $_POST['apellido_persona'] ?? '';
 $username= $_POST['username'] ?? '';
 $correo_persona= $_POST['correo_persona'] ?? '';
 $pass= $_POST['pass'] ?? '';
+$rol = $_POST['rol'] ?? '';
 $tel_persona= $_POST['tel_persona'] ?? '';
 $localidad= $_POST['localidad'] ?? '';
 $barrio= $_POST['barrio'] ?? '';
@@ -15,13 +16,21 @@ $altura_calle= $_POST['altura_calle'] ?? '';
 #Encripto la password
 $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
-#Insert en tabla persona
+#Insert en tabla persona, logia bifurcada dependiendo de si se usa desde el portal de admin o no
 
-$sql_persona = "INSERT INTO persona (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES (?, ?, ?, ?, ?, 'cliente', ?)";
+if($rol==''){
+    $sql_persona = "INSERT INTO persona (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES (?, ?, ?, ?, ?, 'cliente', ?)";
 
-$stmt = $conn->prepare($sql_persona);
-$stmt->bind_param("ssssss", $nombre_persona, $apellido_persona, $username, 
-$correo_persona, $hashed_pass, $tel_persona);
+    $stmt = $conn->prepare($sql_persona);
+    $stmt->bind_param("ssssss", $nombre_persona, $apellido_persona, $username, 
+    $correo_persona, $hashed_pass, $tel_persona);
+}else{
+    $sql_persona = "INSERT INTO persona (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql_persona);
+    $stmt->bind_param("sssssss", $nombre_persona, $apellido_persona, $username, 
+    $correo_persona, $hashed_pass, $rol, $tel_persona);
+}
 
 if ($stmt->execute()) {
 

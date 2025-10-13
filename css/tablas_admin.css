@@ -9,10 +9,13 @@ main > section{
 }
 
 table {
-    table-layout: fixed; 
-    width: 100%;
     margin-top: 2rem;
-    border: #2E6009 1px solid;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 thead{
@@ -21,8 +24,16 @@ thead{
 }
 
 tbody{
-  background-color: #F0E8DD;
   color: #4b4b4b;
+}
+
+/* --- Filas del Cuerpo de la Tabla (tbody) --- */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Color alterno para las filas */
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; /* Efecto al pasar el mouse */
 }
 
 th,td {
@@ -30,11 +41,19 @@ th,td {
   word-wrap: break-word;
   font-size: 14px;
   text-align: center;
-  border: #2E6009 1px solid;
+  padding: 15px;
+}
+
+.acciones{
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
 }
 
 .edit_btn, .delete_btn{
     border-style: none;
     background-color: transparent;
     cursor: pointer;
+    text-decoration: none;
 }

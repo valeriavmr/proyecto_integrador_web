@@ -3,47 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear cuenta</title>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Crear Persona</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/registro_cuenta.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
+    <link rel="stylesheet" href="../../css/editar_usuario_admin.css">
 </head>
 <body>
     <?php
-    if (session_status() == PHP_SESSION_ACTIVE) {
-        session_destroy();
-    }
+    //Validacion de permisos
+    require_once('auth.php');
+
+    //Inserto el header
+    include('header_admin.php');
     ?>
-<main>
-        <h1>Nueva cuenta</h1>
+        <h1>Nuevo usuario</h1>
+        <main>
         <form action="" id="form_cuenta" method="POST">
         <fieldset>
             <h2>Datos personales</h2>
             <label for="nombre_persona"></label>
             <input type="text" name="nombre_persona" id="nombre_persona" 
             placeholder="Ingrese su nombre" required size="50"
-            value="<?php echo $_POST['nombre_persona'] ?? '' ?>"><br>
-
+            value="<?php echo $_POST['nombre_persona'] ?? '' ?>">
             <label for="apellido_persona"></label>
             <input type="text" name="apellido_persona" id="apellido_persona" 
             placeholder="Ingrese su apellido" required size="50"
-            value="<?php echo $_POST['apellido_persona'] ?? '' ?>"><br>
-
+            value="<?php echo $_POST['apellido_persona'] ?? '' ?>">
             <div class="username-validado">
               <label for="username"></label>
             <input type="text" name="username" id="username" 
             placeholder="Ingrese un nombre de usuario" required size="50"
-            value="<?php echo $_POST['username'] ?? '' ?>" onchange="this.form.submit()"><br>
-            <p id='popover-username' style="display:none;">El nombre de usuario ya existe. Por favor, elija otro.</p>
+            value="<?php echo $_POST['username'] ?? '' ?>" onchange="this.form.submit()">
+            <p id='popover-username' style="display:none; color: red;">El nombre de usuario ya existe. Por favor, elija otro.</p>
             
             <?php
               $username = $_POST['username'] ?? '';
-              include_once('crud/conexion.php');
-              include_once('crud/consultas_varias.php');
+              include_once('../crud/conexion.php');
+              include_once('../crud/consultas_varias.php');
 
               if(verificarNombreUsuario($conn, $username)) {
                   echo "<script>
@@ -68,8 +68,8 @@
             <label for="correo_persona"></label>
             <input type="email" name="correo_persona" id="correo_persona" 
             placeholder="Ingrese su correo electrónico" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-            required size="50" value="<?php echo $_POST['correo_persona'] ?? '' ?>" onchange="this.form.submit()"><br>
-            <p id='popover-correo' style="display:none;">El correo ya está registrado. Por favor, utilice otro.</p>
+            required size="50" value="<?php echo $_POST['correo_persona'] ?? '' ?>" onchange="this.form.submit()">
+            <p id='popover-correo' style="display:none; color: red;">El correo ya está registrado. Por favor, utilice otro.</p>
 
             <?php
               $correo = $_POST['correo_persona'] ?? '';
@@ -95,8 +95,15 @@
             <label for="pass"></label>
             <input type="password" name="pass" id="pass" minlength="8"
             maxlength="16" placeholder="Ingrese una contraseña" required size="50"
-            value="<?php echo $_POST['pass'] ?? '' ?>"><br>
+            value="<?php echo $_POST['pass'] ?? '' ?>">
 
+            <label for="rol"></label>
+            <select name="rol" id="rol" required>
+                <option value="" disabled <?php echo empty($_POST['barrio']) ? 'selected' : '' ?>>Seleccione el tipo de rol del usuario</option>
+                <option value="admin">Administrador</option>
+                <option value="cliente">Cliente</option>
+                <option value="trabajador">Trabajador</option>
+            </select>
             <label for="tel_persona"></label>
             <input type="tel" name="tel_persona" id="tel_persona" minlength="10"
             maxlength="11" placeholder="Ingrese un celular de contacto" required size="50"
@@ -109,38 +116,34 @@
             <select name="localidad" id="localidad" required>
                 <option value="" disabled <?php echo empty($_POST['localidad']) ? 'selected' : '' ?>>Seleccione su localidad</option>
                 <option value="CABA" <?php echo (($_POST['localidad'] ?? '') == 'CABA') ? 'selected' : '' ?>>Ciudad Autónoma de Buenos Aires</option>
-            </select><br>
+            </select>
 
             <label for="barrio"></label>
             <select name="barrio" id="barrio">
                 <option value="" disabled <?php echo empty($_POST['barrio']) ? 'selected' : '' ?>>Seleccione su barrio</option>
-                <?php include('barrios.php'); ?>
+                <?php include('../barrios.php'); ?>
             </select>
             <script>
                 // Mantener el barrio seleccionado
                 document.getElementById('barrio').value = "<?php echo $_POST['barrio'] ?? '' ?>";
             </script>
-            <br>
-
             <label for="calle"></label>
             <input type="text" name="calle" id="calle" size="50"
             placeholder="Ingrese su calle" required
-            value="<?php echo $_POST['calle'] ?? '' ?>"><br>
-
+            value="<?php echo $_POST['calle'] ?? '' ?>">
             <label for="altura_calle"></label>
             <input type="number" name="altura_calle" id="altura_calle"
             placeholder="Ingrese la altura de su dirección" required min="1" max="20000"
-            value="<?php echo $_POST['altura_calle'] ?? '' ?>"><br>
-
-            <input type="submit" value="Crear cuenta" formaction="crud/insert_persona.php" id="btn_crear_cuenta">
-        </fieldset><br>
+            value="<?php echo $_POST['altura_calle'] ?? '' ?>">
+            <input type="submit"  id="btn_guardar_persona" value="Crear cuenta" formaction="../../crud/insert_persona.php" id="btn_crear_cuenta">
+        </fieldset>
     </form>
-
-    <div id="seccion_volver">
-        <a href="login.php" id="link_login">Ya tengo una cuenta</a><br><br>
-        <a href="main_guest.php" id="link_main">Cancelar</a>
-    </div>
-</main>
-<?php include('footer.php'); ?>
+    <section>
+        <a href="personas_admin.php">Volver a Administración de personas</a>
+    </section>
+    </main>
+    <?php
+    include('../footer.php');
+    ?>
 </body>
 </html>

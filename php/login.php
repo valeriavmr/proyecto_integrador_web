@@ -17,10 +17,6 @@
 </head>
 <body>
     <?php
-    if (session_status() == PHP_SESSION_ACTIVE) {
-        session_destroy();
-    }
-
     // Capturamos un posible mensaje de error desde la URL
     $error = isset($_GET['error']) ? $_GET['error'] : '';
 

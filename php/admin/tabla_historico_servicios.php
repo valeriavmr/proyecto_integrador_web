@@ -16,7 +16,18 @@
     require_once('../crud/conexion.php');
     include_once('../crud/consultas_varias.php');
 
-    [$datos_personas, $columnas] = selectAllServicios($conn, false);
+    //Traigo el momento actual
+    $currentDateTime = new DateTime('now');
+
+    //Reviso si es redireccionado desde detalle_usuario.php
+    if(isset($_GET['id_persona']) && !empty($_GET['id_persona'])){
+        $id_persona = $_GET['id_persona'];
+        $datos_personas = selectTurnosDePersona($conn, $id_persona);
+        $columnas = is_array($datos_personas) && count($datos_personas) > 0 ? array_keys($datos_personas[0]) : [];
+    }
+    else{
+        [$datos_personas, $columnas] = selectAllServicios($conn, false);
+    }
 
     //Agrego un crud en las columnas
     if(count($columnas)>0) $columnas[] = 'acciones';
@@ -40,11 +51,14 @@
                             echo '<td>' . htmlspecialchars($fila[$columna]) . '</td>';
                         }
                         else{
-                            echo '<td>
-                                <button class="edit_btn" data-id="'.$fila['id_servicio'].'">
+                            echo '<td>';
+                            if($fila['horario'] > $currentDateTime)
+                            {
+                                echo '<button class="edit_btn" data-id="'.$fila['id_servicio'].'">
                                     <img src="../../recursos/edit_icon.png">
-                                </button>
-                                <form method="GET" action="../crud/eliminar_servicio.php?id_servicio='.$fila['id_servicio'].'" class="form_eliminar">
+                                </button>';
+                            }
+                            echo '<form method="GET" action="../crud/eliminar_servicio.php?id_servicio='.$fila['id_servicio'].'" class="form_eliminar">
                                 <input type="hidden" name="id_servicio" value="'.$fila['id_servicio'].'">
                                 <button type="submit" class="delete_btn"><img src="../../recursos/delete_icon.png"></button>
                                 </form>

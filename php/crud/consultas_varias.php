@@ -61,14 +61,32 @@ function verificarCorreo($conn, $correo) {
 }
 
 //Devuelve el id de persona a partir del nombre de usuario
-function obtenerIdPersona($conn, $username) {   
-    $sql = "SELECT id_persona FROM persona WHERE nombre_de_usuario = '$username'";
-    $result = $conn->query($sql);
+function obtenerIdPersona($conn, $username) {
+    $sql = "SELECT id_persona FROM persona WHERE nombre_de_usuario = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         return $row['id_persona'];
     } else {
-        return null; // Retorna null si no se encuentra el usuario
+        return null;
+    }
+}
+
+//Devuelve el id de la persona que tiene un correo
+function obtenerIdPersonaPorCorreo($conn, $correo) {
+    $sql = "SELECT id_persona FROM persona WHERE correo = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $correo);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['id_persona'];
+    } else {
+        return null;
     }
 }
 
@@ -193,6 +211,32 @@ function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
 
 /*Seccion de administrador*/
 
+//Devolver a la persona por id
+function getPersonaPorId($conn, $id) {
+    $sql = "SELECT * FROM persona WHERE id_persona = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    }
+    return null; // Si no hay resultados
+}
+
+//Devolver direccion de la persona por id
+function getDireccionPorId($conn, $id) {
+    $sql = "SELECT * FROM direccion WHERE id_persona = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    }
+    return null; // Si no hay resultados
+}
+
 //Eliminar direccion por id
 
 function deleteDireccionPorId($conn, $id_persona){
@@ -201,7 +245,6 @@ function deleteDireccionPorId($conn, $id_persona){
     $stmt->bind_param("i", $id_persona);
 
     $stmt->execute();
-
 }
 
 //Eliminar a persona por id
@@ -235,6 +278,72 @@ function selectTurnosActivosYPasados($conn, $paraActivos){
     $result = $conn->query($sql);
 
     return $result;
+}
+
+//select que verifica que el username no exista o que corresponda a la misma persona
+function usernameDisponible($conn, $id_persona, $username){
+
+    $sql = 'SELECT COUNT(*) AS count from persona where nombre_de_usuario = ?';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        if($row['count'] > 0){
+            $id_username = obtenerIdPersona($conn,$username);
+            return $id_username == $id_persona;
+        }else{
+            return true;
+        }
+    } else {
+        return false; // En caso de error en la consulta, se asume que no existe
+    }
+}
+
+//Funcion que valida que un correo este disponible o que sea del mismo usuario que lo ingreso
+function correoDisponible($conn, $id_persona, $correo) {
+    $sql = 'SELECT COUNT(*) AS count FROM persona WHERE correo = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $correo);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        if ($row['count'] > 0) {
+            // El correo existe, así que verifico si es el mismo usuario
+            $id_correo = obtenerIdPersonaPorCorreo($conn, $correo);
+            return $id_correo == $id_persona; // true si es mío, false si es de otro
+        } else {
+            return true; // está disponible
+        }
+    } else {
+        return false; // error en la consulta
+    }
+}
+
+function selectTurnosDePersona($conn, $id_persona){
+
+    $sql = 'SELECT * FROM servicio where id_mascota IN (SELECT id_mascota FROM mascota WHERE id_persona = ?)';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_persona);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Si hay resultados
+    if ($result && $result->num_rows > 0) {
+        $turnos = [];
+        while ($row = $result->fetch_assoc()) {
+            $turnos[] = $row;
+        }
+        return $turnos;
+    }
+    return null; // Si no hay resultados
 }
 
 /* Seccion de selects para generar pdfs */

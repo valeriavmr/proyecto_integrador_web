@@ -5,10 +5,6 @@
     padding: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-<<<<<<< HEAD
-
-=======
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
 }
 
 h1{
@@ -40,10 +36,6 @@ body {
 
 header{
     top:0;
-<<<<<<< HEAD
-    height: 15%;
-=======
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
     max-height: 150px;
     display: grid;
     grid-template-columns:1fr 1fr;
@@ -112,9 +104,20 @@ header{
     height: 25px;
     cursor: pointer;
     margin-right: 10px;
-<<<<<<< HEAD
 }
 
-=======
+#volver_s{
+  text-align: center;
 }
->>>>>>> 83af6d2b3b41e3066e08b2b90fb992b5ed7a0a45
+
+#volver_s > a{
+text-decoration: none;
+color: #F4F4F4;
+font-weight: bold;
+border-radius: 1rem;
+padding: 0.5rem;
+display: inline-block;
+background-color: #2E6009;
+margin: 2rem;
+text-align: center;
+}

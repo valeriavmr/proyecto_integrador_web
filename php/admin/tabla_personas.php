@@ -28,7 +28,7 @@
     ?>
         <section id="lista_personas_sec">
             <h2>Usuarios registrados</h2>
-            <table cellspacing="0" cellpadding="4">
+            <table>
                 <thead>
                     <tr><?php
                      foreach($columnas as $nombre_columna){echo '<th>' . $nombre_columna . '</th>';}
@@ -47,11 +47,10 @@
                             }
                         }
                         else{
-                            echo '<td>
-                                <button class="edit_btn" data-id="'.$fila['id_persona'].'">
-                                    <img src="../../recursos/edit_icon.png">
-                                </button>
-                                <form method="POST" action="eliminar_persona.php" class="form_eliminar">
+                            echo '<td class="acciones">
+                                <a href="editar_usuario.php?id_persona='.$fila['id_persona'].'" class="edit_btn">
+                                <img src="../../recursos/edit_icon.png"></a>
+                                <form method="POST" action="crud/eliminar_persona.php" class="form_eliminar">
                                 <input type="hidden" name="id_persona" value="'.$fila['id_persona'].'">
                                 <button type="submit" class="delete_btn"><img src="../../recursos/delete_icon.png"></button>
                                 </form>
@@ -64,6 +63,9 @@
                 </tbody>
             </table>
         </section>
+    <section id="volver_s">
+        <a href="personas_admin.php">Volver a Administración de personas</a>
+    </section>
     </main>
     <?php
         //Muestro mensaje (para ediciones y eliminaciones) y luego lo quito

@@ -16,7 +16,7 @@
     require_once('../crud/conexion.php');
     include_once('../crud/consultas_varias.php');
 
-    [$datos_personas, $columnas] = selectAllServicios($conn, true);
+    [$datos_turnos, $columnas] = selectAllServicios($conn, true);
 
     //Agrego un crud en las columnas
     if(count($columnas)>0) $columnas[] = 'acciones';
@@ -25,7 +25,7 @@
         <section id="lista_personas_sec">
             <br>
             <h2>Turnos activos</h2>
-            <table cellspacing="0" cellpadding="4">
+            <table>
                 <thead>
                     <tr><?php
                      foreach($columnas as $nombre_columna){echo '<th>' . $nombre_columna . '</th>';}
@@ -33,7 +33,7 @@
                 <tbody>
                     <?php
                     //Ahora creamos el cuerpo de la tabla
-                    foreach($datos_personas as $fila){
+                    foreach($datos_turnos as $fila){
                         echo '<tr>';
                         foreach ($columnas as $columna) {
                         if($columna != 'acciones'){

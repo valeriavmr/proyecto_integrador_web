@@ -1,0 +1,118 @@
+/*Configuraciones generales*/
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+h1{
+    margin-top: 2rem;
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 28px;
+    text-align: center;
+    color:#2E6009;
+}
+
+h2{
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 20px;
+    text-align: center;
+    color:#2E6009;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  color: #4b4b4b;
+}
+
+main{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+
+main > section{
+    margin: 2rem;
+    border-radius: 1rem;
+    background-color: #F0E8DD;
+    border-style: none;
+    box-shadow: #a7866D 0px 0px 5px;
+}
+
+main > section > article{
+    margin: 1rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: white;
+    text-align: center;
+    line-height: 1.5;
+}
+
+table {
+    margin: 1rem;
+    width: 90%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead{
+  background-color:#2E6009;
+  color: #F4F4F4;
+}
+
+tbody{
+  color: #4b4b4b;
+}
+
+/* --- Filas del Cuerpo de la Tabla (tbody) --- */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Color alterno para las filas */
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; /* Efecto al pasar el mouse */
+}
+
+th,td {
+  white-space: normal;
+  word-wrap: break-word;
+  font-size: 14px;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+main > section > article > a{
+text-decoration: none;
+color: #F4F4F4;
+font-weight: bold;
+border-radius: 1rem;
+padding: 0.5rem;
+display: inline-block;
+background-color: #2E6009;}
+
+main > section > article > a:hover{
+    background-color: #4b4b4b;
+    transition: 0.3s;
+}
+
+main > section > article > a:active{
+    background-color: #a7866D;
+    transition: 0.1s;
+}
+
+main > section > a{
+    text-decoration: none;
+    color: #4b4b4b;
+}
