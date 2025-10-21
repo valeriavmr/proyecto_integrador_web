@@ -292,4 +292,50 @@ function selectAllServicios($conn, $turnosActivos){
     }
 
 }
+
+
+function selectAllMascotas($conn) {
+    // La consulta SQL que obtuvimos de tu primer mensaje
+    $sql = "
+        SELECT 
+            m.id_mascota,
+            m.nombre AS nombre_mascota,
+            m.fecha_de_nacimiento,
+            m.edad,
+            m.raza,
+            m.tamanio,
+            m.color,
+            p.nombre_de_usuario AS duenio
+        FROM mascota m
+        INNER JOIN persona p ON m.id_persona = p.id_persona
+        ORDER BY p.nombre_de_usuario ASC, m.nombre ASC
+    ";
+
+    $result = $conn->query($sql);
+
+    if (!$result) {
+        // En un entorno de producción, es mejor registrar el error y mostrar un mensaje genérico.
+        // Pero para debug, este mensaje es útil.
+        die("❌ Error en la consulta SQL: " . $conn->error);
+    }
+
+    $datos_mascotas = [];
+    $columnas = [];
+
+    if ($result->num_rows > 0) {
+        // 1. Obtener los nombres de las columnas (solo se hace una vez)
+        $fields = $result->fetch_fields();
+        foreach ($fields as $field) {
+            $columnas[] = $field->name;
+        }
+
+        // 2. Obtener todas las filas de datos
+        while ($fila = $result->fetch_assoc()) {
+            $datos_mascotas[] = $fila;
+        }
+    }
+    
+    // Devolvemos el array de datos y el array de columnas, tal como espera tu script.
+    return [$datos_mascotas, $columnas];
+}
 ?>

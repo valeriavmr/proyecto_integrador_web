@@ -21,7 +21,9 @@
             <img src="../../recursos/perfil_icon.png" alt="">Gestión de personas</a></article>
         <article class="opc_menu_ap"><a href="servicios_admin.php">
             <img src="../../recursos/servicio_icon.png" alt="">Gestión de turnos y servicios</a></article>
-        <article class="opc_menu_ap"><p><img src="../../recursos/mascotas_icon.png" alt="">Gestión de mascotas</p></article>
+        <article class="opc_menu_ap"><a href="mascotas_admin.php">
+            <img src="../../recursos/mascotas_icon.png" alt="">Gestión de mascotas</a></article>
+
         <article class="opc_menu_ap"><p><img src="../../recursos/trabajador_icon.png" alt="">Gestión de trabajadores</p></article>
     </section>
     </main>

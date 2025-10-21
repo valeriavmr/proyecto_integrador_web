@@ -15,8 +15,9 @@ $montserrat_bi = TCPDF_FONTS::addTTFfont('../../../recursos/fuentes/Montserrat-B
         //Header
         public function Header() {
 		// Logo
+        
 		$image_file = '../../../recursos/logsinfondo.png';
-		$this->Image($image_file, 10, 5, 20);
+		
 
 		// Tipo de letra
 		$this->SetFont('montserrat', 'B', 15);
