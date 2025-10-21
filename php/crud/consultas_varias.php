@@ -1,5 +1,19 @@
 <?php
+/* Archivo con funciones reutilizables en varios archivos */
 
+//Devuelve el nombre_de_usuario a partir del id de persona
+function obtenerUsername($conn, $id_persona) {
+    $sql = "SELECT nombre_de_usuario FROM persona WHERE id_persona = '$id_persona'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['nombre_de_usuario'];
+    } else {
+        return null;
+    }
+}
+
+//Devuelve el nombre completo de una persona por su id
 function buscarNombreCompletoPorId($conn, $id_persona) {
     $sql = "SELECT nombre, apellido FROM persona WHERE id_persona = '$id_persona'";
     $result = $conn->query($sql);
@@ -22,6 +36,37 @@ function obtenerNombreMascota($conn,$id_mascota) {
     } else {
         return "Desconocida";
     }
+}
+
+//Devuelve la mascota por id
+function obtenerMascotaPorId($conn, $id_mascota) {
+    $sql = "SELECT * FROM mascota WHERE id_mascota = '$id_mascota'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return null; // Retorna null si no se encuentra la mascota
+    }
+}
+
+//Devuelve todas las mascotas
+function obtenerMascotas($conn) {
+    $sql = "SELECT * FROM mascota";
+    $result = $conn->query($sql);
+    $mascotas = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $mascotas[] = [
+                'id_mascota' => $row['id_mascota'],
+                'nombre' => $row['nombre'],
+                'color' => $row['color'],
+                'edad' => $row['edad'],
+                'raza' => $row['raza'],
+                'tamanio' => $row['tamanio']
+            ];
+        }
+    }
+    return $mascotas;
 }
 
 //devoler nombre y apellido del usuario
@@ -327,6 +372,7 @@ function correoDisponible($conn, $id_persona, $correo) {
     }
 }
 
+//Select de turnos de una persona
 function selectTurnosDePersona($conn, $id_persona){
 
     $sql = 'SELECT * FROM servicio where id_mascota IN (SELECT id_mascota FROM mascota WHERE id_persona = ?)';
@@ -342,6 +388,70 @@ function selectTurnosDePersona($conn, $id_persona){
             $turnos[] = $row;
         }
         return $turnos;
+    }
+    return null; // Si no hay resultados
+}
+
+//Devolver turno por id
+function obtenerTurnoPorId($conn, $id_servicio) {
+    $sql = "SELECT * FROM servicio WHERE id_servicio = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_servicio);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    }
+    return null; // Si no hay resultados
+}
+
+//Funcion para verificar si el tipo de servicio ya existe
+function tipoServicioExiste($conn, $tipo_servicio) {
+    $sql = "SELECT COUNT(*) AS count FROM tipo_de_servicio WHERE lower(tipo_de_servicio) = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", strtolower($tipo_servicio));
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['count'] > 0; // Devuelve true si el tipo de servicio existe, false en caso contrario
+    } else {
+        return false; // En caso de error en la consulta, se asume que no existe
+    }
+}
+
+//Funcion que devuelve todos los tipos de servicios y los nombres de las columnas
+function obtenerTiposDeServicios($conn) {
+    $sql = "SELECT * FROM tipo_de_servicio";
+    $result = $conn->query($sql);
+    $tipos_servicios = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tipos_servicios[] = [
+                'id_tipo_servicio' => $row['id_tipo_servicio'],
+                'tipo_de_servicio' => $row['tipo_de_servicio'],
+                'descripcion' => $row['descripcion'],
+                'precio_servicio' => $row['precio_servicio'],
+                'imagen_servicio' => $row['imagen_servicio']
+            ];
+        }
+    }
+    return $tipos_servicios;
+}
+
+//Funcion que devuelve la ruta completa de las imagenes de los tipos de servicios
+function obtenerRutaImagenTipoServicio($conn, $id_tipo_servicio,$nombre_proyecto) {
+    $sql = "SELECT imagen_servicio FROM tipo_de_servicio WHERE id_tipo_servicio = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_tipo_servicio);
+    $stmt->execute();
+    $result = $stmt->get_result();
+        if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        // Usar el nombre del dominio actual
+        $host = $_SERVER['HTTP_HOST'];
+        return "http://$host/$nombre_proyecto/uploads/" . $row['imagen_servicio'];
     }
     return null; // Si no hay resultados
 }

@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de turnos activos</title>
+    <title>Lista de personas registradas</title>
     <link rel="stylesheet" href="../../css/tablas_admin.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
 </head>
 <body>
- <?php
+     <?php
     require_once('auth.php');
     //Incluyo el header
     include('header_admin.php');
@@ -16,15 +19,22 @@
     require_once('../crud/conexion.php');
     include_once('../crud/consultas_varias.php');
 
-    [$datos_turnos, $columnas] = selectAllServicios($conn, true);
+    $datos_tipos_servicios = obtenerTiposDeServicios($conn);
+
+    //Obtengo los nombres de las columnas
+    $columnas = array();
+    if(count($datos_tipos_servicios)>0){
+        //Si hay datos, obtengo los nombres de las columnas
+        $columnas = array_keys($datos_tipos_servicios[0]);
+    }
 
     //Agrego un crud en las columnas
     if(count($columnas)>0) $columnas[] = 'acciones';
+
     ?>
     <main>
         <section id="lista_personas_sec">
-            <br>
-            <h2>Turnos activos</h2>
+            <h2>Tipos de servicios existentes</h2>
             <table>
                 <thead>
                     <tr><?php
@@ -33,19 +43,23 @@
                 <tbody>
                     <?php
                     //Ahora creamos el cuerpo de la tabla
-                    foreach($datos_turnos as $fila){
+                    foreach($datos_tipos_servicios as $fila){
                         echo '<tr>';
                         foreach ($columnas as $columna) {
                         if($columna != 'acciones'){
-                            echo '<td>' . htmlspecialchars($fila[$columna]) . '</td>';
+                            if($columna == 'imagen'){
+                                echo '<td><img src="data:image/jpeg;base64,'.base64_encode($fila[$columna]).'" alt="Imagen del tipo de servicio" width="100"/></td>';
+                            }
+                            else{
+                                echo '<td>' . htmlspecialchars($fila[$columna]) . '</td>';
+                            }
                         }
                         else{
-                            echo '<td>
-                                <button class="edit_btn" data-id="'.$fila['id_servicio'].'">
-                                    <img src="../../recursos/edit_icon.png">
-                                </button>
-                                <form method="GET" action="../crud/eliminar_servicio.php?id_servicio='.$fila['id_servicio'].'" class="form_eliminar">
-                                <input type="hidden" name="id_servicio" value="'.$fila['id_servicio'].'">
+                            echo '<td class="acciones">
+                                <a href="editar_tipo_servicio.php?id_tipo_servicio='.$fila['id_tipo_servicio'].'" class="edit_btn">
+                                <img src="../../recursos/edit_icon.png"></a>
+                                <form method="POST" action="crud/eliminar_tipo_servicio.php" class="form_eliminar">
+                                <input type="hidden" name="id_tipo_servicio" value="'.$fila['id_tipo_servicio'].'">
                                 <button type="submit" class="delete_btn"><img src="../../recursos/delete_icon.png"></button>
                                 </form>
                             </td>';
@@ -57,6 +71,9 @@
                 </tbody>
             </table>
         </section>
+    <section id="volver_s">
+        <a href="servicios_admin.php">Volver a Administración de servicios</a>
+    </section>
     </main>
     <?php
         //Muestro mensaje (para ediciones y eliminaciones) y luego lo quito
@@ -66,7 +83,7 @@
             unset($_SESSION['mensaje']);
         }
     ?>
-<?php
+    <?php
     include('../footer.php');
     ?>
 </body>
@@ -81,11 +98,10 @@ document.querySelectorAll('.edit_btn').forEach(btn => {
 
 document.querySelectorAll('.form_eliminar').forEach(form => {
     form.addEventListener('submit', e => {
-        if (!confirm("¿Estás seguro de que quieres eliminar este turno?")) {
+        if (!confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
             e.preventDefault();
         }
     });
 });
-</script>   
-</body>
+</script>
 </html>

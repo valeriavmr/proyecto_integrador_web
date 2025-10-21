@@ -67,3 +67,21 @@ main > .servicio_detalle{
     font-weight: bold;
     color: #2E6009;
 }
+
+.servicio_detalle > a:hover{
+    text-decoration: underline;
+}
+
+.editar_turno_btn{
+    background-color: #2E6009;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.editar_turno_btn a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}

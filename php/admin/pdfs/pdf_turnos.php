@@ -75,7 +75,7 @@ $montserrat_bi = TCPDF_FONTS::addTTFfont('../../../recursos/fuentes/Montserrat-B
     require_once('../../crud/conexion.php');
     include_once('../../crud/consultas_varias.php');
 
-    [$datos_turnos, $columnas] = selectAllServicios($conn, true);
+    [$datos_turnos, $columnas] = selectAllServicios($conn, false);
 
     //Con eso empezamos a crear el html
     $html = '

@@ -16,9 +16,6 @@
     require_once('../crud/conexion.php');
     include_once('../crud/consultas_varias.php');
 
-    //Traigo el momento actual
-    $currentDateTime = new DateTime('now');
-
     //Reviso si es redireccionado desde detalle_usuario.php
     if(isset($_GET['id_persona']) && !empty($_GET['id_persona'])){
         $id_persona = $_GET['id_persona'];
@@ -52,11 +49,14 @@
                         }
                         else{
                             echo '<td>';
-                            if($fila['horario'] > $currentDateTime)
+                            date_default_timezone_set('America/Argentina/Buenos_Aires');
+                            $horarioTurno = new DateTime($fila['horario']);
+                            $now = new DateTime();
+                            if($horarioTurno >= $now)
                             {
-                                echo '<button class="edit_btn" data-id="'.$fila['id_servicio'].'">
+                                echo '<a href="editar_turno.php?id_servicio='.$fila['id_servicio'].'" class="edit_btn" data-id="'.$fila['id_servicio'].'">
                                     <img src="../../recursos/edit_icon.png">
-                                </button>';
+                                </a>';
                             }
                             echo '<form method="GET" action="../crud/eliminar_servicio.php?id_servicio='.$fila['id_servicio'].'" class="form_eliminar">
                                 <input type="hidden" name="id_servicio" value="'.$fila['id_servicio'].'">
@@ -70,6 +70,9 @@
                     ?>
                 </tbody>
             </table>
+        </section>
+        <section id="volver_s">
+            <a href="servicios_admin.php">Volver a Administración de servicios</a>
         </section>
     </main>
     <?php

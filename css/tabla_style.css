@@ -19,6 +19,8 @@ table {
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     border-radius: 8px;
     overflow: hidden; /* Para que el border-radius afecte a las celdas */
+    overflow-y: auto;
+    display: block;
 }
 
 /* --- Estilo de las Celdas (th y td) --- */

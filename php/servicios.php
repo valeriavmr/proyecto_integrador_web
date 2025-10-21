@@ -1,17 +1,18 @@
 <?php
-    $lista_servicios = [["Adiestramiento canino", "Servicio de adiestramiento canino a domicilio. Modalidad de suscripción y cita disponibles.",
-"../recursos/dog-training.png"],
-    ["Paseo canino", "Servicio a domicilio de paseo canino. Horarios flexibles","../recursos/paseo_img.png"],
-["Baño y peluquería","Servicio de baño, secado y corte a domicilio","../recursos/banio_img.png"]];
+    require('crud/conexion.php');
+    include_once('crud/consultas_varias.php');
+
+    $lista_servicios = obtenerTiposDeServicios($conn);
 
 
 for($i=0;$i<sizeof($lista_servicios);$i++){
     $servicio = $lista_servicios[$i];
+    $ruta_imagen = obtenerRutaImagenTipoServicio($conn, $servicio['id_tipo_servicio'],"proyecto_adiestramiento_tahito");
     echo "<article>
-    <a href='login.php' title='Ingresa para más información sobre " . $servicio[0] . "'>
-    <h3>" . $servicio[0] . "</h3><br>
-    <p>" . $servicio[1] . "</p><br>
-    <img src=" . $servicio[2] . "></a>
+    <a href='login.php' title='Ingresa para más información sobre " . $servicio['tipo_de_servicio'] . "'>
+    <h3>" . $servicio['tipo_de_servicio'] . "</h3><br>
+    <p>" . $servicio['descripcion'] . "</p><br>
+    <img src=" . $ruta_imagen . "></a>
     </article>";
 }
 ?>
