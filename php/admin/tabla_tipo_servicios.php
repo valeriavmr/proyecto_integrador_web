@@ -47,12 +47,7 @@
                         echo '<tr>';
                         foreach ($columnas as $columna) {
                         if($columna != 'acciones'){
-                            if($columna == 'imagen'){
-                                echo '<td><img src="data:image/jpeg;base64,'.base64_encode($fila[$columna]).'" alt="Imagen del tipo de servicio" width="100"/></td>';
-                            }
-                            else{
-                                echo '<td>' . htmlspecialchars($fila[$columna]) . '</td>';
-                            }
+                            echo '<td><a href="detalle_tipo_servicio.php?id_tipo_servicio='.$fila['id_tipo_servicio'].'">' . htmlspecialchars($fila[$columna]) . '</a></td>';
                         }
                         else{
                             echo '<td class="acciones">
@@ -89,16 +84,9 @@
 </body>
 <script>
 //Coloco los eventos a los botones de edición y borrado
-document.querySelectorAll('.edit_btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const id = btn.dataset.id;
-        location.href = 'edit_usuario.php?id=' + id;
-    });
-});
-
 document.querySelectorAll('.form_eliminar').forEach(form => {
     form.addEventListener('submit', e => {
-        if (!confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
+        if (!confirm("¿Estás seguro de que quieres eliminar este tipo de servicio?")) {
             e.preventDefault();
         }
     });

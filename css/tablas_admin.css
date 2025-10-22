@@ -62,3 +62,8 @@ th,td {
     cursor: pointer;
     text-decoration: none;
 }
+
+td > a{
+    text-decoration: none;
+    color:#4b4b4b;
+}

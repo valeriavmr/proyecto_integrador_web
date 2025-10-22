@@ -41,9 +41,9 @@
                         foreach ($columnas as $columna) {
                         if($columna != 'acciones'){
                             if($columna == 'password'){
-                                echo "<td>••••••••</td>";
+                                echo "<td><a href=\"#\">••••••••</a></td>";
                             }else{
-                                echo '<td>' . htmlspecialchars($fila[$columna]) . '</td>';
+                                echo '<td><a href="detalle_usuario.php?id_persona='.$fila['id_persona'].'">' . htmlspecialchars($fila[$columna]) . '</a></td>';
                             }
                         }
                         else{

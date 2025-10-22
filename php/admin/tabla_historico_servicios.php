@@ -45,7 +45,7 @@
                         echo '<tr>';
                         foreach ($columnas as $columna) {
                         if($columna != 'acciones'){
-                            echo '<td>' . htmlspecialchars($fila[$columna]) . '</td>';
+                            echo '<td><a href="detalle_turno.php?id_servicio=' . $fila['id_servicio'] . '">' . htmlspecialchars($fila[$columna]) . '</a></td>';
                         }
                         else{
                             echo '<td>';

@@ -456,6 +456,52 @@ function obtenerRutaImagenTipoServicio($conn, $id_tipo_servicio,$nombre_proyecto
     return null; // Si no hay resultados
 }
 
+//Funcion que devuelve un tipo de servicio por id
+function obtenerTipoDeServicioPorId($conn, $id_tipo_servicio) {
+    $sql = "SELECT * FROM tipo_de_servicio WHERE id_tipo_servicio = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_tipo_servicio);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    }
+    return null; // Si no hay resultados
+}
+
+//Funcion que verifica si un tipo de servicio existe por tipo_de_servicio y no es el mismo id
+function tipoServicioExisteExcluyendoId($conn, $tipo_servicio, $id_tipo_servicio) {
+    $sql = "SELECT COUNT(*) AS count FROM tipo_de_servicio WHERE lower(tipo_de_servicio) = ? AND id_tipo_servicio != ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", strtolower($tipo_servicio), $id_tipo_servicio);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['count'] > 0; // Devuelve true si el tipo de servicio existe, false en caso contrario
+    } else {
+        return false; // En caso de error en la consulta, se asume que no existe
+    }
+}
+
+//Funcion para eliminar las mascotas de una persona por su id
+function deleteMascotasPorPersonaId($conn, $id_persona){
+    $sql = 'DELETE FROM mascota WHERE id_persona = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_persona);
+
+    $stmt->execute();
+}
+
+//Funcion para eliminar los turnos de una persona por su id
+function deleteTurnosPorPersonaId($conn, $id_persona){
+    $sql = 'DELETE FROM servicio WHERE id_mascota IN (SELECT id_mascota FROM mascota WHERE id_persona = ?)';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_persona);
+
+    $stmt->execute();
+}
+
 /* Seccion de selects para generar pdfs */
 
 //Select de las personas

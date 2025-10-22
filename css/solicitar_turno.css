@@ -123,3 +123,13 @@ input#add_tipo_servicio_btn:hover{
     color: #2E6009;
     font-weight: bold;
 }
+
+.act_btn{
+    background-color: #2E6009;
+    color: white;
+    cursor: pointer;
+    margin-top: 1rem;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
