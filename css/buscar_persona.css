@@ -1,0 +1,59 @@
+main {
+  background-color:#F4F4F4;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  min-height: calc(100vh - 200px);
+  padding-bottom: 1rem; 
+}
+
+main > h1{
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+form{
+   display: flex;
+   flex-direction: row; 
+   justify-content: space-around;
+   align-items: center;
+   margin: 2rem;
+   padding: 0.5rem;
+   min-width: 60vw;
+   margin-bottom: 1rem;
+   border-radius: 1rem;
+   background-color: #F0E8DD;
+   box-sizing: border-box;
+   box-shadow: #a7866D 0px 0px 5px;
+   border-style: none;
+}
+
+input,select{
+    border-style: none;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+    width: 100%;
+    max-width: 340px;
+    height: 2em;
+}
+
+#botonBuscar{
+    background-image: url('../recursos/search_icon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    color: transparent;
+    max-width: 30px;
+    background-color: #2E6009;
+    padding: 1rem;
+}
+
+#botonBuscar:hover{
+    cursor: pointer;
+}
+
+td > a{
+    text-decoration: none;
+    color: #4b4b4b;
+}

@@ -15,8 +15,8 @@
 </head>
 <body>
     <?php include('header_cliente.php'); ?>
-    <main>
-        <fieldset>
+<main>
+<fieldset>
 <form action="" method="post">
     <h2>Solicitar Turno</h2>
 
@@ -46,10 +46,10 @@
     <select name="tipo_servicio" id="tipo_servicio" required>
         <option value="" disabled selected>Seleccione un servicio</option>
         <?php
-        $servicios = ["Adiestramiento canino", "Paseo canino", "Baño y peluqueria"];
+        $servicios = obtenerTiposDeServicios($conn);
         foreach ($servicios as $servicio) {
-            $selected = ($_POST['tipo_servicio'] ?? '') == $servicio ? 'selected' : '';
-            echo "<option value='$servicio' $selected>$servicio</option>";
+            $selected = ($_POST['tipo_servicio'] ?? '') == $servicio['tipo_de_servicio'] ? 'selected' : '';
+            echo "<option value='{$servicio['tipo_de_servicio']}' $selected>{$servicio['tipo_de_servicio']}</option>";
         }
         ?>
     </select>
@@ -113,5 +113,4 @@
     </main>
     <?php include('footer.php'); ?>
 </body>
-<link rel="stylesheet" href="../css/footer_styles.css?v=<?= time() ?>">
 </html>

@@ -45,7 +45,7 @@
                 <li><a href="#"><img src="/proyecto_adiestramiento_tahito/recursos/mascotas_icon.png" alt="" class="iconos">Mascotas</a></li>
                 <hr>
                 <li><a href="servicios_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
-                <li><a href="#"><img src="/proyecto_adiestramiento_tahito/recursos/trabajadores_icon.png" alt="" class="iconos">Trabajadores</a></li>
+                <li><a href="#"><img src="/proyecto_adiestramiento_tahito/recursos/trabajador_icon.png" alt="" class="iconos">Trabajadores</a></li>
                 <hr>
                 <li><a href="main_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
                 <li><a href="/proyecto_adiestramiento_tahito/php/logout.php" title="Cerrar sesión" id="link_logout_menu">

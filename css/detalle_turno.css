@@ -22,6 +22,7 @@ body {
 
 main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex: 1;
@@ -42,12 +43,11 @@ h2{
     font-size: 20px;
     text-align: center;
     color:#2E6009;
-    padding: 1rem;
 }
 
 /*Detalles del turno*/
 
-main > .servicio_detalle{
+main > .servicio_detalle, .detalle_tipo_servicio{
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -66,4 +66,36 @@ main > .servicio_detalle{
     text-decoration: none;
     font-weight: bold;
     color: #2E6009;
+}
+
+.servicio_detalle > a:hover{
+    text-decoration: underline;
+}
+
+.editar_turno_btn{
+    background-color: #2E6009;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.editar_turno_btn a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.eliminar_turno_btn{
+    background-color: #B00020;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
 }
