@@ -305,7 +305,7 @@ function selectAllMascotas($conn) {
             m.raza,
             m.tamanio,
             m.color,
-            p.nombre_de_usuario AS duenio
+            p.nombre_de_usuario AS dueño
         FROM mascota m
         INNER JOIN persona p ON m.id_persona = p.id_persona
         ORDER BY p.nombre_de_usuario ASC, m.nombre ASC
@@ -314,8 +314,7 @@ function selectAllMascotas($conn) {
     $result = $conn->query($sql);
 
     if (!$result) {
-        // En un entorno de producción, es mejor registrar el error y mostrar un mensaje genérico.
-        // Pero para debug, este mensaje es útil.
+
         die("❌ Error en la consulta SQL: " . $conn->error);
     }
 

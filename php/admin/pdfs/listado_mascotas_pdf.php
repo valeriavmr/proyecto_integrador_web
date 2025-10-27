@@ -116,3 +116,4 @@ $html .= '</tbody></table>';
 // --- Renderizamos PDF ---
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Output('listado_general_mascotas.pdf', 'I');
+
