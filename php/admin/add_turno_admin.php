@@ -124,6 +124,14 @@
         <textarea id="detalles" name="detalles" rows="4" cols="50"><?= $_POST['detalles'] ?? '' ?></textarea>
         <br><br>
 
+    <!-- Monto del servicio -->
+
+        <label for="monto_servicio">Monto del servicio:</label><br>
+        <?php
+        $monto_servicio = obtenerMontoServicio($conn, $servicioSeleccionado);
+        ?>
+        <input type="number" id="monto_servicio" name="monto_servicio" required min="0" step="0.001" value="<?= $_POST['monto_servicio'] ?? $monto_servicio ?? '' ?>" readonly>
+
         <input type="submit" value="Solicitar Turno" name="solicitar_turno_btn" formaction="crud/insert_servicio_admin.php" id="solicitar_turno_btn">
     </form>
             <br>

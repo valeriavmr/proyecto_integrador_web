@@ -132,6 +132,11 @@ if (!$id_turno) {
         <br><br>
 
         <input type="submit" value="Editar Turno" name="editar_turno_btn" formaction="crud/update_servicio.php" id="editar_turno_btn">
+
+        <!-- Monto del servicio -->
+        <label for="monto_servicio">Monto del servicio:</label><br>
+        <input type="number" id="monto_servicio" name="monto_servicio" required min="0" step="0.01" value="<?= $_POST['monto_servicio'] ?? $turno['monto'] ?? '' ?>" readonly>
+        <br><br>
         </form>
             <br>
             <br>

@@ -22,7 +22,15 @@
         <article class="opc_menu_ap"><a href="servicios_admin.php">
             <img src="../../recursos/servicio_icon.png" alt="">Gestión de turnos y servicios</a></article>
         <article class="opc_menu_ap"><p><img src="../../recursos/mascotas_icon.png" alt="">Gestión de mascotas</p></article>
-        <article class="opc_menu_ap"><p><img src="../../recursos/trabajador_icon.png" alt="">Gestión de trabajadores</p></article>
+        <article class="opc_menu_ap"><a href="trabajadores_admin.php"><img src="../../recursos/trabajador_icon.png" alt="">Gestión de trabajadores</a></article>
+    </section>
+        <section>
+        <?php
+        if (isset($_GET['mensaje'])) {
+            echo "<p style='margin: 1rem;'>" . htmlspecialchars($_GET['mensaje']) . "</p>";
+            unset($_GET['mensaje']);
+        }
+        ?>
     </section>
     </main>
     <?php

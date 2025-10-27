@@ -18,7 +18,7 @@ $stmt->bind_param("sssii", $localidad, $barrio, $calle, $altura, $id_persona);
 
 if ($stmt->execute()) {
     // Redirigir de vuelta al formulario de edición o donde quieras
-    header("Location: ../editar_usuario.php?id_persona=$id_persona");
+    header("Location: ../detalle_usuario.php?id_persona=$id_persona#info_direccion");
     exit;
 } else {
     die("Error al actualizar la dirección: " . $stmt->error);

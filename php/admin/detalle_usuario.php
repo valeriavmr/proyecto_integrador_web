@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de usuario</title>
     <link rel="stylesheet" href="../../css/detalle_usuario.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
 </head>
 <body>
     <?php
@@ -30,7 +38,8 @@
         $datos_mascotas = obtenerMascotasPorUsuario($conn, $persona['nombre_de_usuario']);
         $columnas_mascotas = is_array($datos_mascotas) && count($datos_mascotas) > 0 ? array_keys($datos_mascotas[0]) : [];
         $datos_servicios = selectTurnosDePersona($conn, $id_persona);
-         $columnas_servicios = is_array($datos_servicios) && count($datos_servicios) > 0 ? array_keys($datos_servicios[0]) : [];
+        $columnas_servicios = is_array($datos_servicios) && count($datos_servicios) > 0 ? array_keys($datos_servicios[0]) : [];
+        $datos_trabajador = obtenerTrabajadorPorId($conn,$id_persona) ?? [];
     ?>
     <h1>Perfil de <?php echo htmlspecialchars($persona['nombre'])?></h1>
     <main>
@@ -118,6 +127,23 @@
             </table>
             </a>
         </section>
+        <?php endif;?>
+        </section>
+        <?php if($persona['rol'] == 'trabajador' || $persona['rol']=='admin'):?>
+            <section id="info_trabajador">
+                <article>
+                    <h2>Datos de Trabajador</h2>
+                <?php if($datos_trabajador):?>
+                    <p><strong>Tipo de trabajador:</strong><?php echo htmlspecialchars($datos_trabajador['rol'])?></p>
+                    <?php if($persona['rol']== 'admin'):?><p><strong>Pass App:</strong> <?php echo htmlspecialchars($datos_trabajador['pass_app']); ?></p><?php endif;?>
+                    <?php if($persona['rol']== 'trabajador'):?><p><strong>Especialidad:</strong> <?php echo htmlspecialchars($datos_trabajador['tipo_de_servicio']); ?></p><?php endif;?>
+                    <br><br>
+                    <a href="editar_trabajadores.php?id_persona=<?php echo htmlspecialchars($id_persona)?>">Editar datos de trabajador</a>
+                <?php else:?>
+                    <p>No hay datos de trabajador</p>
+                <?php endif;?>
+                </article>
+            </section>
         <?php endif;?>
     </main>
     <section id="volver_s">

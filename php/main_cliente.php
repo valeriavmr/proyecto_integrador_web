@@ -51,7 +51,7 @@
                 echo "</div>";
             }
             ?>
-            <button id='agregar_mascota_btn' class='btn'>Agregar mascota</button>
+            <button id='agregar_mascota_btn' class='btn' onclick="location.href='crud/mascotas.php'">Agregar mascota</button>
         </section>
     </main>
     <?php include('footer.php'); ?>

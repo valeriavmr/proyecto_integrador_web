@@ -1,6 +1,10 @@
 <?php
 require('conexion.php');
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 $nombre_persona= $_POST['nombre_persona'] ?? '';
 $apellido_persona= $_POST['apellido_persona'] ?? '';
 $username= $_POST['username'] ?? '';
@@ -35,6 +39,35 @@ if($rol==''){
 if ($stmt->execute()) {
 
     $last_id = $stmt->insert_id;
+
+    include_once('consultas_varias.php');
+    include_once('../admin/crud/enviar_pass_inicial.php');
+
+    $id_sesion = obtenerIdPersona($conn,$_SESSION['username']);
+    $sesion_persona = getPersonaPorId($conn, $id_sesion);
+    $rol_sesion = $sesion_persona['rol'];
+
+    if($rol_sesion=='admin'){
+
+        $correo_admin = $sesion_persona['correo'];
+        $pass_admin = obtenerPassAppPorId($conn, $id_sesion);
+
+        //Envio un correo al usuario con su pass inicial
+        $cuerpo_correo='<h1>Credenciales iniciales</h1>
+        <p><strong>Nombre de usuario:</strong>'. $username .'</p>
+        <p><strong>Contraseña:</strong>' . $pass . '</p>
+        <p><strong>Adiestramiento Tahito</strong></p>';
+        enviarCorreo($correo_admin, $pass_admin, $correo_persona, 'Credenciales Iniciales', $cuerpo_correo);
+    }
+
+    # (si es trabajador o admin) Insert en tabla trabajadores
+    if($rol=='trabajador' || $rol=='admin'){
+        $sql_trabajador = "INSERT INTO trabajadores (id_persona,rol) VALUES (?,?)";
+        $stmt_trabajador = $conn->prepare($sql_trabajador);
+        $stmt_trabajador->bind_param("is", $last_id,$rol);
+        $stmt_trabajador->execute();
+        $stmt_trabajador->close();
+    }
     
     #Insert en tabla direccion
 
@@ -43,7 +76,12 @@ if ($stmt->execute()) {
     $stmt2->bind_param("isssi", $last_id, $localidad, $barrio, $calle, $altura_calle);
 
     if ($stmt2->execute()) {
-        header("Location: ../login.php");
+
+        if($rol_sesion!='admin') {
+            header("Location: ../login.php");
+        }else{
+            header("Location: ../admin/tabla_personas.php?mensaje=Usuario creado correctamente");
+        }
     } else {
         echo "Error: " . $sql_direccion . "<br>" . $conn->error;
     }

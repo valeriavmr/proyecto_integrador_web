@@ -77,7 +77,7 @@ input,select{
     height: 2em;
 }
 
-#btn_guardar_persona, #btn_guardar_direccion{
+#btn_guardar_persona, #btn_guardar_direccion,#btn_guardar_trabajador{
     border-radius: 0.7rem;
     border-style:none;
     background-color: #2E6009;
@@ -86,7 +86,8 @@ input,select{
 }
 
 #btn_guardar_persona:hover,
-#btn_guardar_direccion:hover{
+#btn_guardar_direccion:hover,
+#btn_guardar_trabajador:hover{
     background-color: #a7866D;
     cursor: pointer;
 }
@@ -107,3 +108,4 @@ main  > form > fieldset{
    box-shadow: #a7866D 0px 0px 5px;
    border-style: none;
 }
+

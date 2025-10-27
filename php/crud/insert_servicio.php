@@ -7,6 +7,8 @@ $id_trabajador = $_POST['trabajador'];
 $fecha = $_POST['fecha'];
 $hora = $_POST['hora'];
 $detalles = $_POST['detalles'];
+$monto_servicio = $_POST['monto_servicio'];
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -16,7 +18,7 @@ if (empty($detalles)) {
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['solicitar_turno_btn'])){
-    $sql = "INSERT INTO servicio (tipo_de_servicio, id_mascota, id_trabajador, horario, comentarios) VALUES ('$tipo_servicio', '$id_mascota', '$id_trabajador','$fecha $hora', '$detalles')";
+    $sql = "INSERT INTO servicio (tipo_de_servicio, id_mascota, id_trabajador, horario, comentarios, monto) VALUES ('$tipo_servicio', '$id_mascota', '$id_trabajador','$fecha $hora', '$detalles', '$monto_servicio')";
 
 if ($conn->query($sql) === TRUE) {
     header("Location: ../servicios_cliente.php");
