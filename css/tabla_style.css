@@ -14,7 +14,7 @@
 /* --- Estilo General de la Tabla --- */
 table {
     width: 100%;
-    border-collapse: collapse; /* Une los bordes de las celdas */
+    border-collapse: collapse; 
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     border-radius: 8px;
@@ -40,11 +40,11 @@ thead th {
 
 /* --- Filas del Cuerpo de la Tabla (tbody) --- */
 tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* Color alterno para las filas */
+    background-color: #f9f9f9; 
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1; /* Efecto al pasar el mouse */
+    background-color: #f1f1f1; 
 }
 
 /* --- Celda de Acciones y sus Botones --- */
@@ -54,8 +54,8 @@ td.acciones {
 
 .btn-accion {
     display: inline-block;
-    padding: 6px 12px;
-    margin: 0 4px;
+    padding: 6px 10px;
+    margin: 3 4px;
     border-radius: 5px;
     text-decoration: none;
     color: #fff;
@@ -67,7 +67,8 @@ td.acciones {
     opacity: 0.8;
 }
 
-.btn-accion.editar {
+.btn-accion.editar,
+.btn-accion.descargar {
     background-color: var(--color-primario);
 }
 

@@ -207,6 +207,7 @@ $lista_mascotas = $stmt_select->get_result();
                                 <td><?php echo htmlspecialchars($mascota['tamanio']); ?></td>
                                 <td class="acciones">
                                     <a href="mascotas.php?accion=editar&id=<?php echo $mascota['id_mascota']; ?>" class="btn-accion editar">Editar</a>
+                                    <a href="ficha_mascota_pdf.php?id=<?php echo $mascota['id_mascota']; ?>" class="btn-accion descargar">Descargar Ficha</a>
                                     <a href="mascotas.php?accion=eliminar&id=<?php echo $mascota['id_mascota']; ?>" class="btn-accion eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar a <?php echo htmlspecialchars($mascota['nombre']); ?>?')">Eliminar</a>
                                 </td>
                             </tr>
