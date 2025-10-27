@@ -10,6 +10,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
 </head>
 <body>
+    <?php 
+    if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+    ?>
     <header>
         <a class="img" href="main_guest.php">
             <img src="../recursos/logsinfondo.png" alt="">
@@ -28,7 +33,7 @@
     </header>
     <main>
         <h2>Formulario de contacto</h2>
-        <form action="" method="post">
+        <form action="crud/enviar_mail_contacto.php" method="post">
             <fieldset>
                 <label for="nombre_contacto"></label>
                 <input type="text" name="nombre_contacto" id="nombre_contacto"
@@ -43,6 +48,14 @@
                 <textarea name="mensaje_contacto" id="mensaje_contacto" rows="4" cols="50" required
                 placeholder="¡Cuéntanos tu mensaje!"></textarea><br>
                 <input type="submit" value="Enviar mensaje" id="contacto_btn">
+                <?php if(isset($_SESSION['mensaje'])):?>
+                    <p style="color:green;"><?php echo htmlspecialchars($_SESSION['mensaje'])?></p>
+                <?php endif;
+                unset($_SESSION['mensaje']);?>
+                <?php if(isset($_SESSION['error'])):?>
+                    <p style="color:red;"><?php echo htmlspecialchars($_SESSION['error'])?></p>
+                <?php endif;
+                unset($_SESSION['error']);?>
             </fieldset>
         </form>
     </main>

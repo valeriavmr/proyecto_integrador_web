@@ -10,7 +10,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
 </head>
 <body>
-    <main>
     <?php
     require_once('auth.php');
     //Incluyo el header
@@ -26,6 +25,7 @@
     if(count($columnas)>0) $columnas[] = 'acciones';
 
     ?>
+    <main>
         <section id="lista_mascotas_sec">
             <h2>Mascotas registradas</h2>
             <table cellspacing="0" cellpadding="4">

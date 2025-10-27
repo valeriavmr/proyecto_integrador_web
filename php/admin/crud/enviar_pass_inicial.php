@@ -15,12 +15,12 @@ function enviarCorreo($admin,$pass_admin,$destinatario, $asunto, $cuerpo) {
     $phpmailer = new PHPMailer();
     $phpmailer->isSMTP();
     $phpmailer->isHTML(true);
-    $phpmailer->Host = 'smtp.gmail.com';
-    $phpmailer->Port = 587;
+    $phpmailer->Host = 'mail.serviciosya.com.ar';
+    $phpmailer->Port = 465;
     $phpmailer->SMTPAuth = true;
     $phpmailer->Username = $admin;
     $phpmailer->Password = $pass_admin;
-    $phpmailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $phpmailer->SMTPSecure ='ssl';
 
     $phpmailer->SMTPOptions = array(
     'ssl' => array(

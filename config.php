@@ -26,5 +26,7 @@ define('BASE_URL', $protocol . $server_name . '/' . $project_folder_path);
 // En tu caso, BASE_URL será: "http://localhost/proyecto_adiestramiento_tahito"
 
 
-
+//Para los correo, definir el correo y la contraseña para no hardcodearla en el texto
+define('CORREO_HOST','grupos@serviciosya.com.ar');
+define('PASS_HOST','B6UVDn@3pX');
 ?>

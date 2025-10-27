@@ -135,7 +135,9 @@
                     <h2>Datos de Trabajador</h2>
                 <?php if($datos_trabajador):?>
                     <p><strong>Tipo de trabajador:</strong><?php echo htmlspecialchars($datos_trabajador['rol'])?></p>
-                    <?php if($persona['rol']== 'admin'):?><p><strong>Pass App:</strong> <?php echo htmlspecialchars($datos_trabajador['pass_app']); ?></p><?php endif;?>
+                    <?php if($persona['rol']== 'admin'):?><p><strong>Pass App:</strong> <?php echo htmlspecialchars($datos_trabajador['pass_app']); ?></p>
+                    <p><strong>Correo del host:</strong> <?php echo htmlspecialchars($datos_trabajador['correo_host']); ?></p>
+                    <?php endif;?>
                     <?php if($persona['rol']== 'trabajador'):?><p><strong>Especialidad:</strong> <?php echo htmlspecialchars($datos_trabajador['tipo_de_servicio']); ?></p><?php endif;?>
                     <br><br>
                     <a href="editar_trabajadores.php?id_persona=<?php echo htmlspecialchars($id_persona)?>">Editar datos de trabajador</a>

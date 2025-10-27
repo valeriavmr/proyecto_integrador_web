@@ -49,15 +49,14 @@ if ($stmt->execute()) {
 
     if($rol_sesion=='admin'){
 
-        $correo_admin = $sesion_persona['correo'];
-        $pass_admin = obtenerPassAppPorId($conn, $id_sesion);
+        $admin_sesion = obtenerTrabajadorPorId($conn, $id_sesion);
 
         //Envio un correo al usuario con su pass inicial
         $cuerpo_correo='<h1>Credenciales iniciales</h1>
         <p><strong>Nombre de usuario:</strong>'. $username .'</p>
         <p><strong>Contraseña:</strong>' . $pass . '</p>
         <p><strong>Adiestramiento Tahito</strong></p>';
-        enviarCorreo($correo_admin, $pass_admin, $correo_persona, 'Credenciales Iniciales', $cuerpo_correo);
+        enviarCorreo($admin_sesion['correo_host'], $admin_sesion['pass_app'], $correo_persona, 'Credenciales Iniciales', $cuerpo_correo);
     }
 
     # (si es trabajador o admin) Insert en tabla trabajadores

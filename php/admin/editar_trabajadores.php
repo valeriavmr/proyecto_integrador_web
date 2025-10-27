@@ -65,6 +65,8 @@
                 ?>
                 <label for="pass_app">Pass App:</label>
                 <input type="text" required name="pass_app" id="pass_app" value="<?php echo htmlspecialchars($trabajador['pass_app'] ?? $_POST['pass_app'] ?? null)?>">
+                <label for="correo_host">Correo del hosting:</label>
+                <input type="mail" required name="correo_host" id="correo_host" value="<?php echo htmlspecialchars($trabajador['correo_host'] ?? $_POST['correo_host'] ?? null)?>">
                 <?php
             }
             ?>
