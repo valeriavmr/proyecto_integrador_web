@@ -35,7 +35,7 @@ if ($stmt->execute()) {
 }
 
 // Redirijo nuevamente al formulario para mostrar mensajes
-header("Location: ../editar_usuario.php?id_persona=$id_persona");
+header("Location: ../detalle_usuario.php?id_persona=$id_persona#info_cuenta");
 exit;
 
 ?>

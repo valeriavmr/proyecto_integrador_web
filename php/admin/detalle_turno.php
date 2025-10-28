@@ -42,6 +42,7 @@
             <p>Trabajador asignado: " . $nombre_trabajador . "</p>
             <p>Fecha y Hora: " . $servicio['horario'] . "</p>
             <p>Comentarios adicionales: " . $servicio['comentarios'] . "</p>
+            <p>Monto: " . $servicio['monto'] . "</p>
             <button class='cancelar_turno_btn'><a href='crud/eliminar_servicio.php?id_servicio=" . $servicio['id_servicio'] . "'>Eliminar turno</a></button>
             <a href='servicios_admin.php'>Volver a Administración de servicios</a>";
             if($horarioTurno >= $now) {

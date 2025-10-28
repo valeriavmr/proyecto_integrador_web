@@ -17,6 +17,22 @@
     //Validacion de permisos
     require_once('auth.php');
 
+    require_once('../crud/conexion.php');
+    include_once('../crud/consultas_varias.php');
+
+    //Valido que tenga pass app para que pueda enviar el correo inicial
+    if (session_status() == PHP_SESSION_NONE) { session_start(); }
+
+    $user_admin = $_SESSION['username'];
+
+    $id_admin = obtenerIdPersona($conn,$user_admin);
+
+    $pass_app = obtenerPassAppPorId($conn,$id_admin);
+
+    if($pass_app == null){
+      header('Location: main_admin.php?mensaje=No se poseen las credenciales necesarias.');
+    }
+
     //Inserto el header
     include('header_admin.php');
     ?>
@@ -42,8 +58,6 @@
             
             <?php
               $username = $_POST['username'] ?? '';
-              include_once('../crud/conexion.php');
-              include_once('../crud/consultas_varias.php');
 
               if(verificarNombreUsuario($conn, $username)) {
                   echo "<script>
@@ -99,7 +113,7 @@
 
             <label for="rol"></label>
             <select name="rol" id="rol" required>
-                <option value="" disabled <?php echo empty($_POST['barrio']) ? 'selected' : '' ?>>Seleccione el tipo de rol del usuario</option>
+                <option value="" disabled <?php echo empty($_POST['rol']) ? 'selected' : '' ?>>Seleccione el tipo de rol del usuario</option>
                 <option value="admin">Administrador</option>
                 <option value="cliente">Cliente</option>
                 <option value="trabajador">Trabajador</option>
@@ -135,10 +149,10 @@
             <input type="number" name="altura_calle" id="altura_calle"
             placeholder="Ingrese la altura de su dirección" required min="1" max="20000"
             value="<?php echo $_POST['altura_calle'] ?? '' ?>">
-            <input type="submit"  id="btn_guardar_persona" value="Crear cuenta" formaction="../../crud/insert_persona.php" id="btn_crear_cuenta">
+            <input type="submit"  id="btn_guardar_persona" value="Crear cuenta" formaction="../crud/insert_persona.php" id="btn_crear_cuenta">
         </fieldset>
     </form>
-    <section>
+    <section id="volver_s">
         <a href="personas_admin.php">Volver a Administración de personas</a>
     </section>
     </main>

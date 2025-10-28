@@ -25,6 +25,24 @@ function buscarNombreCompletoPorId($conn, $id_persona) {
     }
 }
 
+//Actualiza la contraseña por username
+function cambiarPassPorUsername($conn, $username,$pass_nueva){
+
+    $hash = password_hash($pass_nueva, PASSWORD_DEFAULT);
+
+    $sql ="UPDATE persona set password=? where nombre_de_usuario=?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss",$hash,$username);
+
+    if($stmt->execute()){
+        header('Location: ../login.php?mensaje=Contraseña cambiada exitosamente');
+    }else{
+        header('Location: ../login.php?mensaje=No se pudo cambiar la contraseña');
+    }
+
+}
+
 
 //Select de mascota por id
 function obtenerNombreMascota($conn,$id_mascota) {
@@ -290,25 +308,42 @@ function deleteDireccionPorId($conn, $id_persona){
     $stmt->bind_param("i", $id_persona);
 
     $stmt->execute();
+
+    $stmt->close();
+}
+
+//Elimino el registro de la persona en la tabla de trabajadores
+function deleteTrabajadorPorId($conn, $id_persona){
+
+    $sql = 'DELETE FROM trabajadores WHERE id_persona = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_persona);
+
+    $stmt->execute();
+
+    $stmt->close();
+
 }
 
 //Eliminar a persona por id
 function deletePersonaPorId($conn, $id_persona){
+    session_start();
+    include_once('/proyecto_adiestramiento_tahito/config.php');
+
     $sql = 'DELETE FROM persona where id_persona = ?';
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
     
-    //Primero elimino la direccion y luego la persona
-    deleteDireccionPorId($conn, $id_persona);
     if ($stmt->execute()) {
         $_SESSION['mensaje'] = "Cuenta eliminada exitosamente";
+        header('Location: ' . BASE_URL . '/php/admin/tabla_personas.php');
     }
     else{
         $_SESSION['mensaje'] = "Error al eliminar la cuenta";
     }
+    $stmt->close();
 
-    header('Location: ../admin/tabla_personas.php');
     exit();
 }
 
@@ -500,6 +535,74 @@ function deleteTurnosPorPersonaId($conn, $id_persona){
     $stmt->bind_param("i", $id_persona);
 
     $stmt->execute();
+}
+
+//Funcion que devuelve las columnas y los registros de la tabla trabajadores
+function selectAllTrabajadores($conn){
+
+        $sql = 'SELECT * FROM trabajadores';
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+            $firstRow = $result->fetch_assoc();
+            $columnNames = array_keys($firstRow);
+
+            $rows = [];
+            $rows[] = $firstRow;
+
+            while ($row = $result->fetch_assoc()) {
+                $rows[] = $row;
+            }
+
+            return [$rows, $columnNames];
+    } else {
+        return [[], []]; // Retorna vacío si no hay personas en la base
+    }
+
+}
+
+//Funcion que devuelve el registro de un trabajador por su id_persona
+function obtenerTrabajadorPorId($conn, $id_persona) {
+    $sql = "SELECT * FROM trabajadores WHERE id_persona = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_persona);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    }
+    return null; // Si no hay resultados
+}
+
+//Funcion que devuelve la pass_app de un trabajador admin por su id_persona
+
+function obtenerPassAppPorId($conn, $id_persona) {
+    $sql = "SELECT pass_app FROM trabajadores WHERE id_persona = ? AND rol = 'admin'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_persona);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['pass_app'];
+    }
+    return null; // Si no hay resultados
+}
+
+//Funcion para obtener el monto que corresponde a un tipo de servicio
+function obtenerMontoServicio($conn, $tipo_servicio) {
+    $sql = "SELECT precio_servicio FROM tipo_de_servicio WHERE tipo_de_servicio = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $tipo_servicio);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['precio_servicio'];
+    } else {
+        return null; // Retorna null si no se encuentra el tipo de servicio
+    }
 }
 
 /* Seccion de selects para generar pdfs */

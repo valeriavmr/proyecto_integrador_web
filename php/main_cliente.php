@@ -51,7 +51,7 @@
                 echo "</div>";
             }
             ?>
-            <a href="http://localhost/proyecto_adiestramiento_tahito/php/crud/mascotas.php" id="agregar_mascota_btn" class="btn"> Agregar mascota</a>
+            <button id='agregar_mascota_btn' class='btn' onclick="location.href='crud/mascotas.php'">Agregar mascota</button>
         </section>
     </main>
     <?php include('footer.php'); ?>

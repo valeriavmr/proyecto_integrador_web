@@ -23,6 +23,7 @@ if ($result->num_rows > 0) {
         <h3>" . $row['tipo_de_servicio'] . "</h3><br>
         <p>Mascota: " . $nombre_mascota . "</p>
         <p>Fecha y Hora: " . $row['horario'] . "</p><br>
+        <p>Monto: " . $row['monto'] . "</p><br>
         <a href='detalle_turno.php?id_servicio=" . $row['id_servicio'] . "'>Ver detalles del turno</a><br>
         <button class='cancelar_turno_btn'><a href='crud/eliminar_servicio.php?id_servicio=" . $row['id_servicio'] . "'>Cancelar turno</a></button>
         </article>";

@@ -34,11 +34,18 @@
             <!-- Mensaje de error -->
             <?php if($error): ?>
                 <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
-            <?php endif; ?>
+            <?php endif; 
+            unset($_GET['error']);?>
             <input type="submit" value="Ingresar" id="btn_login"><br><br>
             <div id="seccion_volver">
             <a href="registro.php" id="link_registro">No tengo una cuenta</a><br><br>
+            <a href="pass_olvidada.php" id="link_pass_olvidada">Olvidé mi contraseña</a>
+            <br><br>
             <a href="main_guest.php" id="link_main">Cancelar</a>
+            <?php if(isset($_GET['mensaje'])):?>
+            <p style="color:green; text-aling:center;"><?php echo htmlspecialchars($_GET['mensaje']); ?></p>
+            <?php endif;
+            unset($_GET['mensaje']);?>
             </div>
         </fieldset>
     </form>

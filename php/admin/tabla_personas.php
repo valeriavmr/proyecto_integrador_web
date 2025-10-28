@@ -10,7 +10,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
 </head>
 <body>
-    <main>
     <?php
     require_once('auth.php');
     //Incluyo el header
@@ -19,6 +18,7 @@
     //Recupero los datos de la tabla
     require_once('../crud/conexion.php');
     include_once('../crud/consultas_varias.php');
+    require_once('../../config.php');
 
     [$datos_personas, $columnas] = selectAllPersonas($conn);
 
@@ -26,6 +26,7 @@
     if(count($columnas)>0) $columnas[] = 'acciones';
 
     ?>
+    <main>
         <section id="lista_personas_sec">
             <h2>Usuarios registrados</h2>
             <table>
@@ -50,7 +51,7 @@
                             echo '<td class="acciones">
                                 <a href="editar_usuario.php?id_persona='.$fila['id_persona'].'" class="edit_btn">
                                 <img src="../../recursos/edit_icon.png"></a>
-                                <form method="POST" action="crud/eliminar_persona.php" class="form_eliminar">
+                                <form method="POST" action="' . BASE_URL . '/php/admin/crud/eliminar_persona.php" class="form_eliminar">
                                 <input type="hidden" name="id_persona" value="'.$fila['id_persona'].'">
                                 <button type="submit" class="delete_btn"><img src="../../recursos/delete_icon.png"></button>
                                 </form>

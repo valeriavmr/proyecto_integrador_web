@@ -69,7 +69,7 @@ form > fieldset > input,select{
     height: 2rem;
 }
 
-#btn_login{
+#btn_login,#btn_rec_pass{
     border-radius: 0.7rem;
     border-style:none;
     background-color: #2E6009;
@@ -77,14 +77,14 @@ form > fieldset > input,select{
     color: #F4F4F4;
 }
 
-#btn_login:hover{
+#btn_login:hover,#btn_rec_pass:hover,#btn_change_pass:hover{
     background-color: #a7866D;
     cursor: pointer;
 }
 
 /*Registro-cancelar*/
 
-#link_registro, label{
+#link_registro, label, #link_pass_olvidada{
     padding: 1rem;
     margin: 1rem;
     color: #2E6009;
@@ -97,3 +97,12 @@ form > fieldset > input,select{
     text-decoration: none;
 }
 
+#btn_change_pass{
+    border-radius: 0.7rem;
+    border-style:none;
+    background-color: #2E6009;
+    font-weight: bold;
+    color: #F4F4F4;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
