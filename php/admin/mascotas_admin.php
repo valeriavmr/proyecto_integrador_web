@@ -17,7 +17,7 @@
         <article class="opc_menu_ap"><a href="tabla_mascotas.php" id="lista_mascotas_op"><img src="../../recursos/lista_mascotas_icon.png" alt=""> Lista de mascotas registradas</a></article>
         <article class="opc_menu_ap" id="listado_mascotas_pdf"><a href="pdfs/listado_mascotas_pdf.php" target="_blank"><img src="../../recursos/pdf_icon.png" alt=""> Generar Reporte de Mascotas</a></article>
         <article class="opc_menu_ap"><a href="agregar_mascota.php" id="agregar_mascota_op"><img src="../../recursos/add_mascota.png" alt=""> Agregar Mascota</a></article>
-        <article class="opc_menu_ap"><p><img src="../../recursos/person_search_icon.png" alt=""> Buscar Mascota</p></article>
+        <article class="opc_menu_ap"><a href="buscar_mascota.php" id="buscar_mascota_op"><img src="../../recursos/person_search_icon.png" alt=""> Buscar Mascota</a></article>
     </section>
     </main>
     <?php

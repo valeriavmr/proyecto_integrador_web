@@ -42,7 +42,7 @@
                 </a></li>
                 <hr>
                 <li><a href="personas_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/personas_icon.png" alt="" class="iconos">Personas</a></li>
-                <li><a href="#"><img src="/proyecto_adiestramiento_tahito/recursos/mascotas_icon.png" alt="" class="iconos">Mascotas</a></li>
+                <li><a href="mascotas_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/mascotas_icon.png" alt="" class="iconos">Mascotas</a></li>
                 <hr>
                 <li><a href="servicios_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
                 <li><a href="#"><img src="/proyecto_adiestramiento_tahito/recursos/trabajador_icon.png" alt="" class="iconos">Trabajadores</a></li>

@@ -21,60 +21,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("INSERT INTO mascota 
             (nombre, fecha_de_nacimiento, edad, raza, tamanio, color, id_persona)
             VALUES (?, ?, ?, ?, ?, ?, ?)");
-            if (!$stmt) {
-    die("Error en la preparación de la consulta: " . $conn->error);
-}
+
+        if (!$stmt) {
+            die("Error en la preparación de la consulta: " . $conn->error);
+        }
+
         $stmt->bind_param("ssissss", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $duenio);
 
         if ($stmt->execute()) {
             echo "<script>alert('Mascota registrada con éxito 🐾'); window.location='mascotas_admin.php';</script>";
         } else {
-            echo "<p style='color:red;'>Error al registrar: " . $stmt->error . "</p>";
+            echo "<p class='mensaje-error'>Error al registrar: " . $stmt->error . "</p>";
         }
 
         $stmt->close();
     } else {
-        echo "<p style='color:red;'>Por favor completá todos los campos.</p>";
+        echo "<p class='mensaje-error'>Por favor completá todos los campos.</p>";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Mascotas registradas</title>
-    <link rel="stylesheet" href="../../css/tablas_admin.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
+    <title>Registrar nueva mascota</title>
+    <link rel="stylesheet" href="../../css/tabla_style.css">
 </head>
 
 <body>
+<main>
+    <h1>Registrar nueva mascota</h1>
 
-    <h2>Registrar nueva mascota</h2>
-
-    <form method="POST" action="">
-        <div class="form-group">
-            <label>Nombre:</label>
-            <input type="text" name="nombre_mascota" required>
+    <form method="POST" action="" class="form-admin">
+        <div class="form-grupo">
+            <label for="nombre_mascota">Nombre:</label>
+            <input type="text" id="nombre_mascota" name="nombre_mascota" required>
         </div>
 
-        <div class="form-group">
-            <label>Fecha de nacimiento:</label>
-            <input type="date" name="fecha_de_nacimiento" required>
+        <div class="form-grupo">
+            <label for="fecha_de_nacimiento">Fecha de nacimiento:</label>
+            <input type="date" id="fecha_de_nacimiento" name="fecha_de_nacimiento" required>
         </div>
 
-        <div class="form-group">
-            <label>Raza:</label>
-            <input type="text" name="raza" required>
+        <div class="form-grupo">
+            <label for="raza">Raza:</label>
+            <input type="text" id="raza" name="raza" required>
         </div>
 
-        <div class="form-group">
-            <label>Tamaño:</label>
-            <select name="tamanio" required>
+        <div class="form-grupo">
+            <label for="tamanio">Tamaño:</label>
+            <select id="tamanio" name="tamanio" required>
                 <option value="">Seleccionar...</option>
                 <option value="Pequeño">Pequeño</option>
                 <option value="Mediano">Mediano</option>
@@ -82,22 +80,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </select>
         </div>
 
-        <div class="form-group">
-            <label>Color:</label>
-            <input type="text" name="color" required>
+        <div class="form-grupo">
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" required>
         </div>
 
-        <div class="form-group">
-            <label>Dueño:</label>
-            <input type="text" name="duenio" required>
+        <div class="form-grupo">
+            <label for="duenio">Dueño (ID o nombre):</label>
+            <input type="text" id="duenio" name="duenio" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Guardar Mascota</button>
+        <div class="acciones-form">
+            <button type="submit" class="btn-primario">Guardar Mascota</button>
+            <a href="mascotas_admin.php" class="btn-secundario">Volver</a>
+        </div>
     </form>
+</main>
 
-    <?php
-        include('../footer.php');
-        ?>
-
+<?php include('../footer.php'); ?>
 </body>
-
+</html>
