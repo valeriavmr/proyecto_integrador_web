@@ -769,4 +769,15 @@ function selectAllMascotas($conn) {
     // Devolvemos el array de datos y el array de columnas, tal como espera tu script.
     return [$datos_mascotas, $columnas];
 }
+
+
+function obtenerTiposServicio($conn) {
+    $sql = "SELECT DISTINCT tipo_de_servicio FROM servicio ORDER BY tipo_de_servicio ASC";
+    $result = $conn->query($sql);
+    $tipos = [];
+    while ($row = $result->fetch_assoc()) {
+        $tipos[] = $row['tipo_de_servicio'];
+    }
+    return $tipos;
+}
 ?>

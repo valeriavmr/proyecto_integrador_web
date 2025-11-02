@@ -58,9 +58,9 @@ include('header_trabajador.php');
     </section>
     <section id="menu_gestion">
         <article class="opc_menu_ap"><a href="balances_cuenta.php">
-            <img src="../../recursos/balance_icono.png" alt="">Balance de cuenta</a></article>
+            <img src="../../recursos/balance_icono.png" alt=""> Balance de cuenta</a></article>
         <article class="opc_menu_ap"><a href="servicios_trabajador.php">
-            <img src="../../recursos/servicio_icon.png" alt="">Gestión de turnos y servicios</a></article>
+            <img src="../../recursos/servicio_icon.png" alt=""> Gestión de turnos y servicios</a></article>
         <?php
         if (isset($_GET['mensaje'])) {
             echo "<p style='margin: 1rem;'>" . htmlspecialchars($_GET['mensaje']) . "</p>";
