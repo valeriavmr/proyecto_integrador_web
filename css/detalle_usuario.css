@@ -33,11 +33,14 @@ html, body {
 body {
   min-height: 100vh;
   color: #4b4b4b;
+  background-color: #F4F4F4;
 }
 
 main{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(1,70vw);
+    background-color: #F4F4F4;
+    justify-content: center;
 }
 
 main > section{
@@ -52,13 +55,16 @@ main > section > article{
     margin: 1rem;
     border-radius: 1rem;
     padding: 1rem;
-    background-color: white;
+    background-color: #F4F4F4;
     text-align: center;
     line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 table {
-    margin: 1rem;
+    margin: 5%;
     width: 90%;
     border-collapse: collapse;
     background-color: #fff;

@@ -191,8 +191,9 @@ function obtenerDireccionPorIdPersona($conn, $id_persona) {
     }
 }
 
-//Devuelve una lista de las personas con rol trabajador del mismo barrio que el cliente
-function obtenerTrabajadores($conn, $id_cliente) {
+//Devuelve una lista de las personas con rol trabajador del mismo barrio que el cliente 
+//y la especialidad que quiere
+function obtenerTrabajadores($conn, $id_cliente,$especialidad) {
     //Primero obtener el barrio del cliente
     $direccion_cliente = obtenerDireccionPorIdPersona($conn, $id_cliente);
     if ($direccion_cliente === null) { 
@@ -200,7 +201,8 @@ function obtenerTrabajadores($conn, $id_cliente) {
     }
     $barrio_cliente = $direccion_cliente['localidad'];
     //Luego obtener los trabajadores del mismo barrio
-    $sql = "SELECT id_persona, nombre, apellido FROM persona WHERE rol = 'trabajador' and id_persona in(select id_persona from direccion where localidad = '$barrio_cliente')";
+    $sql = "SELECT id_persona, nombre, apellido FROM persona WHERE rol = 'trabajador' and id_persona in(select id_persona from direccion where localidad = '$barrio_cliente')
+    and id_persona in(select id_persona from trabajadores where tipo_de_servicio = '$especialidad')";
     $result = $conn->query($sql);
     $trabajadores = [];
     if ($result->num_rows > 0) {
@@ -604,6 +606,52 @@ function obtenerMontoServicio($conn, $tipo_servicio) {
     } else {
         return null; // Retorna null si no se encuentra el tipo de servicio
     }
+}
+
+//Funcion que devuelve los turnos pendientes de un trabajador
+function turnosPendientesTrabajador($conn, $id_trabajador){
+
+    $sql = "SELECT * FROM servicio WHERE id_trabajador = ? and horario >= NOW()";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i",$id_trabajador);
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if($result && $result->num_rows >0){
+        $turnos = [];
+        while ($row = $result->fetch_assoc()) {
+            $turnos[] = $row;
+        }
+        return $turnos;
+    }else{
+        return [];
+    }
+
+}
+
+//Funcion que devuelve los turnos de un trabajador
+function turnosDeTrabajador($conn, $id_trabajador){
+
+    $sql = "SELECT * FROM servicio WHERE id_trabajador = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i",$id_trabajador);
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if($result && $result->num_rows >0){
+        $turnos = [];
+        while ($row = $result->fetch_assoc()) {
+            $turnos[] = $row;
+        }
+        return $turnos;
+    }else{
+        return [];
+    }
+
 }
 
 /* Seccion de selects para generar pdfs */

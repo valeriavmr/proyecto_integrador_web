@@ -25,24 +25,26 @@
                 <li><img src="/proyecto_adiestramiento_tahito/recursos/logsinfondo.png" alt=""></li>
                 <li><a href="#">
                     <?php       
-                        require_once('crud/conexion.php');
                         if (session_status() == PHP_SESSION_NONE) {
                             session_start();
                         }
+                        include_once('../crud/conexion.php');
                         $usuario = $_SESSION['username'];
-                        include_once('crud/consultas_varias.php');
-                        echo obtenerNombreUsuario($conn, $usuario); ?>
+                        include_once('../crud/consultas_varias.php');
+                        echo obtenerNombreUsuario($conn, $usuario); 
+                        ?>
                 </a></li>
                 <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/crud/perfil.php"><img src="/proyecto_adiestramiento_tahito/recursos/perfil_icon.png" alt="" class="iconos">Perfil</a></li>
-                <li><a href="crud/mascotas.php"><img src="/proyecto_adiestramiento_tahito/recursos/mascotas_icon.png" alt="" class="iconos">Mis mascotas</a></li>
+                <li><a href="/proyecto_adiestramiento_tahito/php/trabajador/perfil_trabajador.php"><img src="/proyecto_adiestramiento_tahito/recursos/perfil_icon.png" alt="" class="iconos">Perfil</a></li>
+                <li><a href="balances_cuenta.php"><img src="/proyecto_adiestramiento_tahito/recursos/balance_icono.png" alt="" class="iconos">Balance de cuenta</a></li>
                 <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/servicios_cliente.php"><img src="/proyecto_adiestramiento_tahito/recursos/servicio_icon.png" alt="" class="iconos">Turnos y servicios</a></li>
+                <li><a href="/proyecto_adiestramiento_tahito/php/trabajador/servicios_trabajador.php"><img src="/proyecto_adiestramiento_tahito/recursos/servicio_icon.png" alt="" class="iconos">Turnos</a></li>
                 <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/main_cliente.php"><img src="/proyecto_adiestramiento_tahito/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
+                <li><a href="/proyecto_adiestramiento_tahito/php/trabajador/main_trabajador.php"><img src="/proyecto_adiestramiento_tahito/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
                 <li><a href="/proyecto_adiestramiento_tahito/php/logout.php" title="Cerrar sesión" id="link_logout_menu">
                     <img src="/proyecto_adiestramiento_tahito/recursos/logout_img.png" alt="Cerrar sesión"></a></li>
             </ul>
+            <h2>Perfil de Trabajador</h2>
         </nav>
     </header>
 </body>

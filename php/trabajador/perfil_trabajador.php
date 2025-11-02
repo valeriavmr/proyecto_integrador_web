@@ -20,24 +20,21 @@
                 session_start(); 
             }
 
-        //Validacion de permisos
-        require_once('auth.php');
-
         //Inserto el header
-        include('header_admin.php');
-
-        $id_persona = $_GET['id_persona'] ?? null;
+        include('header_trabajador.php');
 
         //Para traer la info de la persona
         require('../crud/conexion.php');
         include_once('../crud/consultas_varias.php');
+
+        $id_persona = obtenerIdPersona($conn, $_SESSION['username']) ?? null;
 
         // Obtenemos los datos de la persona
         $persona = getPersonaPorId($conn, $id_persona);
         $datos_direccion = getDireccionPorId($conn, $id_persona);
         $datos_mascotas = obtenerMascotasPorUsuario($conn, $persona['nombre_de_usuario']);
         $columnas_mascotas = is_array($datos_mascotas) && count($datos_mascotas) > 0 ? array_keys($datos_mascotas[0]) : [];
-        $datos_servicios = selectTurnosDePersona($conn, $id_persona);
+        $datos_servicios = turnosDeTrabajador($conn, $id_persona);
         $columnas_servicios = is_array($datos_servicios) && count($datos_servicios) > 0 ? array_keys($datos_servicios[0]) : [];
         $datos_trabajador = obtenerTrabajadorPorId($conn,$id_persona) ?? [];
     ?>
@@ -52,7 +49,7 @@
             <p><strong>Email:</strong> <?php echo htmlspecialchars($persona['correo']); ?></p>
             <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($persona['telefono']); ?></p>
             <p><strong>Rol:</strong> <?php echo htmlspecialchars($persona['rol']); ?></p>
-            <a href="editar_usuario.php?id_persona=<?php echo htmlspecialchars($id_persona)?>#form_editar_persona">Editar datos de cuenta</a>
+            <a href="../admin/editar_usuario.php?id_persona=<?php echo htmlspecialchars($id_persona)?>#form_editar_persona">Editar datos de cuenta</a>
             </article>
         </section>
         <section id="info_direccion">
@@ -64,7 +61,7 @@
                 <p><strong>Calle:</strong> <?php echo htmlspecialchars($datos_direccion['calle']); ?></p>
                 <p><strong>Altura:</strong> <?php echo htmlspecialchars($datos_direccion['altura']); ?></p>
                 <br><br>
-                <a href="editar_usuario.php?id_persona=<?php echo htmlspecialchars($id_persona)?>#form_editar_direccion">Editar datos de dirección</a>
+                <a href="../admin/editar_usuario.php?id_persona=<?php echo htmlspecialchars($id_persona)?>#form_editar_direccion">Editar datos de dirección</a>
             <?php else:?>
                 <p>No hay datos de direccion</p>
             <?php endif;?>
@@ -98,7 +95,7 @@
             </table>
         </section>
         <?php endif;?>
-        <?php if($datos_servicios!=null){ if($_SESSION['rol']=='admin'){?>
+        <?php if($_SESSION['rol']=='admin' && $datos_servicios):?>
         <section id="info_turnos">
             <br>
             <h2>Datos de turnos</h2>
@@ -127,13 +124,13 @@
             </table>
             </a>
         </section>
-        <?php }
-        };?>
+        <?php endif;?>
         </section>
         <?php if($persona['rol'] == 'trabajador' || $persona['rol']=='admin'):?>
             <section id="info_trabajador">
                 <article>
                     <h2>Datos de Trabajador</h2>
+                    <br><br>
                 <?php if($datos_trabajador):?>
                     <p><strong>Tipo de trabajador:</strong><?php echo htmlspecialchars($datos_trabajador['rol'])?></p>
                     <?php if($persona['rol']== 'admin'):?><p><strong>Pass App:</strong> <?php echo htmlspecialchars($datos_trabajador['pass_app']); ?></p>
@@ -141,7 +138,7 @@
                     <?php endif;?>
                     <?php if($persona['rol']== 'trabajador'):?><p><strong>Especialidad:</strong> <?php echo htmlspecialchars($datos_trabajador['tipo_de_servicio']); ?></p><?php endif;?>
                     <br><br>
-                    <a href="editar_trabajadores.php?id_persona=<?php echo htmlspecialchars($id_persona)?>">Editar datos de trabajador</a>
+                    <a href="../admin/editar_trabajadores.php?id_persona=<?php echo htmlspecialchars($id_persona)?>">Editar datos de trabajador</a>
                 <?php else:?>
                     <p>No hay datos de trabajador</p>
                 <?php endif;?>
@@ -150,7 +147,7 @@
         <?php endif;?>
     </main>
     <section id="volver_s">
-        <a href="personas_admin.php">Volver a Administración de personas</a>
+        <a href="main_trabajador.php">Volver a la página principal</a>
     </section>
     <?php
     include('../footer.php');

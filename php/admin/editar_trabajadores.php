@@ -15,7 +15,13 @@
     require_once('auth.php');
 
     //Inserto el header
-    include('header_admin.php');
+    if($_SESSION['rol']=='admin'){
+        include('header_admin.php');
+    }else{
+        if($_SESSION['rol']=='trabajador'){
+            include('../trabajador/header_trabajador.php');
+        }
+    }
 
     $id_persona = $_GET['id_persona'] ?? null;
     if (!$id_persona) {
@@ -40,7 +46,7 @@
             <input type="hidden" name="id_persona" value="<?php echo htmlspecialchars($trabajador['id_persona'] ?? '');?>">
             <label for="rol">Rol:</label>
             <input type="text" name="rol" id="rol" required size="50"
-            value="<?php echo htmlspecialchars($trabajador['rol'] ?? ''); ?>">
+            value="<?php echo htmlspecialchars($trabajador['rol'] ?? ''); ?>" <?php if($_SESSION['rol']!='admin'){echo "readonly";}?>>
             <?php
             //Para el rol trabajador, muestro el campo especialidad
             if($trabajador['rol'] == 'trabajador'){
@@ -74,9 +80,12 @@
         </fieldset>
         </form>
         <section id="volver_s">
-        <a href="tabla_trabajadores.php">
+        <?php if($_SESSION['rol']=='admin'):?><a href="tabla_trabajadores.php">
         Volver a la lista de trabajadores</a>
+        <?php elseif($_SESSION['rol']=='trabajador'):?><a href="../trabajador/perfil_trabajador.php">Volver a Perfil</a>
+        <?php endif;?>
         </section>
+    </section>
         </main>
         <?php include('../footer.php');?>
 </body>

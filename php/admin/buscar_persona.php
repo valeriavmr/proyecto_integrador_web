@@ -30,7 +30,7 @@
         // Obtenemos los datos de la persona
         $persona = getPersonaPorId($conn, $id_persona);
 
-        $columnNames = array_filter(array_keys($persona), function($col) {return $col !== 'password';});
+        $columnNames = array_filter(array_keys($persona ?? []), function($col) {return $col !== 'password';});
 
         // Inicializo los resultados
         $resultados = [];

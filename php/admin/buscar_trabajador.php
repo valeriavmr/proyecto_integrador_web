@@ -38,7 +38,7 @@
         // Obtenemos los datos de la persona en la tabla de trabajadores
         $persona = obtenerTrabajadorPorId($conn, $id_persona);
 
-        $columnNames = array_keys($persona);
+        $columnNames = array_keys($persona ?? []);
 
         // Inicializo los resultados
         $resultados = [];

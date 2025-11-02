@@ -115,6 +115,13 @@ main section{
     background-color: #f4f4f4;
 }
 
+.tabla_servicios tr td a{
+    text-decoration: none;
+    color:#2E6009;
+    font-weight: bold;
+}
+
+
 .cancelar_turno_btn{
     background-color:transparent;
     color: red;
@@ -133,4 +140,8 @@ main section{
     color: red;
     text-decoration: none;
     font-weight: bold;
+}
+
+#hist_trabajador > table{
+    width: 70vw;
 }

@@ -60,9 +60,10 @@
     <select name="trabajador" id="trabajador" required onchange="this.form.submit()">
         <option value="" disabled selected>Selecciona un trabajador</option>
         <?php
-        $id_cliente = obtenerIdPersona($conn, $usuario);
-        $trabajadores = obtenerTrabajadores($conn, $id_cliente);
-        foreach ($trabajadores as $trabajador) {
+            $id_cliente = obtenerIdPersona($conn, $usuario);
+            $especialidad = $_POST['tipo_de_servicio'] ?? '';
+            $trabajadores = obtenerTrabajadores($conn, $id_cliente,$especialidad);
+            foreach ($trabajadores as $trabajador) {
             $selected = ($_POST['trabajador'] ?? '') == $trabajador['id_trabajador'] ? 'selected' : '';
             echo "<option value='{$trabajador["id_trabajador"]}' $selected>{$trabajador['nombre_completo']}</option>";
         }

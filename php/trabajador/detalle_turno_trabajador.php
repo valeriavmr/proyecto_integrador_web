@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
     
 </head>
 <body>
@@ -19,14 +19,14 @@
     if (session_status() == PHP_SESSION_NONE) { 
             session_start(); 
         }
-        
-    include('header_cliente.php');
+
+    include('header_trabajador.php');
     ?>
     <main>
         <?php
-        require_once('crud/conexion.php');
+        require_once('../crud/conexion.php');
         $usuario = $_SESSION['username'];
-        include_once('crud/consultas_varias.php');
+        include_once('../crud/consultas_varias.php');
         $id_servicio = $_GET['id_servicio'];
         $servicio = info_servicio($conn, $id_servicio);
 
@@ -49,8 +49,8 @@
             $horarioTurno = new DateTime($servicio['horario']);
             $now = new DateTime();
             if($horarioTurno >= $now){
-            echo "<button class='cancelar_turno_btn'><a href='crud/eliminar_servicio.php?id_servicio=" . $servicio['id_servicio'] . "'>Cancelar turno</a></button>";}
-            echo "<a href='main_cliente.php'>Volver al inicio</a>";
+            echo "<button class='cancelar_turno_btn'><a href='../crud/eliminar_servicio.php?id_servicio=" . $servicio['id_servicio'] . "'>Cancelar turno</a></button>";}
+            echo "<a href='main_trabajador.php'>Volver al inicio</a>";
             echo "</article>";
         } else {
             echo "<p>No se encontró el servicio solicitado.</p>";
@@ -58,9 +58,9 @@
         ?>
     </main>
     <?php
-    include('footer.php');
+    include('../footer.php');
     ?>
 </body>
-<link rel="stylesheet" href="../css/servicios_cliente.css?v=<?= time() ?>">
-<link rel="stylesheet" href="../css/detalle_turno.css?v=<?= time() ?>">
+<link rel="stylesheet" href="../../css/servicios_cliente.css?v=<?= time() ?>">
+<link rel="stylesheet" href="../../css/detalle_turno.css?v=<?= time() ?>">
 </html>

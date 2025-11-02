@@ -34,7 +34,7 @@ if (session_status() == PHP_SESSION_NONE) {
         // Traigo todos los turnos
         $todos_los_turnos = selectTurnosActivosYPasados($conn,false)->fetch_all(MYSQLI_ASSOC) ?? [];
         $turno_para_filtros = $todos_los_turnos[0] ?? []; // Solo necesito uno para los nombres de las columnas
-        $columnNames = array_keys($turno_para_filtros);
+        $columnNames = array_keys($turno_para_filtros ?? []);
 
         // Inicializo los resultados
         $resultados = [];

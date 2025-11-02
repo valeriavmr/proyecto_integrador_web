@@ -21,7 +21,13 @@ $id_persona = $_GET['id_persona'] ?? $_POST['id_persona'] ?? null;
     require_once('auth.php');
 
     //Inserto el header
-    include('header_admin.php');
+    if($_SESSION['rol']=='admin'){
+        include('header_admin.php');
+    }else{
+        if($_SESSION['rol']=='trabajador'){
+            include('../trabajador/header_trabajador.php');
+        }
+    }
 
     //Para traer los datos de la persona y su direccion
     require('../crud/conexion.php');
@@ -42,9 +48,9 @@ $id_persona = $_GET['id_persona'] ?? $_POST['id_persona'] ?? null;
         <form action="" method="post" id="form_editar_persona"> 
             <input type="hidden" name="id_persona" value="<?php echo htmlspecialchars($id_persona); ?>">
             <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" size="50" id="nombre" required value=<?php echo htmlspecialchars($persona['nombre'])?>>
+            <input type="text" name="nombre" size="50" id="nombre" required value="<?php echo htmlspecialchars($persona['nombre'])?>">
             <label for="apellido">Apellido:</label>
-            <input type="text" name="apellido" size="50" id="apellido" required value=<?php echo htmlspecialchars($persona['apellido'])?>>
+            <input type="text" name="apellido" size="50" id="apellido" required value="<?php echo htmlspecialchars($persona['apellido'])?>">
             <label for="username">Nombre de usuario:</label>
             <input type="text" name="username" size="50" id="username" required value="<?php echo $_POST['username'] ?? htmlspecialchars($persona['nombre_de_usuario']) ?>" onchange="this.form.submit()">
             <?php
@@ -79,13 +85,20 @@ $id_persona = $_GET['id_persona'] ?? $_POST['id_persona'] ?? null;
             <?php endif; 
             unset($_SESSION['mensaje_correo ']);
             ?>
+
+            <?php $esAdmin = ($_SESSION['rol'] === 'admin'); ?>
+            
             <label for="rol">Tipo de usuario:</label>
-            <select name="rol" id="rol" required>
-                <option value=<?php echo $persona['rol']?> selected><?php echo htmlspecialchars($persona['rol'])?></option>
+            <select name="rol" id="rol" required <?= $esAdmin ? '' : 'disabled' ?>>
+                <option value="<?= $persona['rol'] ?>" selected><?= htmlspecialchars($persona['rol']) ?></option>
                 <option value="admin">Administrador</option>
                 <option value="cliente">Cliente</option>
                 <option value="trabajador">Trabajador</option>
             </select>
+
+            <?php if (!$esAdmin): ?>
+                <input type="hidden" name="rol" value="<?= htmlspecialchars($persona['rol']) ?>">
+            <?php endif; ?>
             <label for="tel">Teléfono:</label>
             <input type="tel" name="tel" id="tel" minlength="10"
             maxlength="11" required value=<?php echo htmlspecialchars($persona['telefono'])?>>
@@ -106,14 +119,16 @@ $id_persona = $_GET['id_persona'] ?? $_POST['id_persona'] ?? null;
                 <?php include('../barrios.php'); ?>
             </select>
             <label for="calle">Calle:</label>
-            <input type="text" name="calle" size="50" id="calle" required value=<?php echo htmlspecialchars($direccion['calle'])?>>
+            <input type="text" name="calle" size="50" id="calle" required value="<?= htmlspecialchars($direccion['calle']); ?>">
             <label for="altura">Altura:</label>
-            <input type="number" name="altura" id="altura" min="1" max="20000" required value=<?php echo htmlspecialchars($direccion['altura'])?>>
+            <input type="number" name="altura" id="altura" min="1" max="20000" required value="<?php echo htmlspecialchars($direccion['altura'])?>">
             <input type="submit" value="Guardar cambios" id="btn_guardar_direccion">
         </form>
     </section>
     <section id="volver_s">
-        <a href="tabla_personas.php">Volver a registro de personas</a>
+        <?php if($_SESSION['rol']=='admin'):?><a href="tabla_personas.php">Volver a registro de personas</a>
+            <?php elseif($_SESSION['rol']=='trabajador'):?><a href="../trabajador/perfil_trabajador.php">Volver a Perfil</a>
+            <?php endif;?>
     </section>
 </main>
 <script>

@@ -15,7 +15,7 @@
     include('header_admin.php');
     ?>
     <main>
-        <h1>Menú de gestión</h1>
+    <h1>Menú de gestión</h1>
     <section id="menu_gestion">
         <article class="opc_menu_ap"><a href="personas_admin.php">
             <img src="../../recursos/perfil_icon.png" alt="">Gestión de personas</a></article>
