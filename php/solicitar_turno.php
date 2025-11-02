@@ -43,7 +43,7 @@
 
     <!-- Tipo de servicio -->
     <label for="tipo_servicio">Tipo de Servicio:</label><br>
-    <select name="tipo_servicio" id="tipo_servicio" required>
+    <select name="tipo_servicio" id="tipo_servicio" required onchange="this.form.submit()">
         <option value="" disabled selected>Seleccione un servicio</option>
         <?php
         $servicios = obtenerTiposDeServicios($conn);
@@ -60,12 +60,14 @@
     <select name="trabajador" id="trabajador" required onchange="this.form.submit()">
         <option value="" disabled selected>Selecciona un trabajador</option>
         <?php
+        // Si se ha seleccionado una mascota y un tipo de servicio, mostrar los trabajadores disponibles
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mascota']) && isset($_POST['tipo_servicio'])){
             $id_cliente = obtenerIdPersona($conn, $usuario);
-            $especialidad = $_POST['tipo_de_servicio'] ?? '';
+            $especialidad = $_POST['tipo_servicio'] ?? '';
             $trabajadores = obtenerTrabajadores($conn, $id_cliente,$especialidad);
             foreach ($trabajadores as $trabajador) {
             $selected = ($_POST['trabajador'] ?? '') == $trabajador['id_trabajador'] ? 'selected' : '';
-            echo "<option value='{$trabajador["id_trabajador"]}' $selected>{$trabajador['nombre_completo']}</option>";
+            echo "<option value='{$trabajador["id_trabajador"]}' $selected>{$trabajador['nombre_completo']}</option>";}
         }
         ?>
     </select>

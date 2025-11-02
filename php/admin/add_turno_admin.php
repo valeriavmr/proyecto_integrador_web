@@ -56,7 +56,7 @@
         <br><br>
             <!-- Tipo de servicio -->
     <label for="tipo_servicio">Tipo de Servicio:</label><br>
-    <select name="tipo_servicio" id="tipo_servicio" required>
+    <select name="tipo_servicio" id="tipo_servicio" required onchange="this.form.submit()">
         <option value="" disabled selected>Seleccione un servicio</option>
         <?php
         $servicios = obtenerTiposDeServicios($conn);
@@ -70,9 +70,10 @@
     <br><br>
         <?php
         // Si se ha seleccionado una mascota y un tipo de servicio, mostrar los trabajadores disponibles
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mascota'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mascota']) && isset($_POST['tipo_servicio'])) {
             $mascota_seleccionada = obtenerMascotaPorId($conn, $_POST['mascota']);
-            $trabajadores = obtenerTrabajadores($conn, $mascota_seleccionada['id_persona']);
+            $servicioSeleccionado = $_POST['tipo_servicio'] ?? '';
+            $trabajadores = obtenerTrabajadores($conn, $mascota_seleccionada['id_persona'],$servicioSeleccionado);
         } else {
             $trabajadores = [];
         }
@@ -128,10 +129,13 @@
 
         <label for="monto_servicio">Monto del servicio:</label><br>
         <?php
-        $monto_servicio = obtenerMontoServicio($conn, $servicioSeleccionado);
+         if (!empty($_POST['tipo_servicio'])){
+            $monto_servicio = obtenerMontoServicio($conn, $servicioSeleccionado);
+            $_POST['monto_servicio'] = $monto_servicio;
+         }
         ?>
-        <input type="number" id="monto_servicio" name="monto_servicio" required min="0" step="0.001" value="<?= $_POST['monto_servicio'] ?? $monto_servicio ?? '' ?>" readonly>
-
+        <input type="number" id="monto_servicio" name="monto_servicio" required min="0" step="0.001" value="<?= $_POST['monto_servicio'] ?? '' ?>" readonly>
+         <br>
         <input type="submit" value="Solicitar Turno" name="solicitar_turno_btn" formaction="crud/insert_servicio_admin.php" id="solicitar_turno_btn">
     </form>
             <br>

@@ -191,28 +191,43 @@ function obtenerDireccionPorIdPersona($conn, $id_persona) {
     }
 }
 
-//Devuelve una lista de las personas con rol trabajador del mismo barrio que el cliente 
-//y la especialidad que quiere
-function obtenerTrabajadores($conn, $id_cliente,$especialidad) {
-    //Primero obtener el barrio del cliente
+// Devuelve una lista de las personas con rol 'trabajador' del mismo barrio que el cliente
+// y con la especialidad indicada
+function obtenerTrabajadores($conn, $id_cliente, $especialidad) {
+    // Primero obtener el barrio (localidad) del cliente
     $direccion_cliente = obtenerDireccionPorIdPersona($conn, $id_cliente);
     if ($direccion_cliente === null) { 
-        return []; // Retorna un array vacío si no se encuentra la dirección del cliente
+        return []; // No hay dirección registrada
     }
+
     $barrio_cliente = $direccion_cliente['localidad'];
-    //Luego obtener los trabajadores del mismo barrio
-    $sql = "SELECT id_persona, nombre, apellido FROM persona WHERE rol = 'trabajador' and id_persona in(select id_persona from direccion where localidad = '$barrio_cliente')
-    and id_persona in(select id_persona from trabajadores where tipo_de_servicio = '$especialidad')";
-    $result = $conn->query($sql);
+
+    // Consulta con alias y JOINs
+    $sql = "
+        SELECT 
+            p.id_persona AS id_trabajador,
+            CONCAT(p.nombre, ' ', p.apellido) AS nombre_completo
+        FROM persona AS p
+        INNER JOIN direccion AS d ON p.id_persona = d.id_persona
+        INNER JOIN trabajadores AS t ON p.id_persona = t.id_persona
+        WHERE 
+            p.rol = 'trabajador'
+            AND d.localidad = ?
+            AND t.tipo_de_servicio = ?
+    ";
+
+    // Usamos consulta preparada para evitar inyección SQL
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $barrio_cliente, $especialidad);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     $trabajadores = [];
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $trabajadores[] = [
-                'id_trabajador' => $row['id_persona'],
-                'nombre_completo' => $row['nombre'] . ' ' . $row['apellido']
-            ];
-        }
+    while ($row = $result->fetch_assoc()) {
+        $trabajadores[] = $row; // ya viene con id_trabajador y nombre_completo
     }
+
+    $stmt->close();
     return $trabajadores;
 }
 
@@ -597,7 +612,7 @@ function obtenerPassAppPorId($conn, $id_persona) {
 function obtenerMontoServicio($conn, $tipo_servicio) {
     $sql = "SELECT precio_servicio FROM tipo_de_servicio WHERE tipo_de_servicio = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $tipo_servicio);
+    $stmt->bind_param("s", $tipo_servicio);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result && $result->num_rows > 0) {
