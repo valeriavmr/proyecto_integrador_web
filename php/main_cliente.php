@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adiestramiento Tahito</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
@@ -35,25 +33,49 @@
             $usuario = $_SESSION['username'];
             
             include_once('crud/consultas_varias.php');
+            
             $mascotas = obtenerMascotasPorUsuario($conn, $usuario);
             if (empty($mascotas)) {
-                echo "<p>No tienes mascotas registradas.</p>";
+                // CORRECCIÓN: Agregar el mensaje si no hay mascotas
+                echo "<p>No tienes mascotas registradas.</p>"; 
             } else {
                 echo "<div id='mascotas_main_container'>";
+
                 foreach ($mascotas as $mascota) {
+                    if (!empty($mascota['imagen_url'])) {
+                        $imagen = $mascota['imagen_url'];
+                    } else {
+                        // Si la URL es NULL o "" (vacía), usa la imagen por defecto.
+                        $imagen = '../img/default_pet.jpg'; 
+                    }
+                    
                     echo "<article class='mascotas_main'>
-                    <h3>" . $mascota['nombre'] . "</h3>
-                    <p>Color: " . $mascota['color'] . "</p>
-                    <p>Raza: " . $mascota['raza'] . "</p>
-                    <p>Edad: " . $mascota['edad'] . " años</p>
+                    <div class='mascota_img_container'>
+                        <img src='" . htmlspecialchars($imagen) . "' alt='Foto de " . htmlspecialchars($mascota['nombre']) . "'>
+                    </div>
+
+                    
+                    <h3>" . htmlspecialchars($mascota['nombre']) . "</h3>
+                    <p>Color: " . htmlspecialchars($mascota['color']) . "</p>
+                    <p>Raza: " . htmlspecialchars($mascota['raza']) . "</p>
+                    <p>Edad: " . htmlspecialchars($mascota['edad']) . " años</p>
                     </article>";
+                
                 }
                 echo "</div>";
+                echo "<script>console.log(" . json_encode($mascotas) . ");</script>";
+
             }
             ?>
             <button id='agregar_mascota_btn' class='btn' onclick="location.href='crud/mascotas.php'">Agregar mascota</button>
         </section>
     </main>
+    </main>
+    <div id="huellas-animacion-container">
+        <div class="huella huella-1"></div>
+        <div class="huella huella-2"></div>
+        <div class="huella huella-3"></div>
+        </div>
     <?php include('footer.php'); ?>
 </body>
 </html>

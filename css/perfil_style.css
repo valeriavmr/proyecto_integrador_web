@@ -44,6 +44,7 @@ body {
     min-height: auto; 
     min-height: unset;             
     display: block;
+
 }
 
 /* --- Título del Perfil --- */
@@ -64,18 +65,18 @@ body {
 }
 
 .perfil-info p {
-    margin: 10px 0;
+    margin: 12px 0;
     font-size: 1.1em;
     color: var(--color-texto-secundario);
-    display: flex;
-    justify-content: center;
-    
+  
+    justify-content: flex-start; /* Alinear a la izquierda */
+    padding-left: 20%; /* Mover el contenido un poco más adentro */
 }
-
 .perfil-info p strong {
     color: var(--color-texto-principal);
-    width: 100px; 
-    display: inline-block;
+    width: 120px; /* Aumentar el ancho del label (ej: Usuario, Email) */
+    font-weight: 700; /* Darle más peso a la etiqueta */
+    /* display: inline-block; (Mantener) */
 }
 
 /* --- Sección de Acciones (Botones) --- */
@@ -126,6 +127,7 @@ body {
 
 .menu {
   background-color: #F0E8DD;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   min-height: 90px;
   display: flex;
   padding: 0 20px;

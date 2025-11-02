@@ -13,6 +13,7 @@ $sql = "
         m.raza,
         m.tamanio,
         m.color,
+        m.imagen_url,
         p.nombre_de_usuario AS duenio
     FROM mascota m
     INNER JOIN persona p ON m.id_persona = p.id_persona
@@ -52,8 +53,7 @@ class MYPDF extends TCPDF {
         // Línea de separación opcional
         $this->Line(10, self::HEADER_HEIGHT - 2, $this->getPageWidth() - 10, self::HEADER_HEIGHT - 2);
 
-        // Espacio final después del header.
-        // Importante: establece la posición Y para el inicio del contenido.
+
         $this->SetY(self::HEADER_HEIGHT);
     }
 
@@ -91,6 +91,8 @@ $html = '
             <th><b>Raza</b></th>
             <th><b>Tamaño</b></th>
             <th><b>Color</b></th>
+            <th><b>Foto</b></th>
+
         </tr>
     </thead>
     <tbody>
@@ -106,6 +108,7 @@ while ($mascota = $result->fetch_assoc()) {
             <td>' . htmlspecialchars($mascota['edad']) . '</td>
             <td>' . htmlspecialchars($mascota['raza']) . '</td>
             <td>' . htmlspecialchars($mascota['tamanio']) . '</td>
+            <td>' . htmlspecialchars($mascota['color']) . '</td>
             <td>' . htmlspecialchars($mascota['color']) . '</td>
         </tr>
     ';

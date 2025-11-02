@@ -172,7 +172,8 @@ function obtenerMascotasPorUsuario($conn, $username) {
                 'color' => $row['color'],
                 'edad' => $row['edad'],
                 'raza' => $row['raza'],
-                'tamanio' => $row['tamanio']
+                'tamanio' => $row['tamanio'],
+                'imagen_url' => $row['imagen_url']
             ];
         }
     }

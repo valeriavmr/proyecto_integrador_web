@@ -23,6 +23,42 @@ $id_usuario_logueado = $user_data['id_persona'];
 $mensaje = "";
 $mensaje_tipo = "";
 
+
+// Función auxiliar para subir la imagen y devolver la RUTA WEB
+function subirImagen($archivo, $nombreMascota, $idUsuario) {
+    
+    $directorio_subida_absoluta = BASE_PATH . '/uploads/mascotas/'; 
+    $directorio_subida_web = BASE_URL . '/uploads/mascotas/';
+
+    // 2. Asegurarse de que el directorio exista (con permisos, si PHP puede crearlo)
+    if (!is_dir($directorio_subida_absoluta)) {
+        if (!mkdir($directorio_subida_absoluta, 0777, true)) {
+            
+            error_log("Fallo al crear el directorio de subida: " . $directorio_subida_absoluta);
+            return null; 
+        }
+    }
+    
+    // 3. Generar un nombre de archivo seguro y único
+    $extension = pathinfo($archivo['name'], PATHINFO_EXTENSION);
+    
+    $nombre_limpio = preg_replace('/[^A-Za-z0-9\_]/', '', str_replace(' ', '_', $nombreMascota));
+    $nombre_archivo = $nombre_limpio . '_' . $idUsuario . '_' . time() . '.' . $extension;
+    
+    $ruta_completa_servidor = $directorio_subida_absoluta . $nombre_archivo;
+    $ruta_completa_web = $directorio_subida_web . $nombre_archivo; // La URL que se guarda en BD
+    
+    // 4. Mover el archivo subido al servidor
+    if (move_uploaded_file($archivo['tmp_name'], $ruta_completa_servidor)) {
+        
+        return $ruta_completa_web;
+    }
+    
+    error_log("Fallo al mover el archivo subido a: " . $ruta_completa_servidor . " Error: " . $archivo['error']);
+    return null; // Error en la subida
+}
+
+
 // 4. MANEJO DE ACCIONES (CREAR, ACTUALIZAR, BORRAR)
 $accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
 
@@ -34,15 +70,22 @@ if ($accion === 'agregar') {
     $raza = $_POST['raza'];
     $tamanio = $_POST['tamanio'];
     $color = $_POST['color'];
+    $imagen_url = null;
 
-    $sql = "INSERT INTO mascota (id_persona, nombre, fecha_de_nacimiento, edad, raza, tamanio, color) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    // Manejo de la subida de imagen
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $imagen_url = subirImagen($_FILES['imagen'], $nombre, $id_usuario_logueado);
+    }
+
+    
+    $sql = "INSERT INTO mascota (id_persona, nombre, fecha_de_nacimiento, edad, raza, tamanio, color, imagen_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ississs", $id_usuario_logueado, $nombre, $fecha_nac, $edad, $raza, $tamanio, $color);
+    $stmt->bind_param("ississss", $id_usuario_logueado, $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url); 
     if ($stmt->execute()) {
         $mensaje = "Mascota agregada correctamente.";
         $mensaje_tipo = "exito";
     } else {
-        $mensaje = "Error al agregar la mascota.";
+        $mensaje = "Error al agregar la mascota: " . $stmt->error;
         $mensaje_tipo = "error";
     }
 }
@@ -56,15 +99,24 @@ if ($accion === 'actualizar') {
     $raza = $_POST['raza'];
     $tamanio = $_POST['tamanio'];
     $color = $_POST['color'];
+    $imagen_url = $_POST['imagen_actual'] ?? null; 
 
-    $sql = "UPDATE mascota SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=? WHERE id_mascota=? AND id_persona=?";
+    // Manejo de la subida de nueva imagen
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $nueva_imagen_url = subirImagen($_FILES['imagen'], $nombre, $id_usuario_logueado);
+        if ($nueva_imagen_url) {
+            $imagen_url = $nueva_imagen_url;            
+        }
+    }
+    
+    $sql = "UPDATE mascota SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=? AND id_persona=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssisssii", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $id_mascota, $id_usuario_logueado);
+    $stmt->bind_param("ssissssii", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url, $id_mascota, $id_usuario_logueado); 
     if ($stmt->execute()) {
         $mensaje = "Mascota actualizada correctamente.";
         $mensaje_tipo = "exito";
     } else {
-        $mensaje = "Error al actualizar la mascota.";
+        $mensaje = "Error al actualizar la mascota: " . $stmt->error;
         $mensaje_tipo = "error";
     }
 }
@@ -72,6 +124,8 @@ if ($accion === 'actualizar') {
 // --- ACCIÓN: ELIMINAR MASCOTA ---
 if ($accion === 'eliminar') {
     $id_mascota = $_GET['id'];
+   
+    
     $sql = "DELETE FROM mascota WHERE id_mascota=? AND id_persona=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $id_mascota, $id_usuario_logueado);
@@ -138,12 +192,27 @@ $lista_mascotas = $stmt_select->get_result();
             }
             ?>
 
-            <form method="POST" action="mascotas.php">
+            <form method="POST" action="mascotas.php" enctype="multipart/form-data"> 
                 <input type="hidden" name="accion" value="<?php echo $mascota_a_editar ? 'actualizar' : 'agregar'; ?>">
                 <?php if ($mascota_a_editar): ?>
                     <input type="hidden" name="id_mascota" value="<?php echo $mascota_a_editar['id_mascota']; ?>">
+                    <input type="hidden" name="imagen_actual" value="<?php echo htmlspecialchars($mascota_a_editar['imagen_url'] ?? ''); ?>"> 
                 <?php endif; ?>
 
+                <div class="form-group">
+                    <label for="imagen">Foto de la Mascota:</label>
+                    <?php if ($mascota_a_editar && $mascota_a_editar['imagen_url']): ?>
+                        <div style="margin-bottom: 10px;">
+                            <p>Imagen actual:</p>
+                            <img src="<?php echo htmlspecialchars($mascota_a_editar['imagen_url']); ?>" alt="Foto de <?php echo htmlspecialchars($mascota_a_editar['nombre']); ?>" style="max-width: 150px; height: auto; border-radius: 8px;">
+                        </div>
+                    <?php endif; ?>
+                    <input type="file" id="imagen" name="imagen" accept="image/*">
+                    <?php if ($mascota_a_editar): ?>
+                        <small>Dejar vacío para mantener la imagen actual.</small>
+                    <?php endif; ?>
+                </div>
+                
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($mascota_a_editar['nombre'] ?? ''); ?>" required>
@@ -157,7 +226,7 @@ $lista_mascotas = $stmt_select->get_result();
                     name="fecha_de_nacimiento" 
                     value="<?php echo $mascota_a_editar ? $fecha_formateada : ''; ?>" 
                     required
-                  >
+                    >
                 </div>
 
                 <div class="form-group">
@@ -182,7 +251,7 @@ $lista_mascotas = $stmt_select->get_result();
                     <a href="mascotas.php" class="link-cancelar">Cancelar Edición</a>
                 <?php endif; ?>
             </form>
-        </section>
+            </section>
 
         <section class="tabla-container">
             
