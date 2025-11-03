@@ -10,7 +10,9 @@ if (session_status() == PHP_SESSION_NONE) {
     $trabajador_id = $_POST['trabajador'] ?? null;
     $fecha = $_POST['fecha'] ?? null;
     $hora = $_POST['hora'] ?? null;
+    $horario_p = $_POST['horario'] ?? null;
     $detalles = $_POST['detalles'] ?? null;
+    $pagado = $_POST['pagado'] ?? 0;
 
     //Si se han enviado los datos, los valido y actualizo el turno
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,10 +24,10 @@ if (session_status() == PHP_SESSION_NONE) {
         if (empty($trabajador_id)) {
             $errores[] = "El trabajador es obligatorio.";
         }
-        if (empty($fecha)) {
+        if (empty($fecha) && empty($horario_p)) {
             $errores[] = "La fecha es obligatoria.";
         }
-        if (empty($hora)) {
+        if (empty($hora) && empty($horario_p)) {
             $errores[] = "La hora es obligatoria.";
         }
         if (empty($detalles)) {
@@ -37,13 +39,20 @@ if (session_status() == PHP_SESSION_NONE) {
             require('../../crud/conexion.php');
 
             //Combino fecha y hora en un solo datetime
-            $horario = date('Y-m-d H:i:s', strtotime("$fecha $hora"));
+            if(empty($horario_p)){
+                $horario = date('Y-m-d H:i:s', strtotime("$fecha $hora"));
+            }else{
+                $horario = $horario_p;
+            }
 
             //Actualizo el turno en la base de datos
-            $stmt = $conn->prepare("UPDATE servicio SET id_mascota = ?, tipo_de_servicio = ?, id_trabajador = ?, horario = ?, comentarios = ? WHERE id_servicio = ?");
-            $stmt->bind_param("isissi", $mascota_id, $tipo_servicio, $trabajador_id, $horario, $detalles, $id_turno);
+            $stmt = $conn->prepare("UPDATE servicio SET id_mascota = ?, tipo_de_servicio = ?, id_trabajador = ?, horario = ?, comentarios = ?, pagado = ? WHERE id_servicio = ?");
+            $stmt->bind_param("isissii", $mascota_id, $tipo_servicio, $trabajador_id, $horario, $detalles, $pagado, $id_turno);
             if ($stmt->execute()) {
-                header("Location: ../tabla_historico_servicios.php");
+                if($_SESSION['rol']=='admin'){
+                    header("Location: ../tabla_historico_servicios.php");
+                }elseif($_SESSION['rol']=='trabajador'){
+                    header("Location: ../../trabajador/detalle_turno_trabajador.php?id_servicio=$id_turno");}
                 exit();
             } else {
                 $errores[] = "Error al actualizar el turno: " . $stmt->error;

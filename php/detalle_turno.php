@@ -35,6 +35,8 @@
 
         if ($servicio) {
 
+            $pagado = $servicio['pagado'] == 1 ? 'si' : 'no';
+
             echo"<article class='servicio_detalle'>
             <h2>Detalles del turno</h2>
             <h3>Tipo de servicio: " . $servicio['tipo_de_servicio'] . "</h3>
@@ -42,8 +44,8 @@
             <p>Trabajador asignado: " . $nombre_trabajador . "</p>
             <p>Fecha y Hora: " . $servicio['horario'] . "</p>
             <p>Comentarios adicionales: " . $servicio['comentarios'] . "</p>
-            <p>Monto: " . $servicio['monto'] . "</p>";
-
+            <p>Monto: " . $servicio['monto'] . "</p>
+            <p>Pagado: ". $pagado. "</p>";
             //Para que solo se puedan cancelar turnos futuros
             date_default_timezone_set('America/Argentina/Buenos_Aires');
             $horarioTurno = new DateTime($servicio['horario']);

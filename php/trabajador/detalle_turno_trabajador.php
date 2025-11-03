@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
+    <link rel="stylesheet" href="../../css/toggle_switch.css?v=<?= time() ?>">
     
 </head>
 <body>
@@ -35,6 +36,8 @@
 
         if ($servicio) {
 
+            $pagado = $servicio['pagado'] == 1 ? true : false;
+
             echo"<article class='servicio_detalle'>
             <h2>Detalles del turno</h2>
             <h3>Tipo de servicio: " . $servicio['tipo_de_servicio'] . "</h3>
@@ -43,6 +46,28 @@
             <p>Fecha y Hora: " . $servicio['horario'] . "</p>
             <p>Comentarios adicionales: " . $servicio['comentarios'] . "</p>
             <p>Monto: " . $servicio['monto'] . "</p>";
+            if($pagado){
+                echo "<p>Estado: Pagado</p>";
+            }else{
+                echo "<p>Pagado: No</p>";?>
+                <p><strong>Marcar como pagado</strong></p>
+                <form action="../admin/crud/update_servicio.php" method="post">
+                    <input type="hidden" name="id_servicio" value="<?php echo htmlspecialchars($servicio['id_servicio']);?>">
+                    <input type="hidden" name="mascota" value="<?php echo htmlspecialchars($servicio['id_mascota']);?>">
+                    <input type="hidden" name="tipo_servicio" value="<?php echo htmlspecialchars($servicio['tipo_de_servicio']);?>">
+                    <input type="hidden" name="trabajador" value="<?php echo htmlspecialchars($servicio['id_trabajador']);?>">
+                    <input type="hidden" name="horario" value="<?php echo htmlspecialchars($servicio['horario']);?>">
+                    <input type="hidden" name="detalles" value="<?php echo htmlspecialchars($servicio['comentarios']);?>">
+                    <label class="switch" name="pagado">
+                        <input type="checkbox" name="pagado" id="pagado"
+                        class="pagado-toggle" value="1" 
+                        onchange="this.form.submit()"
+                        <?= $pagado ? 'checked' : '' ?>>
+                        <span class="slider round"></span>
+                    </label>
+                </form>
+            <?php
+            }
 
             //Para que solo se puedan cancelar turnos futuros
             date_default_timezone_set('America/Argentina/Buenos_Aires');

@@ -28,6 +28,15 @@ if (!$id_turno) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar turno</title>
     <link rel="stylesheet" href="../../css/solicitar_turno.css?v=<?= time() ?>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
+    <link rel="stylesheet" href="../../css/toggle_switch.css?v=<?= time() ?>">
 </head>
 <body>
     <?php include('header_admin.php'); ?>
@@ -85,7 +94,7 @@ if (!$id_turno) {
     <select name="trabajador" id="trabajador" required onchange="this.form.submit()">
         <option value="<?php echo $turno['id_trabajador'] ?? $_POST['trabajador'] ?? '' ?>" selected><?php echo htmlspecialchars(obtenerNombreUsuario($conn, $usuario_trabajador)); ?></option>
         <?php
-        $trabajadores = obtenerTrabajadores($conn, $mascota['id_persona']);
+        $trabajadores = obtenerTrabajadores($conn, $mascota['id_persona'],$_POST['tipo_servicio']);
         foreach ($trabajadores as $trabajador) {
             $selected = ($_POST['trabajador'] ?? '') == $trabajador['id_trabajador'] ? 'selected' : '';
             echo "<option value='{$trabajador["id_trabajador"]}' $selected>{$trabajador['nombre_completo']}</option>";
@@ -130,13 +139,20 @@ if (!$id_turno) {
         <label for="detalles">Observaciones a tener en cuenta:</label><br>
         <textarea id="detalles" name="detalles" rows="4" cols="50"><?= $turno['comentarios'] ?? $_POST['detalles'] ?? '' ?></textarea>
         <br><br>
-
-        <input type="submit" value="Editar Turno" name="editar_turno_btn" formaction="crud/update_servicio.php" id="editar_turno_btn">
-
-        <!-- Monto del servicio -->
+<!-- Monto del servicio -->
         <label for="monto_servicio">Monto del servicio:</label><br>
         <input type="number" id="monto_servicio" name="monto_servicio" required min="0" step="0.01" value="<?= $_POST['monto_servicio'] ?? $turno['monto'] ?? '' ?>" readonly>
         <br><br>
+        <p><strong>Marcar como pagado</strong></p>
+        <?php $pagado = $turno['pagado'] == 1 ? true : false; ?>
+        <label class="switch" name="pagado">
+                        <input type="checkbox" name="pagado" id="pagado"
+                        class="pagado-toggle" value="1" 
+                        <?= $pagado ? 'checked' : '' ?>>
+                        <span class="slider round"></span>
+                    </label>
+        <br><br>
+        <input type="submit" value="Editar Turno" name="editar_turno_btn" formaction="crud/update_servicio.php" id="editar_turno_btn">
         </form>
             <br>
             <br>
