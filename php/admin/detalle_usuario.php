@@ -89,7 +89,7 @@
                         foreach($datos_mascotas as $fila){
                             echo '<a href="'. $fila['id_mascota'] .'"><tr>';
                             foreach($columnas_mascotas as $columna){
-                                echo '<td>' . htmlspecialchars($fila[$columna]) .'</td>';
+                                echo '<td style="max-width: 200px;">' . htmlspecialchars($fila[$columna]) .'</td>';
                             }
                             echo '</a></tr>';
                         }

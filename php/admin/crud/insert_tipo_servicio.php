@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Insertar en la base de datos
-    $sql = "INSERT INTO tipo_de_servicio (tipo_de_servicio, descripcion, precio_servicio, imagen_servicio) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO tipo_de_servicio_g3 (tipo_de_servicio, descripcion, precio_servicio, imagen_servicio) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssds", $tipo_servicio, $descripcion, $precio, $imagen_nombre);
     if ($stmt->execute()) {

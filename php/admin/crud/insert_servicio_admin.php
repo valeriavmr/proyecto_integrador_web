@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $horario = "$fecha $hora";
     
     // Aquí puedes agregar la lógica para insertar los datos en la base de datos
-    $query = "INSERT INTO servicio (tipo_de_servicio, id_mascota, id_trabajador, horario, comentarios, monto,pagado) VALUES (?, ?, ?, ?, ?, ?,0)";
+    $query = "INSERT INTO servicio_g3 (tipo_de_servicio, id_mascota, id_trabajador, horario, comentarios, monto,pagado) VALUES (?, ?, ?, ?, ?, ?,0)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("siissd", $tipo_servicio, $mascota, $trabajador, $horario, $detalles, $monto_servicio);
     $stmt->execute();

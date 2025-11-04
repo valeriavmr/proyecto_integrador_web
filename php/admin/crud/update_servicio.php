@@ -46,7 +46,7 @@ if (session_status() == PHP_SESSION_NONE) {
             }
 
             //Actualizo el turno en la base de datos
-            $stmt = $conn->prepare("UPDATE servicio SET id_mascota = ?, tipo_de_servicio = ?, id_trabajador = ?, horario = ?, comentarios = ?, pagado = ? WHERE id_servicio = ?");
+            $stmt = $conn->prepare("UPDATE servicio_g3 SET id_mascota = ?, tipo_de_servicio = ?, id_trabajador = ?, horario = ?, comentarios = ?, pagado = ? WHERE id_servicio = ?");
             $stmt->bind_param("isissii", $mascota_id, $tipo_servicio, $trabajador_id, $horario, $detalles, $pagado, $id_turno);
             if ($stmt->execute()) {
                 if($_SESSION['rol']=='admin'){

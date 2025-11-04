@@ -12,7 +12,7 @@ if (!isset($_SESSION['username'])) {
 
 // 3. OBTENER EL ID DEL USUARIO LOGUEADO
 $username = $_SESSION['username'];
-$sql_user = "SELECT id_persona FROM persona WHERE nombre_de_usuario = ?";
+$sql_user = "SELECT id_persona FROM persona_g3 WHERE nombre_de_usuario = ?";
 $stmt_user = $conn->prepare($sql_user);
 $stmt_user->bind_param("s", $username);
 $stmt_user->execute();
@@ -78,7 +78,7 @@ if ($accion === 'agregar') {
     }
 
     
-    $sql = "INSERT INTO mascota (id_persona, nombre, fecha_de_nacimiento, edad, raza, tamanio, color, imagen_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO mascota_g3 (id_persona, nombre, fecha_de_nacimiento, edad, raza, tamanio, color, imagen_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ississss", $id_usuario_logueado, $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url); 
     if ($stmt->execute()) {
@@ -109,7 +109,7 @@ if ($accion === 'actualizar') {
         }
     }
     
-    $sql = "UPDATE mascota SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=? AND id_persona=?";
+    $sql = "UPDATE mascota_g3 SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=? AND id_persona=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssissssii", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url, $id_mascota, $id_usuario_logueado); 
     if ($stmt->execute()) {
@@ -126,7 +126,7 @@ if ($accion === 'eliminar') {
     $id_mascota = $_GET['id'];
    
     
-    $sql = "DELETE FROM mascota WHERE id_mascota=? AND id_persona=?";
+    $sql = "DELETE FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $id_mascota, $id_usuario_logueado);
     if ($stmt->execute()) {
@@ -142,7 +142,7 @@ if ($accion === 'eliminar') {
 $mascota_a_editar = null;
 if ($accion === 'editar') {
     $id_mascota_editar = $_GET['id'];
-    $sql_editar = "SELECT * FROM mascota WHERE id_mascota=? AND id_persona=?";
+    $sql_editar = "SELECT * FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
     $stmt_editar = $conn->prepare($sql_editar);
     $stmt_editar->bind_param("ii", $id_mascota_editar, $id_usuario_logueado);
     $stmt_editar->execute();
@@ -151,7 +151,7 @@ if ($accion === 'editar') {
 }
 
 
-$sql_select = "SELECT * FROM mascota WHERE id_persona = ?";
+$sql_select = "SELECT * FROM mascota_g3 WHERE id_persona = ?";
 $stmt_select = $conn->prepare($sql_select);
 $stmt_select->bind_param("i", $id_usuario_logueado);
 $stmt_select->execute();

@@ -15,8 +15,8 @@ $sql = "
         m.color,
         m.imagen_url,
         p.nombre_de_usuario AS duenio
-    FROM mascota m
-    INNER JOIN persona p ON m.id_persona = p.id_persona
+    FROM mascota_g3 m
+    INNER JOIN persona_g3 p ON m.id_persona = p.id_persona
     ORDER BY p.nombre_de_usuario ASC, m.nombre ASC
 ";
 

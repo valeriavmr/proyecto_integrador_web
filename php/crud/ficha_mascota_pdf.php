@@ -24,7 +24,7 @@ $id_mascota = intval($_GET['id']);
 $username = $_SESSION['username'];
 
 
-$sql_user = "SELECT id_persona FROM persona WHERE nombre_de_usuario = ?";
+$sql_user = "SELECT id_persona FROM persona_g3 WHERE nombre_de_usuario = ?";
 $stmt_user = $conn->prepare($sql_user);
 $stmt_user->bind_param("s", $username);
 $stmt_user->execute();
@@ -34,7 +34,7 @@ $id_usuario = $user_data['id_persona'];
 
 
 
-$sql_mascota = "SELECT * FROM mascota WHERE id_mascota = ? AND id_persona = ?";
+$sql_mascota = "SELECT * FROM mascota_g3 WHERE id_mascota = ? AND id_persona = ?";
 $stmt = $conn->prepare($sql_mascota);
 $stmt->bind_param("ii", $id_mascota, $id_usuario);
 $stmt->execute();

@@ -3,7 +3,7 @@
 
 //Devuelve el nombre_de_usuario a partir del id de persona
 function obtenerUsername($conn, $id_persona) {
-    $sql = "SELECT nombre_de_usuario FROM persona WHERE id_persona = '$id_persona'";
+    $sql = "SELECT nombre_de_usuario FROM persona_g3 WHERE id_persona = '$id_persona'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -15,7 +15,7 @@ function obtenerUsername($conn, $id_persona) {
 
 //Devuelve el nombre completo de una persona por su id
 function buscarNombreCompletoPorId($conn, $id_persona) {
-    $sql = "SELECT nombre, apellido FROM persona WHERE id_persona = '$id_persona'";
+    $sql = "SELECT nombre, apellido FROM persona_g3 WHERE id_persona = '$id_persona'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -30,7 +30,7 @@ function cambiarPassPorUsername($conn, $username,$pass_nueva){
 
     $hash = password_hash($pass_nueva, PASSWORD_DEFAULT);
 
-    $sql ="UPDATE persona set password=? where nombre_de_usuario=?";
+    $sql ="UPDATE persona_g3 set password=? where nombre_de_usuario=?";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss",$hash,$username);
@@ -46,7 +46,7 @@ function cambiarPassPorUsername($conn, $username,$pass_nueva){
 
 //Select de mascota por id
 function obtenerNombreMascota($conn,$id_mascota) {
-    $sql = "SELECT nombre FROM mascota WHERE id_mascota = '$id_mascota'";
+    $sql = "SELECT nombre FROM mascota_g3 WHERE id_mascota = '$id_mascota'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -58,7 +58,7 @@ function obtenerNombreMascota($conn,$id_mascota) {
 
 //Devuelve la mascota por id
 function obtenerMascotaPorId($conn, $id_mascota) {
-    $sql = "SELECT * FROM mascota WHERE id_mascota = '$id_mascota'";
+    $sql = "SELECT * FROM mascota_g3 WHERE id_mascota = '$id_mascota'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return $result->fetch_assoc();
@@ -69,7 +69,7 @@ function obtenerMascotaPorId($conn, $id_mascota) {
 
 //Devuelve todas las mascotas
 function obtenerMascotas($conn) {
-    $sql = "SELECT * FROM mascota";
+    $sql = "SELECT * FROM mascota_g3";
     $result = $conn->query($sql);
     $mascotas = [];
     if ($result->num_rows > 0) {
@@ -89,7 +89,7 @@ function obtenerMascotas($conn) {
 
 //devoler nombre y apellido del usuario
 function obtenerNombreUsuario($conn, $usuario) {
-    $sql = "SELECT nombre, apellido FROM persona WHERE nombre_de_usuario = '$usuario'";
+    $sql = "SELECT nombre, apellido FROM persona_g3 WHERE nombre_de_usuario = '$usuario'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -101,7 +101,7 @@ function obtenerNombreUsuario($conn, $usuario) {
 
 //Verifica si el nombre de usuario ya existe
 function verificarNombreUsuario($conn, $username) {
-    $sql = "SELECT COUNT(*) AS count FROM persona WHERE nombre_de_usuario = '$username'";
+    $sql = "SELECT COUNT(*) AS count FROM persona_g3 WHERE nombre_de_usuario = '$username'";
     $result = $conn->query($sql);
     if ($result) {
         $row = $result->fetch_assoc();
@@ -113,7 +113,7 @@ function verificarNombreUsuario($conn, $username) {
 
 //verifica si el correo ya existe
 function verificarCorreo($conn, $correo) {
-    $sql = "SELECT COUNT(*) AS count FROM persona WHERE correo = '$correo'";
+    $sql = "SELECT COUNT(*) AS count FROM persona_g3 WHERE correo = '$correo'";
     $result = $conn->query($sql);
     if ($result) {
         $row = $result->fetch_assoc();
@@ -125,7 +125,7 @@ function verificarCorreo($conn, $correo) {
 
 //Devuelve el id de persona a partir del nombre de usuario
 function obtenerIdPersona($conn, $username) {
-    $sql = "SELECT id_persona FROM persona WHERE nombre_de_usuario = ?";
+    $sql = "SELECT id_persona FROM persona_g3 WHERE nombre_de_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -140,7 +140,7 @@ function obtenerIdPersona($conn, $username) {
 
 //Devuelve el id de la persona que tiene un correo
 function obtenerIdPersonaPorCorreo($conn, $correo) {
-    $sql = "SELECT id_persona FROM persona WHERE correo = ?";
+    $sql = "SELECT id_persona FROM persona_g3 WHERE correo = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $correo);
     $stmt->execute();
@@ -161,7 +161,7 @@ function obtenerMascotasPorUsuario($conn, $username) {
         return []; // Retorna un array vacío si no se encuentra el usuario
     }
 
-    $sql = "SELECT * FROM mascota WHERE id_persona = '$id_persona'";
+    $sql = "SELECT * FROM mascota_g3 WHERE id_persona = '$id_persona'";
     $result = $conn->query($sql);
     $mascotas = [];
     if ($result->num_rows > 0) {
@@ -182,7 +182,7 @@ function obtenerMascotasPorUsuario($conn, $username) {
 
 //Devuelve la dirección de una persona por su id
 function obtenerDireccionPorIdPersona($conn, $id_persona) {
-    $sql = "SELECT * FROM direccion WHERE id_persona = '$id_persona'";
+    $sql = "SELECT * FROM direccion_g3 WHERE id_persona = '$id_persona'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return $result->fetch_assoc();
@@ -207,9 +207,9 @@ function obtenerTrabajadores($conn, $id_cliente, $especialidad) {
         SELECT 
             p.id_persona AS id_trabajador,
             CONCAT(p.nombre, ' ', p.apellido) AS nombre_completo
-        FROM persona AS p
-        INNER JOIN direccion AS d ON p.id_persona = d.id_persona
-        INNER JOIN trabajadores AS t ON p.id_persona = t.id_persona
+        FROM persona_g3 AS p
+        INNER JOIN direccion_g3 AS d ON p.id_persona = d.id_persona
+        INNER JOIN trabajadores_g3 AS t ON p.id_persona = t.id_persona
         WHERE 
             p.rol = 'trabajador'
             AND d.localidad = ?
@@ -232,7 +232,7 @@ function obtenerTrabajadores($conn, $id_cliente, $especialidad) {
 }
 
 function info_servicio($conn, $id_servicio) {
-    $sql = "SELECT * FROM servicio WHERE id_servicio = '$id_servicio'";
+    $sql = "SELECT * FROM servicio_g3 WHERE id_servicio = '$id_servicio'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return $result->fetch_assoc();
@@ -255,7 +255,7 @@ function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
     }
 
     // Obtener horarios ocupados
-    $sql = "SELECT horario FROM servicio WHERE id_trabajador = '$id_trabajador' AND DATE(horario) = '$fecha'";
+    $sql = "SELECT horario FROM servicio_g3 WHERE id_trabajador = '$id_trabajador' AND DATE(horario) = '$fecha'";
     $result = $conn->query($sql);
 
     $ocupadas = [];
@@ -294,7 +294,7 @@ function obtenerHorasDisponibles($conn, $id_trabajador, $fecha) {
 
 //Devolver a la persona por id
 function getPersonaPorId($conn, $id) {
-    $sql = "SELECT * FROM persona WHERE id_persona = ?";
+    $sql = "SELECT * FROM persona_g3 WHERE id_persona = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -307,7 +307,7 @@ function getPersonaPorId($conn, $id) {
 
 //Devolver direccion de la persona por id
 function getDireccionPorId($conn, $id) {
-    $sql = "SELECT * FROM direccion WHERE id_persona = ?";
+    $sql = "SELECT * FROM direccion_g3 WHERE id_persona = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -321,7 +321,7 @@ function getDireccionPorId($conn, $id) {
 //Eliminar direccion por id
 
 function deleteDireccionPorId($conn, $id_persona){
-    $sql = 'DELETE FROM direccion WHERE id_persona = ?';
+    $sql = 'DELETE FROM direccion_g3 WHERE id_persona = ?';
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
 
@@ -333,7 +333,7 @@ function deleteDireccionPorId($conn, $id_persona){
 //Elimino el registro de la persona en la tabla de trabajadores
 function deleteTrabajadorPorId($conn, $id_persona){
 
-    $sql = 'DELETE FROM trabajadores WHERE id_persona = ?';
+    $sql = 'DELETE FROM trabajadores_g3 WHERE id_persona = ?';
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
 
@@ -348,7 +348,7 @@ function deletePersonaPorId($conn, $id_persona){
     session_start();
     include_once('/proyecto_adiestramiento_tahito/config.php');
 
-    $sql = 'DELETE FROM persona where id_persona = ?';
+    $sql = 'DELETE FROM persona_g3 where id_persona = ?';
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
@@ -367,7 +367,7 @@ function deletePersonaPorId($conn, $id_persona){
 
 //Select de turnos activos
 function selectTurnosActivosYPasados($conn, $paraActivos){
-    $sql = 'SELECT * FROM servicio';
+    $sql = 'SELECT * FROM servicio_g3';
 
     if($paraActivos){
         $sql .=' where horario >= NOW()';
@@ -381,7 +381,7 @@ function selectTurnosActivosYPasados($conn, $paraActivos){
 //select que verifica que el username no exista o que corresponda a la misma persona
 function usernameDisponible($conn, $id_persona, $username){
 
-    $sql = 'SELECT COUNT(*) AS count from persona where nombre_de_usuario = ?';
+    $sql = 'SELECT COUNT(*) AS count from persona_g3 where nombre_de_usuario = ?';
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -405,7 +405,7 @@ function usernameDisponible($conn, $id_persona, $username){
 
 //Funcion que valida que un correo este disponible o que sea del mismo usuario que lo ingreso
 function correoDisponible($conn, $id_persona, $correo) {
-    $sql = 'SELECT COUNT(*) AS count FROM persona WHERE correo = ?';
+    $sql = 'SELECT COUNT(*) AS count FROM persona_g3 WHERE correo = ?';
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $correo);
     $stmt->execute();
@@ -428,7 +428,7 @@ function correoDisponible($conn, $id_persona, $correo) {
 //Select de turnos de una persona
 function selectTurnosDePersona($conn, $id_persona){
 
-    $sql = 'SELECT * FROM servicio where id_mascota IN (SELECT id_mascota FROM mascota WHERE id_persona = ?)';
+    $sql = 'SELECT * FROM servicio_g3 where id_mascota IN (SELECT id_mascota FROM mascota_g3 WHERE id_persona = ?)';
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
     $stmt->execute();
@@ -447,7 +447,7 @@ function selectTurnosDePersona($conn, $id_persona){
 
 //Devolver turno por id
 function obtenerTurnoPorId($conn, $id_servicio) {
-    $sql = "SELECT * FROM servicio WHERE id_servicio = ?";
+    $sql = "SELECT * FROM servicio_g3 WHERE id_servicio = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_servicio);
     $stmt->execute();
@@ -460,7 +460,7 @@ function obtenerTurnoPorId($conn, $id_servicio) {
 
 //Funcion para verificar si el tipo de servicio ya existe
 function tipoServicioExiste($conn, $tipo_servicio) {
-    $sql = "SELECT COUNT(*) AS count FROM tipo_de_servicio WHERE lower(tipo_de_servicio) = ?";
+    $sql = "SELECT COUNT(*) AS count FROM tipo_de_servicio_g3 WHERE lower(tipo_de_servicio) = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", strtolower($tipo_servicio));
     $stmt->execute();
@@ -475,7 +475,7 @@ function tipoServicioExiste($conn, $tipo_servicio) {
 
 //Funcion que devuelve todos los tipos de servicios y los nombres de las columnas
 function obtenerTiposDeServicios($conn) {
-    $sql = "SELECT * FROM tipo_de_servicio";
+    $sql = "SELECT * FROM tipo_de_servicio_g3";
     $result = $conn->query($sql);
     $tipos_servicios = [];
     if ($result->num_rows > 0) {
@@ -494,7 +494,7 @@ function obtenerTiposDeServicios($conn) {
 
 //Funcion que devuelve la ruta completa de las imagenes de los tipos de servicios
 function obtenerRutaImagenTipoServicio($conn, $id_tipo_servicio,$nombre_proyecto) {
-    $sql = "SELECT imagen_servicio FROM tipo_de_servicio WHERE id_tipo_servicio = ?";
+    $sql = "SELECT imagen_servicio FROM tipo_de_servicio_g3 WHERE id_tipo_servicio = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_tipo_servicio);
     $stmt->execute();
@@ -511,7 +511,7 @@ function obtenerRutaImagenTipoServicio($conn, $id_tipo_servicio,$nombre_proyecto
 
 //Funcion que devuelve un tipo de servicio por id
 function obtenerTipoDeServicioPorId($conn, $id_tipo_servicio) {
-    $sql = "SELECT * FROM tipo_de_servicio WHERE id_tipo_servicio = ?";
+    $sql = "SELECT * FROM tipo_de_servicio_g3 WHERE id_tipo_servicio = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_tipo_servicio);
     $stmt->execute();
@@ -524,7 +524,7 @@ function obtenerTipoDeServicioPorId($conn, $id_tipo_servicio) {
 
 //Funcion que verifica si un tipo de servicio existe por tipo_de_servicio y no es el mismo id
 function tipoServicioExisteExcluyendoId($conn, $tipo_servicio, $id_tipo_servicio) {
-    $sql = "SELECT COUNT(*) AS count FROM tipo_de_servicio WHERE lower(tipo_de_servicio) = ? AND id_tipo_servicio != ?";
+    $sql = "SELECT COUNT(*) AS count FROM tipo_de_servicio_g3 WHERE lower(tipo_de_servicio) = ? AND id_tipo_servicio != ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", strtolower($tipo_servicio), $id_tipo_servicio);
     $stmt->execute();
@@ -539,7 +539,7 @@ function tipoServicioExisteExcluyendoId($conn, $tipo_servicio, $id_tipo_servicio
 
 //Funcion para eliminar las mascotas de una persona por su id
 function deleteMascotasPorPersonaId($conn, $id_persona){
-    $sql = 'DELETE FROM mascota WHERE id_persona = ?';
+    $sql = 'DELETE FROM mascota_g3 WHERE id_persona = ?';
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
 
@@ -548,7 +548,7 @@ function deleteMascotasPorPersonaId($conn, $id_persona){
 
 //Funcion para eliminar los turnos de una persona por su id
 function deleteTurnosPorPersonaId($conn, $id_persona){
-    $sql = 'DELETE FROM servicio WHERE id_mascota IN (SELECT id_mascota FROM mascota WHERE id_persona = ?)';
+    $sql = 'DELETE FROM servicio_g3 WHERE id_mascota IN (SELECT id_mascota FROM mascota_g3 WHERE id_persona = ?)';
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
 
@@ -558,7 +558,7 @@ function deleteTurnosPorPersonaId($conn, $id_persona){
 //Funcion que devuelve las columnas y los registros de la tabla trabajadores
 function selectAllTrabajadores($conn){
 
-        $sql = 'SELECT * FROM trabajadores';
+        $sql = 'SELECT * FROM trabajadores_g3';
 
     $result = $conn->query($sql);
 
@@ -582,7 +582,7 @@ function selectAllTrabajadores($conn){
 
 //Funcion que devuelve el registro de un trabajador por su id_persona
 function obtenerTrabajadorPorId($conn, $id_persona) {
-    $sql = "SELECT * FROM trabajadores WHERE id_persona = ?";
+    $sql = "SELECT * FROM trabajadores_g3 WHERE id_persona = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
     $stmt->execute();
@@ -596,7 +596,7 @@ function obtenerTrabajadorPorId($conn, $id_persona) {
 //Funcion que devuelve la pass_app de un trabajador admin por su id_persona
 
 function obtenerPassAppPorId($conn, $id_persona) {
-    $sql = "SELECT pass_app FROM trabajadores WHERE id_persona = ? AND rol = 'admin'";
+    $sql = "SELECT pass_app FROM trabajadores_g3 WHERE id_persona = ? AND rol = 'admin'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_persona);
     $stmt->execute();
@@ -610,7 +610,7 @@ function obtenerPassAppPorId($conn, $id_persona) {
 
 //Funcion para obtener el monto que corresponde a un tipo de servicio
 function obtenerMontoServicio($conn, $tipo_servicio) {
-    $sql = "SELECT precio_servicio FROM tipo_de_servicio WHERE tipo_de_servicio = ?";
+    $sql = "SELECT precio_servicio FROM tipo_de_servicio_g3 WHERE tipo_de_servicio = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $tipo_servicio);
     $stmt->execute();
@@ -626,7 +626,7 @@ function obtenerMontoServicio($conn, $tipo_servicio) {
 //Funcion que devuelve los turnos pendientes de un trabajador
 function turnosPendientesTrabajador($conn, $id_trabajador){
 
-    $sql = "SELECT * FROM servicio WHERE id_trabajador = ? and horario >= NOW()";
+    $sql = "SELECT * FROM servicio_g3 WHERE id_trabajador = ? and horario >= NOW()";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i",$id_trabajador);
@@ -649,7 +649,7 @@ function turnosPendientesTrabajador($conn, $id_trabajador){
 //Funcion que devuelve los turnos de un trabajador
 function turnosDeTrabajador($conn, $id_trabajador){
 
-    $sql = "SELECT * FROM servicio WHERE id_trabajador = ?";
+    $sql = "SELECT * FROM servicio_g3 WHERE id_trabajador = ?";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i",$id_trabajador);
@@ -674,7 +674,7 @@ function turnosDeTrabajador($conn, $id_trabajador){
 //Select de las personas
 function selectAllPersonas($conn){
 
-    $sql = 'SELECT * FROM persona';
+    $sql = 'SELECT * FROM persona_g3';
 
     $result = $conn->query($sql);
 
@@ -699,7 +699,7 @@ function selectAllPersonas($conn){
 //Select de todos los turnos, tanto activos como finalizados
 function selectAllServicios($conn, $turnosActivos){
 
-    $sql = 'SELECT * FROM servicio';
+    $sql = 'SELECT * FROM servicio_g3';
 
     if($turnosActivos == true){
         $sql = $sql . ' where horario >= NOW()';
@@ -738,8 +738,8 @@ function selectAllMascotas($conn) {
             m.tamanio,
             m.color,
             p.nombre_de_usuario AS dueño
-        FROM mascota m
-        INNER JOIN persona p ON m.id_persona = p.id_persona
+        FROM mascota_g3 m
+        INNER JOIN persona_g3 p ON m.id_persona = p.id_persona
         ORDER BY p.nombre_de_usuario ASC, m.nombre ASC
     ";
 
@@ -747,7 +747,7 @@ function selectAllMascotas($conn) {
 
     if (!$result) {
 
-        die("❌ Error en la consulta SQL: " . $conn->error);
+        die("Error en la consulta SQL: " . $conn->error);
     }
 
     $datos_mascotas = [];
@@ -772,7 +772,7 @@ function selectAllMascotas($conn) {
 
 
 function obtenerTiposServicio($conn) {
-    $sql = "SELECT DISTINCT tipo_de_servicio FROM servicio ORDER BY tipo_de_servicio ASC";
+    $sql = "SELECT DISTINCT tipo_de_servicio FROM servicio_g3 ORDER BY tipo_de_servicio ASC";
     $result = $conn->query($sql);
     $tipos = [];
     while ($row = $result->fetch_assoc()) {

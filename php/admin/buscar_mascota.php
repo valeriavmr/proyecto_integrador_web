@@ -27,7 +27,7 @@
     $usuario = $_SESSION['username'] ?? null;
 
     // Obtenemos todas las columnas de la tabla mascota (excepto campos internos)
-    $queryCols = "SHOW COLUMNS FROM mascota";
+    $queryCols = "SHOW COLUMNS FROM mascota_g3";
     $colsResult = $conn->query($queryCols);
     $columnNames = [];
 
@@ -46,7 +46,7 @@
 
         if (in_array($campo_mascota, $columnNames)) {
             // Búsqueda insensible a mayúsculas
-            $sql = "SELECT * FROM mascota WHERE LOWER($campo_mascota) LIKE ?";
+            $sql = "SELECT * FROM mascota_g3 WHERE LOWER($campo_mascota) LIKE ?";
             $stmt = $conn->prepare($sql);
             $param = '%' . strtolower($valor_campo) . '%';
             $stmt->bind_param("s", $param);

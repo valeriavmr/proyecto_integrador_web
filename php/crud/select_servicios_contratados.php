@@ -7,7 +7,7 @@ require('conexion.php');
 
 $usuario = $_SESSION['username'];
 
-$sql = "SELECT * FROM servicio WHERE id_mascota IN (SELECT id_mascota FROM mascota WHERE id_persona = (SELECT id_persona FROM persona WHERE nombre_de_usuario = '$usuario'))
+$sql = "SELECT * FROM servicio_g3 WHERE id_mascota IN (SELECT id_mascota FROM mascota_g3 WHERE id_persona = (SELECT id_persona FROM persona_g3 WHERE nombre_de_usuario = '$usuario'))
 and horario >= NOW()";
 $result = $conn->query($sql);
 

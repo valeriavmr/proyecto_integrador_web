@@ -6,7 +6,7 @@ $username = $_POST['username'];
 $pass = $_POST['pass'];
 
 #Primero busco al usuarios
-$sql = "SELECT nombre_de_usuario, password, rol FROM persona WHERE nombre_de_usuario = ?";
+$sql = "SELECT password, rol FROM persona_g3 WHERE nombre_de_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
