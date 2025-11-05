@@ -22,7 +22,7 @@ $sql = "
         horario,
         monto,
         pagado
-    FROM servicio
+    FROM servicio_g3
     WHERE 1=1
 ";
 

@@ -13,7 +13,7 @@ if (!$tipo_servicio) {
     die("Tipo de servicio no encontrado.");
 }
 // Preparar y ejecutar la consulta de eliminación
-$sql = "DELETE FROM tipo_de_servicio WHERE id_tipo_servicio = ?";
+$sql = "DELETE FROM tipo_de_servicio_g3 WHERE id_tipo_servicio = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id_tipo_servicio);
 if ($stmt->execute()) {

@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $altura = $_POST['altura'];
 
     // --- 5.1. Actualizar tabla persona ---
-    $sql_persona = "UPDATE persona 
+    $sql_persona = "UPDATE persona_g3 
                     SET nombre=?, apellido=?, nombre_de_usuario=?, correo=?, telefono=? 
                     WHERE nombre_de_usuario=?";
     $stmt_persona = $conn->prepare($sql_persona);
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // --- 5.2. Obtener id_persona ---
-        $sql_id = "SELECT id_persona FROM persona WHERE nombre_de_usuario = ?";
+        $sql_id = "SELECT id_persona FROM persona_g3 WHERE nombre_de_usuario = ?";
         $stmt_id = $conn->prepare($sql_id);
         if (!$stmt_id) {
             die("Error en SQL id_persona: " . $conn->error);
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_persona = $row_id['id_persona'];
 
         // --- 5.3. Verificar si ya tiene dirección ---
-        $sql_check = "SELECT COUNT(*) AS existe FROM direccion WHERE id_persona = ?";
+        $sql_check = "SELECT COUNT(*) AS existe FROM direccion_g3 WHERE id_persona = ?";
         $stmt_check = $conn->prepare($sql_check);
         $stmt_check->bind_param("i", $id_persona);
         $stmt_check->execute();
@@ -70,14 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($existe_direccion) {
             // --- UPDATE ---
-            $sql_direccion = "UPDATE direccion 
+            $sql_direccion = "UPDATE direccion_g3 
                               SET provincia=?, localidad=?, calle=?, altura=? 
                               WHERE id_persona=?";
             $stmt_direccion = $conn->prepare($sql_direccion);
             $stmt_direccion->bind_param("sssii", $provincia, $localidad, $calle, $altura, $id_persona);
         } else {
             // --- INSERT ---
-            $sql_direccion = "INSERT INTO direccion (id_persona, provincia, localidad, calle, altura) 
+            $sql_direccion = "INSERT INTO direccion_g3 (id_persona, provincia, localidad, calle, altura) 
                               VALUES (?, ?, ?, ?, ?)";
             $stmt_direccion = $conn->prepare($sql_direccion);
             $stmt_direccion->bind_param("isssi", $id_persona, $provincia, $localidad, $calle, $altura);
@@ -100,9 +100,9 @@ $sql_select = "
     SELECT 
         p.*, d.provincia, d.localidad, d.calle, d.altura
     FROM 
-        persona p
+        persona_g3 p
     LEFT JOIN 
-        direccion d ON p.id_persona = d.id_persona 
+        direccion_g3 d ON p.id_persona = d.id_persona 
     WHERE 
         p.nombre_de_usuario = ?
 ";

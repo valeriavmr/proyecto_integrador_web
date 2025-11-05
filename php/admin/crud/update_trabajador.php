@@ -15,7 +15,7 @@ $correo_host = $_POST['correo_host'] ?? null;
 if (!$id_persona) die("Error: no se especificó la persona.");
 
 //Creo el update
-$sql = 'UPDATE trabajadores SET pass_app = ?, tipo_de_servicio = ?, correo_host = ? WHERE id_persona = ?';
+$sql = 'UPDATE trabajadores_g3 SET pass_app = ?, tipo_de_servicio = ?, correo_host = ? WHERE id_persona = ?';
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sssi", $pass_app,$tipo_de_servicio, $correo_host,$id_persona);

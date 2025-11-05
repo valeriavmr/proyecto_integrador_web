@@ -11,7 +11,7 @@ $altura = $_POST['altura'] ?? '';
 if (!$id_persona) die("Error: no se especificó la persona.");
 
 // Preparar la query de update
-$sql = "UPDATE direccion SET provincia = ?, localidad = ?, calle = ?, altura = ? WHERE id_persona = ?";
+$sql = "UPDATE direccion_g3 SET provincia = ?, localidad = ?, calle = ?, altura = ? WHERE id_persona = ?";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sssii", $localidad, $barrio, $calle, $altura, $id_persona);

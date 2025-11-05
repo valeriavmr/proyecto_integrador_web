@@ -44,7 +44,7 @@ if ($imagen_servicio && $imagen_servicio['error'] === UPLOAD_ERR_OK)
 }
 
 // Preparar y ejecutar la consulta de actualización
-$sql = "UPDATE tipo_de_servicio SET tipo_de_servicio = ?, descripcion = ?, precio_servicio = ?, imagen_servicio = ? WHERE id_tipo_servicio = ?";
+$sql = "UPDATE tipo_de_servicio_g3 SET tipo_de_servicio = ?, descripcion = ?, precio_servicio = ?, imagen_servicio = ? WHERE id_tipo_servicio = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssdsi", $nombre_tipo_servicio, $descripcion_tipo_servicio, $precio_tipo_servicio, $nombreImagenFinal, $id_tipo_servicio);
 if ($stmt->execute()) {

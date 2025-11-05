@@ -21,7 +21,7 @@ if (!$id_persona) {
 }
 
 //hago el UPDATE
-$sql = "UPDATE persona 
+$sql = "UPDATE persona_g3 
         SET nombre = ?, apellido = ?, nombre_de_usuario = ?, correo = ?, rol = ?, telefono = ?
         WHERE id_persona = ?";
 

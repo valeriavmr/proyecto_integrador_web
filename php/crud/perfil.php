@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
-$sql = "SELECT nombre, apellido, nombre_de_usuario, correo, telefono, rol FROM persona WHERE nombre_de_usuario = ?";
+$sql = "SELECT nombre, apellido, nombre_de_usuario, correo, telefono, rol FROM persona_g3 WHERE nombre_de_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();

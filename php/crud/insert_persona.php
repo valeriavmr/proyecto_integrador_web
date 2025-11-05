@@ -23,13 +23,13 @@ $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 #Insert en tabla persona, logia bifurcada dependiendo de si se usa desde el portal de admin o no
 
 if($rol==''){
-    $sql_persona = "INSERT INTO persona (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES (?, ?, ?, ?, ?, 'cliente', ?)";
+    $sql_persona = "INSERT INTO persona_g3 (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES (?, ?, ?, ?, ?, 'cliente', ?)";
 
     $stmt = $conn->prepare($sql_persona);
     $stmt->bind_param("ssssss", $nombre_persona, $apellido_persona, $username, 
     $correo_persona, $hashed_pass, $tel_persona);
 }else{
-    $sql_persona = "INSERT INTO persona (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql_persona = "INSERT INTO persona_g3 (nombre, apellido, nombre_de_usuario, correo, password, rol, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql_persona);
     $stmt->bind_param("sssssss", $nombre_persona, $apellido_persona, $username, 
@@ -61,7 +61,7 @@ if ($stmt->execute()) {
 
     # (si es trabajador o admin) Insert en tabla trabajadores
     if($rol=='trabajador' || $rol=='admin'){
-        $sql_trabajador = "INSERT INTO trabajadores (id_persona,rol) VALUES (?,?)";
+        $sql_trabajador = "INSERT INTO trabajadores_g3 (id_persona,rol) VALUES (?,?)";
         $stmt_trabajador = $conn->prepare($sql_trabajador);
         $stmt_trabajador->bind_param("is", $last_id,$rol);
         $stmt_trabajador->execute();
@@ -70,7 +70,7 @@ if ($stmt->execute()) {
     
     #Insert en tabla direccion
 
-    $sql_direccion = "INSERT INTO direccion (id_persona, provincia, localidad, calle, altura) VALUES (?, ?, ?, ?, ?)";
+    $sql_direccion = "INSERT INTO direccion_g3 (id_persona, provincia, localidad, calle, altura) VALUES (?, ?, ?, ?, ?)";
     $stmt2 = $conn->prepare($sql_direccion);
     $stmt2->bind_param("isssi", $last_id, $localidad, $barrio, $calle, $altura_calle);
 
