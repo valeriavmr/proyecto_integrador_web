@@ -12,13 +12,14 @@
 <body>
     <?php
     require_once('auth.php');
-    //Incluyo el header
-    include('header_admin.php');
 
     //Recupero los datos de la tabla
     require_once('../crud/conexion.php');
     include_once('../crud/consultas_varias.php');
     require_once('../../config.php');
+
+    //Incluyo el header
+    include('header_admin.php');
 
     [$datos_personas, $columnas] = selectAllPersonas($conn);
 
@@ -64,6 +65,11 @@
                 </tbody>
             </table>
         </section>
+    <section>
+        <form method="post" action="pdfs/excel_personas.php">
+            <button type="submit" name="exportar_excel" class="boton_excel">Exportar a Excel</button>
+        </form>
+    </section>
     <section id="volver_s">
         <a href="personas_admin.php">Volver a Administración de personas</a>
     </section>

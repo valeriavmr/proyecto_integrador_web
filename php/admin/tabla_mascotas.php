@@ -64,6 +64,14 @@
                 </tbody>
             </table>
         </section>
+        <section>
+        <form method="post" action="pdfs/excel_mascotas.php">
+            <button type="submit" name="exportar_excel" class="boton_excel">Exportar a Excel</button>
+        </form>
+    </section>
+    <section id="volver_s">
+        <a href="mascotas_admin.php">Volver a Administración de mascotas</a>
+    </section>
     </main>
     <?php
         //Muestro mensaje (para ediciones y eliminaciones) y luego lo quito
