@@ -71,11 +71,7 @@
         </section>
     </main>
     </main>
-    <div id="huellas-animacion-container">
-        <div class="huella huella-1"></div>
-        <div class="huella huella-2"></div>
-        <div class="huella huella-3"></div>
-        </div>
+    
     <?php include('footer.php'); ?>
 </body>
 </html>

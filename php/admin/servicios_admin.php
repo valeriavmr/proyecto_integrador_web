@@ -18,12 +18,12 @@
     <br>    
     <h2>Gestión de Turnos y Servicios</h2>
     <section id="menu_gestion">
-        <article class="opc_menu_ap"><a href="tabla_historico_servicios.php"><img src="../../recursos/lista_servicios_icon.png" alt="">Lista Histórico de turnos</a></article>
-        <article class="opc_menu_ap" id="pdf_datos_servicios"><a href="pdfs/pdf_turnos.php" target="_blank"><img src="../../recursos/pdf_icon.png" alt="">Generar reporte de datos de turnos</a></article>
-        <article class="opc_menu_ap"><a href="add_turno_admin.php"><img src="../../recursos/crear_turno_icon.png" alt="">Crear turno</a></article>
-        <article class="opc_menu_ap"><a href="buscar_turno.php"><img src="../../recursos/search_negro_icon.png" alt="">Buscar turno</a></article>
-        <article class="opc_menu_ap"><a href="tabla_tipo_servicios.php"><img src="../../recursos/lista_tipos_servicios_icon.png" alt="">Lista de tipos de servicios</a></article>
-        <article class="opc_menu_ap"><a href="add_tipo_servicio_admin.php"><img src="../../recursos/crear_tipo_servicio_icon.png" alt="">Agregar tipo de servicio</a></article>
+        <article class="opc_menu_ap"><a href="tabla_historico_servicios.php"><img src="../../recursos/lista_servicios_icon.png" alt=""> Lista Histórico de turnos</a></article>
+        <article class="opc_menu_ap" id="pdf_datos_servicios"><a href="pdfs/pdf_turnos.php" target="_blank"><img src="../../recursos/pdf_icon.png" alt=""> Generar reporte de datos de turnos</a></article>
+        <article class="opc_menu_ap"><a href="add_turno_admin.php"><img src="../../recursos/crear_turno_icon.png" alt=""> Crear turno</a></article>
+        <article class="opc_menu_ap"><a href="buscar_turno.php"><img src="../../recursos/search_negro_icon.png" alt=""> Buscar turno</a></article>
+        <article class="opc_menu_ap"><a href="tabla_tipo_servicios.php"><img src="../../recursos/lista_tipos_servicios_icon.png" alt=""> Lista de tipos de servicios</a></article>
+        <article class="opc_menu_ap"><a href="add_tipo_servicio_admin.php"><img src="../../recursos/crear_tipo_servicio_icon.png" alt=""> Agregar tipo de servicio</a></article>
     </section>
     <section>
         <?php

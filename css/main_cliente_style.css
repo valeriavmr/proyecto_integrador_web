@@ -137,46 +137,7 @@ main > section{
     }
 }
 
-/* Contenedor general */
-#huellas-animacion-container {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; 
-    z-index: 99; 
-}
 
-/* Estilo de la huella individual */
-.huella {
-    position: absolute;
-    width: 30px; 
-    height: 30px;
-    background-image: url('../img/huella_pata.png'); 
-    background-size: contain;
-    background-repeat: no-repeat;
-    
-    /* Aplica la animación */
-    animation: huella-recorrido 15s infinite linear; /* linear para movimiento constante */
-}
-
-/* Definición de la Posición Vertical de Inicio y Retraso */
-.huella-1 {
-    top: 5%; /* Cerca de la parte superior */
-    left: 0; /* No importa el 'left' inicial, el keyframes lo maneja */
-    animation-delay: 0s; 
-}
-.huella-2 {
-    top: 10%; /* Un poco más abajo */
-    left: 0; 
-    animation-delay: 5s; 
-}
-.huella-3 {
-    top: 5%;
-    left: 0; 
-    animation-delay: 10s; 
-}
 /* toggle_switch.css */
 /* Contenedor del switch */
 .switch {

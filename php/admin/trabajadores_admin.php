@@ -17,8 +17,8 @@
     <main>
     <h2>Gestión de Trabajadores</h2>
     <section id="menu_gestion">
-        <article class="opc_menu_ap"><a href="tabla_trabajadores.php" id="lista_personas_op"><img src="../../recursos/lista_personas_icon.png" alt="">Lista de trabajadores registradas</a></article>
-        <article class="opc_menu_ap"><a href="buscar_trabajador.php"><img src="../../recursos/person_search_icon.png" alt="">Buscar trabajador</a></article>
+        <article class="opc_menu_ap"><a href="tabla_trabajadores.php" id="lista_personas_op"><img src="../../recursos/lista_personas_icon.png" alt=""> Lista de trabajadores registradas</a></article>
+        <article class="opc_menu_ap"><a href="buscar_trabajador.php"><img src="../../recursos/person_search_icon.png" alt=""> Buscar trabajador</a></article>
     </section>
     </main>
     <?php
