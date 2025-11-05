@@ -14,7 +14,18 @@
     <link rel="stylesheet" href="../css/solicitar_turno.css?v=<?= time() ?>">
 </head>
 <body>
-    <?php include('header_cliente.php'); ?>
+    <?php 
+    if (session_status() == PHP_SESSION_NONE) { 
+                session_start(); 
+            }
+
+    $usuario = $_SESSION['username'];
+
+    if($usuario == null){
+        header("Location: no_autorizado.php");
+        exit;
+            }
+    include('header_cliente.php'); ?>
 <main>
 <fieldset>
 <form action="" method="post">
@@ -27,10 +38,6 @@
         <?php
         // Obtener mascotas
         require('crud/conexion.php');
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        $usuario = $_SESSION['username'];
         include_once('crud/consultas_varias.php');
         $mascotas = obtenerMascotasPorUsuario($conn, $usuario);
         foreach ($mascotas as $mascota) {

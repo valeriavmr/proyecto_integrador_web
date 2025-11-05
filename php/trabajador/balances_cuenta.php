@@ -2,6 +2,10 @@
 // Incluir configuración y conexión
 require_once __DIR__ . '/../../config.php';
 session_start();
+
+//Evito a usuarios no autorizados
+include_once('../admin/auth.php');
+
 require_once(BASE_PATH . '/php/crud/conexion.php');
 require_once(BASE_PATH . '/php/crud/consultas_varias.php');
 

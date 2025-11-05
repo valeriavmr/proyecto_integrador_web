@@ -19,6 +19,9 @@
             session_start(); 
         }
 
+    //Evito a usuarios no autorizados
+    include_once('../admin/auth.php');
+
     include('header_trabajador.php');
     ?>
     <main>

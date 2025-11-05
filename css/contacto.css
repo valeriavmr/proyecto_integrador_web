@@ -120,12 +120,18 @@ textarea{
     min-height: 5rem;
 }
 
-#contacto_btn{
+#contacto_btn,#no_autorizado_btn{
     background-color: #2E6009;
     color: white;
     cursor: pointer;
 }
 
-#contacto_btn:hover{
+#contacto_btn:hover,#no_autorizado_btn:hover{
     background-color: #a7866D;
+}
+
+#no_autorizado_btn{
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border-style: none;
 }

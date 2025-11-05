@@ -17,8 +17,15 @@
 <body>
     <?php
     if (session_status() == PHP_SESSION_NONE) { 
-            session_start(); 
-        }
+                session_start(); 
+            }
+
+    $usuario = $_SESSION['username'];
+
+    if($usuario == null){
+        header("Location: no_autorizado.php");
+        exit;
+            }
         
     include('header_cliente.php');
     ?>
