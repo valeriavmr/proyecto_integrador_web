@@ -71,6 +71,11 @@
                 </tbody>
             </table>
         </section>
+        <section>
+        <form method="post" action="pdfs/excel_turnos.php">
+            <button type="submit" name="exportar_excel" class="boton_excel">Exportar a Excel</button>
+        </form>
+    </section>
         <section id="volver_s">
             <a href="servicios_admin.php">Volver a Administración de servicios</a>
         </section>

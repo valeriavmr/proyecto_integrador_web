@@ -26,6 +26,9 @@ $id_trabajador = obtenerIdPersona($conn, $username_trabajador);
 
 //Coloco el header
 include('header_trabajador.php');
+
+//Evito a usuarios no autorizados
+include_once('../admin/auth.php');
 ?>
 <main>
     <section id="servicios_contratados">

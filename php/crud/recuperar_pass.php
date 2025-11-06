@@ -14,7 +14,7 @@ $username = $_POST['username'] ?? '';
 $correo = $_POST['correo'] ?? '';
 
 //Hago un select para verificar que las credenciales le corresponden a una cuenta
-$sql = "SELECT * from persona where nombre_de_usuario = ? AND correo = ?";
+$sql = "SELECT * from persona_g3 where nombre_de_usuario = ? AND correo = ?";
 
 $stmt = $conn->prepare($sql);
 

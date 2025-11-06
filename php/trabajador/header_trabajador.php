@@ -28,6 +28,9 @@
                         if (session_status() == PHP_SESSION_NONE) {
                             session_start();
                         }
+
+                        //Evito a usuarios no autorizados
+                        include_once('../admin/auth.php');
                         include_once('../crud/conexion.php');
                         $usuario = $_SESSION['username'];
                         include_once('../crud/consultas_varias.php');

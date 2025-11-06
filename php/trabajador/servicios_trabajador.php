@@ -21,6 +21,9 @@ include_once('../crud/consultas_varias.php');
 //Me traigo los datos del usuario
 if (session_status() == PHP_SESSION_NONE) { session_start(); }
 
+//Evito a usuarios no autorizados
+include_once('../admin/auth.php');
+
 $username_trabajador = $_SESSION['username'];
 $id_trabajador = obtenerIdPersona($conn, $username_trabajador);
 

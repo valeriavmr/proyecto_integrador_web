@@ -67,3 +67,15 @@ td > a{
     text-decoration: none;
     color:#4b4b4b;
 }
+
+.boton_excel {
+    background-color: #2E6009;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.boton_excel:hover {
+    background-color: #1b5e3f;
+}

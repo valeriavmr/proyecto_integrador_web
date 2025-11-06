@@ -1,8 +1,15 @@
 <?php
+//Locales
 $host = "localhost";
 $dbname = "proyecto_db";
 $user = "root";
 $password ="";
+
+//Hosting
+/*$host = "localhost";
+$dbname = "c2720913_bolsa";
+$user = "c2720913_bolsa";
+$password ="ra92vopaLI";*/
 
 #conectar usando mysqli
 $conn = new mysqli($host,$user,$password,$dbname);

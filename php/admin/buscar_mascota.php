@@ -88,7 +88,7 @@
                     <?php foreach ($resultados as $fila): ?>
                         <tr>
                             <?php foreach ($fila as $clave => $valor): ?>
-                                <td>
+                                <td style="max-width: 200px;">
                                     <a href="detalle_mascota.php?id_mascota=<?= htmlspecialchars($fila['id_mascota']) ?>">
                                         <?= htmlspecialchars($valor) ?>
                                     </a>

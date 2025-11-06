@@ -26,10 +26,16 @@
                 <li><a href="#">
                     <?php       
                         require_once('crud/conexion.php');
-                        if (session_status() == PHP_SESSION_NONE) {
-                            session_start();
-                        }
-                        $usuario = $_SESSION['username'];
+                        if (session_status() == PHP_SESSION_NONE) { 
+                                session_start(); 
+                            }
+
+                    $usuario = $_SESSION['username'];
+
+                    if($usuario == null){
+                        header("Location: no_autorizado.php");
+                        exit;
+                            }
                         include_once('crud/consultas_varias.php');
                         echo obtenerNombreUsuario($conn, $usuario); ?>
                 </a></li>
