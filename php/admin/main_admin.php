@@ -18,9 +18,9 @@
     <h1>Menú de gestión</h1>
     <section id="menu_gestion">
         <article class="opc_menu_ap"><a href="personas_admin.php">
-            <img src="../../recursos/perfil_icon.png" alt="">Gestión de personas</a></article>
+            <img src="../../recursos/perfil_icon.png" alt=""> Gestión de personas</a></article>
         <article class="opc_menu_ap"><a href="servicios_admin.php">
-            <img src="../../recursos/servicio_icon.png" alt="">Gestión de turnos y servicios</a></article>
+            <img src="../../recursos/servicio_icon.png" alt=""> Gestión de turnos y servicios</a></article>
                     <?php
         if (isset($_GET['mensaje'])) {
             echo "<p style='margin: 1rem;'>" . htmlspecialchars($_GET['mensaje']) . "</p>";
@@ -28,9 +28,9 @@
         }
         ?>
         <article class="opc_menu_ap"><a href="mascotas_admin.php">
-            <img src="../../recursos/mascotas_icon.png" alt="">Gestión de mascotas</a></article>
+            <img src="../../recursos/mascotas_icon.png" alt=""> Gestión de mascotas</a></article>
 
-        <article class="opc_menu_ap"><a href="trabajadores_admin.php"><img src="../../recursos/trabajador_icon.png" alt="">Gestión de trabajadores</a></article>
+        <article class="opc_menu_ap"><a href="trabajadores_admin.php"><img src="../../recursos/trabajador_icon.png" alt=""> Gestión de trabajadores</a></article>
     </section>
     </main>
     <?php

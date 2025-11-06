@@ -1,24 +1,29 @@
 <?php
 // 1. INCLUDES Y CONFIGURACIÓN INICIAL
-require_once __DIR__ . '/../../config.php';
+// Usamos dirname(__FILE__) para mayor compatibilidad en hosting
+require_once dirname(__FILE__) . '/../../config.php'; 
 session_start();
 require_once(BASE_PATH . '/php/crud/conexion.php');
 
-// 2. VERIFICACIÓN DE SESIÓN DE USUARIO
+// 2. VERIFICACIÓN DE SESIÓN Y OBTENCIÓN DE ROL
 if (!isset($_SESSION['username'])) {
     header('Location: ' . BASE_URL . '/php/login.php');
     exit();
 }
 
-// 3. OBTENER EL ID DEL USUARIO LOGUEADO
+// 3. OBTENER EL ID, EL USERNAME Y EL ROL DEL USUARIO LOGUEADO
 $username = $_SESSION['username'];
-$sql_user = "SELECT id_persona FROM persona_g3 WHERE nombre_de_usuario = ?";
+// Aseguramos obtener el campo 'rol'
+$sql_user = "SELECT id_persona, rol FROM persona_g3 WHERE nombre_de_usuario = ?";
 $stmt_user = $conn->prepare($sql_user);
 $stmt_user->bind_param("s", $username);
 $stmt_user->execute();
 $result_user = $stmt_user->get_result();
 $user_data = $result_user->fetch_assoc();
+
 $id_usuario_logueado = $user_data['id_persona'];
+// Control para la doble autorización
+$es_administrador = ($user_data['rol'] === 'admin'); 
 
 $mensaje = "";
 $mensaje_tipo = "";
@@ -30,7 +35,7 @@ function subirImagen($archivo, $nombreMascota, $idUsuario) {
     $directorio_subida_absoluta = BASE_PATH . '/uploads/mascotas/'; 
     $directorio_subida_web = BASE_URL . '/uploads/mascotas/';
 
-    // 2. Asegurarse de que el directorio exista (con permisos, si PHP puede crearlo)
+    
     if (!is_dir($directorio_subida_absoluta)) {
         if (!mkdir($directorio_subida_absoluta, 0777, true)) {
             
@@ -63,6 +68,7 @@ function subirImagen($archivo, $nombreMascota, $idUsuario) {
 $accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
 
 // --- ACCIÓN: AGREGAR MASCOTA ---
+// Nota: La acción 'agregar' SIEMPRE es para el usuario logueado, sin excepción.
 if ($accion === 'agregar') {
     $nombre = $_POST['nombre']; 
     $fecha_nac = $_POST['fecha_de_nacimiento'];
@@ -91,7 +97,7 @@ if ($accion === 'agregar') {
 }
 
 // --- ACCIÓN: ACTUALIZAR MASCOTA ---
-if ($accion === 'actualizar') {
+if ($accion === 'actualizar' && isset($_POST['id_mascota'])) {
     $id_mascota = $_POST['id_mascota'];
     $nombre = $_POST['nombre'];
     $fecha_nac = $_POST['fecha_de_nacimiento'];
@@ -105,13 +111,23 @@ if ($accion === 'actualizar') {
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
         $nueva_imagen_url = subirImagen($_FILES['imagen'], $nombre, $id_usuario_logueado);
         if ($nueva_imagen_url) {
-            $imagen_url = $nueva_imagen_url;            
+            $imagen_url = $nueva_imagen_url;
         }
     }
     
-    $sql = "UPDATE mascota_g3 SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=? AND id_persona=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssissssii", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url, $id_mascota, $id_usuario_logueado); 
+    // Lógica de doble autorización para UPDATE
+    if ($es_administrador) {
+        // Administrador: actualiza por ID de mascota (sin id_persona)
+        $sql = "UPDATE mascota_g3 SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssissssi", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url, $id_mascota);
+    } else {
+        // Cliente: actualiza solo sus mascotas (requiere id_mascota AND id_persona)
+        $sql = "UPDATE mascota_g3 SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=? AND id_persona=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssissssii", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url, $id_mascota, $id_usuario_logueado);
+    }
+
     if ($stmt->execute()) {
         $mensaje = "Mascota actualizada correctamente.";
         $mensaje_tipo = "exito";
@@ -123,39 +139,83 @@ if ($accion === 'actualizar') {
 
 // --- ACCIÓN: ELIMINAR MASCOTA ---
 if ($accion === 'eliminar') {
-    $id_mascota = $_GET['id'];
-   
-    
-    $sql = "DELETE FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $id_mascota, $id_usuario_logueado);
-    if ($stmt->execute()) {
-        $mensaje = "Mascota eliminada correctamente.";
-        $mensaje_tipo = "exito";
-    } else {
-        $mensaje = "Error al eliminar la mascota.";
-        $mensaje_tipo = "error";
+    // Usamos el ID del formulario POST (¡Corregido para coincidir con la tabla!)
+    if (isset($_POST['id_mascota'])) { 
+        $id_mascota = $_POST['id_mascota'];
+        
+        // Lógica de doble autorización para DELETE
+        if ($es_administrador) {
+            // Administrador: elimina por ID de mascota (sin id_persona)
+            $sql = "DELETE FROM mascota_g3 WHERE id_mascota=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id_mascota);
+        } else {
+            // Cliente: elimina solo sus mascotas (requiere id_mascota AND id_persona)
+            $sql = "DELETE FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $id_mascota, $id_usuario_logueado);
+        }
+
+        if ($stmt->execute()) {
+            $mensaje = "Mascota eliminada correctamente.";
+            $mensaje_tipo = "exito";
+        } else {
+            $mensaje = "Error al eliminar la mascota.";
+            $mensaje_tipo = "error";
+        }
     }
 }
 
 // 5. LÓGICA PARA EL MODO EDICIÓN DEL FORMULARIO
 $mascota_a_editar = null;
-if ($accion === 'editar') {
-    $id_mascota_editar = $_GET['id'];
-    $sql_editar = "SELECT * FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
-    $stmt_editar = $conn->prepare($sql_editar);
-    $stmt_editar->bind_param("ii", $id_mascota_editar, $id_usuario_logueado);
-    $stmt_editar->execute();
-    $result_editar = $stmt_editar->get_result();
-    $mascota_a_editar = $result_editar->fetch_assoc();
+if ($accion === 'editar' && isset($_GET['id_mascota'])) { // Corregido el índice a id_mascota
+    $id_mascota_editar = $_GET['id_mascota'];
+    
+    // Lógica de doble autorización para SELECT (Cargar datos)
+    if ($es_administrador) {
+        $sql_editar = "SELECT * FROM mascota_g3 WHERE id_mascota=?";
+        $stmt_editar = $conn->prepare($sql_editar);
+        $stmt_editar->bind_param("i", $id_mascota_editar);
+    } else {
+        $sql_editar = "SELECT * FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
+        $stmt_editar = $conn->prepare($sql_editar);
+        $stmt_editar->bind_param("ii", $id_mascota_editar, $id_usuario_logueado);
+    }
+
+    if ($stmt_editar->execute()) {
+        $result_editar = $stmt_editar->get_result();
+        $mascota_a_editar = $result_editar->fetch_assoc();
+    }
 }
 
 
-$sql_select = "SELECT * FROM mascota_g3 WHERE id_persona = ?";
-$stmt_select = $conn->prepare($sql_select);
-$stmt_select->bind_param("i", $id_usuario_logueado);
-$stmt_select->execute();
-$lista_mascotas = $stmt_select->get_result();
+// 6. LÓGICA PARA LA LISTA DE MASCOTAS (VISUALIZACIÓN)
+// Lógica de doble autorización para SELECT (Listado)
+if ($es_administrador) {
+    // Administrador: ve TODAS las mascotas
+    $sql_select = "SELECT * FROM mascota_g3";
+    $stmt_select = $conn->prepare($sql_select);
+} else {
+    // Cliente: ve SOLO sus mascotas
+    $sql_select = "SELECT * FROM mascota_g3 WHERE id_persona = ?";
+    $stmt_select = $conn->prepare($sql_select);
+    $stmt_select->bind_param("i", $id_usuario_logueado);
+}
+
+// Ejecución del SELECT, con manejo de error
+if ($stmt_select) {
+    if (!$stmt_select->execute()) {
+        error_log("Error al ejecutar la consulta de selección: " . $stmt_select->error);
+        $lista_mascotas = new stdClass(); 
+        $lista_mascotas->num_rows = 0;
+    } else {
+        $lista_mascotas = $stmt_select->get_result();
+    }
+} else {
+    $lista_mascotas = new stdClass(); 
+    $lista_mascotas->num_rows = 0;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -275,9 +335,14 @@ $lista_mascotas = $stmt_select->get_result();
                                 <td><?php echo htmlspecialchars($mascota['raza']); ?></td>
                                 <td><?php echo htmlspecialchars($mascota['tamanio']); ?></td>
                                 <td class="acciones">
-                                    <a href="mascotas.php?accion=editar&id=<?php echo $mascota['id_mascota']; ?>" class="btn-accion editar">Editar</a>
-                                    <a href="ficha_mascota_pdf.php?id=<?php echo $mascota['id_mascota']; ?>" class="btn-accion descargar">Descargar Ficha</a>
-                                    <a href="mascotas.php?accion=eliminar&id=<?php echo $mascota['id_mascota']; ?>" class="btn-accion eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar a <?php echo htmlspecialchars($mascota['nombre']); ?>?')">Eliminar</a>
+                                    <a href="mascotas.php?accion=editar&id_mascota=<?php echo $mascota['id_mascota']; ?>" class="btn-accion editar">Editar</a>
+                                    <a href="ficha_mascota_pdf.php?id_mascota=<?php echo $mascota['id_mascota']; ?>" class="btn-accion descargar">Descargar Ficha</a>
+                                    
+                                    <form method="POST" action="mascotas.php" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar a <?php echo htmlspecialchars($mascota['nombre']); ?>?')">
+                                        <input type="hidden" name="accion" value="eliminar">
+                                        <input type="hidden" name="id_mascota" value="<?php echo $mascota['id_mascota']; ?>">
+                                        <button type="submit" class="btn-accion eliminar">Eliminar</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
@@ -294,6 +359,6 @@ $lista_mascotas = $stmt_select->get_result();
 
     <?php include_once(BASE_PATH . '/php/footer.php'); ?>
 
-   
+    
 </body>
 </html>

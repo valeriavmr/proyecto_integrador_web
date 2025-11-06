@@ -48,12 +48,19 @@
                         }
                         else{
                             echo '<td>
-                                <button class="edit_btn" data-id="'.$fila['id_mascota'].'">
-                                    <img src="../../recursos/edit_icon.png">
-                                </button>
-                                <form method="POST" action="eliminar_mascota.php" class="form_eliminar">
-                                <input type="hidden" name="id_mascota" value="'.$fila['id_mascota'].'">
-                                <button type="submit" class="delete_btn"><img src="../../recursos/delete_icon.png"></button>
+                                <form method="GET" action="../crud/mascotas.php" class="form_editar" style="display:inline;">
+                                    <input type="hidden" name="accion" value="editar">
+                                    <input type="hidden" name="id_mascota" value="' . $fila['id_mascota'] . '">
+                                    <button type="submit" class="edit_btn">
+                                        <img src="../../recursos/edit_icon.png" alt="Editar">
+                                    </button>
+                                </form>
+                                <form method="POST" action="../crud/mascotas.php" class="form_eliminar" style="display:inline;">
+                                    <input type="hidden" name="accion" value="eliminar">
+                                    <input type="hidden" name="id_mascota" value="' . $fila['id_mascota'] . '">
+                                    <button type="submit" class="delete_btn">
+                                        <img src="../../recursos/delete_icon.png" alt="Eliminar">
+                                    </button>
                                 </form>
                             </td>';
                         }
@@ -66,7 +73,7 @@
         </section>
     </main>
     <?php
-        //Muestro mensaje (para ediciones y eliminaciones) y luego lo quito
+        
         if (isset($_SESSION['mensaje'])) {
             $mensaje = htmlspecialchars($_SESSION['mensaje']);
             echo "<script>alert('$mensaje');</script>";
@@ -78,17 +85,11 @@
     ?>
 </body>
 <script>
-//Coloco los eventos a los botones de edición y borrado
-document.querySelectorAll('.edit_btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const id = btn.dataset.id;
-        location.href = 'edit_usuario.php?id=' + id;
-    });
-});
+
 
 document.querySelectorAll('.form_eliminar').forEach(form => {
     form.addEventListener('submit', e => {
-        if (!confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
+        if (!confirm("¿Estás seguro de que quieres eliminar esta mascota?")) {
             e.preventDefault();
         }
     });

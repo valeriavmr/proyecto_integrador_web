@@ -1,56 +1,75 @@
 <?php
-
+// 1. CONFIGURACIÓN INICIAL Y SEGURIDAD
 ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE); 
 
-require_once __DIR__ . '/../../config.php';
-require_once __DIR__ . '/../../tcpdf/tcpdf.php';
+// Uso de dirname(__FILE__) para mayor compatibilidad
+require_once dirname(__FILE__). '/../../config.php';
+require_once dirname(__FILE__). '/../../tcpdf/tcpdf.php';
 require_once(BASE_PATH . '/php/crud/conexion.php');
 
 session_start();
 
-
+// 2. VERIFICACIÓN DE SESIÓN
 if (!isset($_SESSION['username'])) {
     header('Location: ' . BASE_URL . '/php/login.php');
     exit();
 }
 
-
-if (!isset($_GET['id'])) {
+// 3. OBTENER PARÁMETROS Y DATOS DE USUARIO
+// Se actualiza el índice de la URL a 'id_mascota'
+if (!isset($_GET['id_mascota'])) {
     die('ID de mascota no proporcionado.');
 }
 
-$id_mascota = intval($_GET['id']);
+$id_mascota = intval($_GET['id_mascota']);
 $username = $_SESSION['username'];
 
-
-$sql_user = "SELECT id_persona FROM persona_g3 WHERE nombre_de_usuario = ?";
+// Obtener ID y ROL del usuario logueado
+$sql_user = "SELECT id_persona, rol FROM persona_g3 WHERE nombre_de_usuario = ?";
 $stmt_user = $conn->prepare($sql_user);
 $stmt_user->bind_param("s", $username);
 $stmt_user->execute();
 $result_user = $stmt_user->get_result();
+
+if ($result_user->num_rows === 0) {
+    die('Usuario no encontrado.');
+}
+
 $user_data = $result_user->fetch_assoc();
 $id_usuario = $user_data['id_persona'];
+$es_administrador = ($user_data['rol'] === 'admin'); // Suponiendo que 'admin' es el rol
 
+// 4. LÓGICA DE AUTORIZACIÓN PARA CARGAR LA FICHA
+if ($es_administrador) {
+    // Si es administrador: Cargar CUALQUIER mascota por ID.
+    $sql_mascota = "SELECT * FROM mascota_g3 WHERE id_mascota = ?";
+    $stmt = $conn->prepare($sql_mascota);
+    $stmt->bind_param("i", $id_mascota);
+} else {
+    // Si es cliente: Cargar solo sus propias mascotas.
+    $sql_mascota = "SELECT * FROM mascota_g3 WHERE id_mascota = ? AND id_persona = ?";
+    $stmt = $conn->prepare($sql_mascota);
+    $stmt->bind_param("ii", $id_mascota, $id_usuario);
+}
 
-
-$sql_mascota = "SELECT * FROM mascota_g3 WHERE id_mascota = ? AND id_persona = ?";
-$stmt = $conn->prepare($sql_mascota);
-$stmt->bind_param("ii", $id_mascota, $id_usuario);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
-    die('No se encontró la mascota o no pertenece al usuario.');
+    die('No se encontró la mascota o no tiene permiso para verla.');
 }
 
 $mascota = $result->fetch_assoc();
 
 
+// 5. MANEJO DE IMAGEN (No requiere cambios de lógica)
+
 $imagen_url_web = $mascota['imagen_url'] ?? ''; 
 $ruta_imagen_display = ''; 
 
 if (!empty($imagen_url_web)) {
+    // Reemplazamos la URL web por la ruta física en el servidor
     $ruta_fisica = str_replace(BASE_URL, BASE_PATH, $imagen_url_web);
     
     if (file_exists($ruta_fisica)) {
@@ -59,6 +78,7 @@ if (!empty($imagen_url_web)) {
 } 
 
 if (empty($ruta_imagen_display)) {
+    // Usamos el método compatible para el default
     $ruta_imagen_display = BASE_PATH . '/img/default_pet.png';
     
     if (!file_exists($ruta_imagen_display)) {
@@ -66,13 +86,14 @@ if (empty($ruta_imagen_display)) {
     }
 }
 
-// SOLUCIÓN B: Inicializar la variable ANTES de la condición
 $imagen_tag = ''; 
 
 if (!empty($ruta_imagen_display)) {
     $imagen_tag = '<img src="' . $ruta_imagen_display . '" width="40mm" height="40mm" style="border: 1px solid #ccc; max-width:100%; height:auto;" />';
 }
 
+
+// 6. GENERACIÓN DEL PDF (TCPDF)
 
 class MYPDF extends TCPDF {
     public function Header() {
@@ -142,4 +163,7 @@ $html = '
 ';
 
 $pdf->writeHTML($html, true, false, true, false, '');
+
+// 7. SALIDA DEL PDF: 'I' (Inline/Browser) para mostrar, 'D' (Download) para forzar descarga.
+// Dejamos 'I' como estabas, que permite ver y luego guardar desde el navegador.
 $pdf->Output('ficha_' . $mascota['nombre'] . '.pdf', 'I');
