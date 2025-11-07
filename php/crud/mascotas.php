@@ -1,6 +1,6 @@
 <?php
 // 1. INCLUDES Y CONFIGURACIÓN INICIAL
-// Usamos dirname(__FILE__) para mayor compatibilidad en hosting
+
 require_once dirname(__FILE__) . '/../../config.php'; 
 session_start();
 require_once(BASE_PATH . '/php/crud/conexion.php');
@@ -139,18 +139,15 @@ if ($accion === 'actualizar' && isset($_POST['id_mascota'])) {
 
 // --- ACCIÓN: ELIMINAR MASCOTA ---
 if ($accion === 'eliminar') {
-    // Usamos el ID del formulario POST (¡Corregido para coincidir con la tabla!)
     if (isset($_POST['id_mascota'])) { 
         $id_mascota = $_POST['id_mascota'];
         
         // Lógica de doble autorización para DELETE
         if ($es_administrador) {
-            // Administrador: elimina por ID de mascota (sin id_persona)
             $sql = "DELETE FROM mascota_g3 WHERE id_mascota=?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $id_mascota);
         } else {
-            // Cliente: elimina solo sus mascotas (requiere id_mascota AND id_persona)
             $sql = "DELETE FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ii", $id_mascota, $id_usuario_logueado);
@@ -168,10 +165,9 @@ if ($accion === 'eliminar') {
 
 // 5. LÓGICA PARA EL MODO EDICIÓN DEL FORMULARIO
 $mascota_a_editar = null;
-if ($accion === 'editar' && isset($_GET['id_mascota'])) { // Corregido el índice a id_mascota
+if ($accion === 'editar' && isset($_GET['id_mascota'])) { 
     $id_mascota_editar = $_GET['id_mascota'];
     
-    // Lógica de doble autorización para SELECT (Cargar datos)
     if ($es_administrador) {
         $sql_editar = "SELECT * FROM mascota_g3 WHERE id_mascota=?";
         $stmt_editar = $conn->prepare($sql_editar);
@@ -229,13 +225,20 @@ if ($stmt_select) {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/tabla_style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/menu_style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/form_style.css?v=<?= time() ?>">
-
-
 </head>
 <body>
 
-    <?php include_once(BASE_PATH . '/php/crud/header_mascota.php'); ?>
-
+    <?php 
+    
+//Inserto el header
+    if($_SESSION['rol']=='admin'){
+        include('../admin/header_admin.php');
+    }else{
+        if($_SESSION['rol']=='cliente'){
+            include_once(BASE_PATH . '/php/crud/header_mascota.php');
+        }
+    }
+     ?>
     <main class="perfil-container">
         
         <section class="formulario-edicion-mascota">

@@ -41,13 +41,13 @@
                         echo obtenerNombreUsuario($conn, $usuario); ?>
                 </a></li>
                 <hr>
-                <li><a href="personas_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/personas_icon.png" alt="" class="iconos">Personas</a></li>
-                <li><a href="mascotas_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/mascotas_icon.png" alt="" class="iconos">Mascotas</a></li>
+                <li><a href="/proyecto_adiestramiento_tahito/php/admin/personas_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/personas_icon.png" alt="" class="iconos">Personas</a></li>
+                <li><a href="/proyecto_adiestramiento_tahito/php/admin/mascotas_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/mascotas_icon.png" alt="" class="iconos">Mascotas</a></li>
                 <hr>
-                <li><a href="servicios_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
-                <li><a href="trabajadores_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/trabajador_icon.png" alt="" class="iconos">Trabajadores</a></li>
+                <li><a href="/proyecto_adiestramiento_tahito/php/admin/servicios_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
+                <li><a href="/proyecto_adiestramiento_tahito/php/admin/trabajadores_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/trabajador_icon.png" alt="" class="iconos">Trabajadores</a></li>
                 <hr>
-                <li><a href="main_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
+                <li><a href="/proyecto_adiestramiento_tahito/php/admin/main_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
                 <li><a href="/proyecto_adiestramiento_tahito/php/logout.php" title="Cerrar sesión" id="link_logout_menu">
                     <img src="/proyecto_adiestramiento_tahito/recursos/logout_img.png" alt="Cerrar sesión"></a></li>
             </ul>
