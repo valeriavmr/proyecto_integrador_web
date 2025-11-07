@@ -19,7 +19,7 @@
     <article>
         <h3>Nuestras redes</h3>
         <ul>
-            <li><a href="https://instagram.com"><img src="/proyecto_adiestramiento_tahito/recursos/instagram_icon.png" alt="">@adiestramientocanino_tahito</a></li>
+            <li><a href="https://instagram.com" target="_blank"><img src="/proyecto_adiestramiento_tahito/recursos/instagram_icon.png" alt="">@adiestramientocanino_tahito</a></li>
             <li><a href="#"><img src="/proyecto_adiestramiento_tahito/recursos/phone_icon.png" alt="">+541122334455</a></li>
             <li><a href="#"><img src="/proyecto_adiestramiento_tahito/recursos/mail_icon.png" alt="">adiestramientocanino_tahito@gmail.com</a></li>
         </ul>

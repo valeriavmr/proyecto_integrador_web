@@ -23,7 +23,7 @@
             <ul id="nav_menu">
                 <li><a href="main_guest.php#servicios">Servicios</a></li>
                 <li><a href="main_guest.php">Home</a></li>
-                <li><a href="#">Trabaja con nosotros</a></li>
+                <li><a href="trabaja_con_nosotros.php">Trabaja con nosotros</a></li>
             </ul>
         </nav>
         <div id="nav_registro">

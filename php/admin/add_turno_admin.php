@@ -138,11 +138,11 @@
          <br>
         <input type="submit" value="Solicitar Turno" name="solicitar_turno_btn" formaction="crud/insert_servicio_admin.php" id="solicitar_turno_btn">
     </form>
-            <br>
-            <br>
 </fieldset>
 <section>
-    <a href="servicios_admin.php">Volver a Administración de servicios</a>
+    <section id="volver_s">
+        <a href="servicios_admin.php">Volver a Administración de servicios</a>
+    </section>
 </section>
 </main>
 <?php include('../footer.php'); ?>
