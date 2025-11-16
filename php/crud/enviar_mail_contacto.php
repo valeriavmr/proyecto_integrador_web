@@ -55,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $mail->send();
 
-        header('Location: contacto.php?mensaje=Mensaje enviado correctamente');
+        header('Location: ../contacto.php?mensaje=Mensaje enviado correctamente');
         exit;   
 
     } catch (Exception $e) {
-        header("Location: contacto.php?error=Error al enviar el mensaje: {$mail->ErrorInfo}");
+        header("Location: ../contacto.php?error=Error al enviar el mensaje: {$mail->ErrorInfo}");
         exit;
     }
 }

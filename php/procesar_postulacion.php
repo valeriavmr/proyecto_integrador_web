@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (move_uploaded_file($cv_tmp_name, $ruta_completa_servidor)) {
             
    
-            $sql = "INSERT INTO postulaciones (nombre, apellido, correo, puesto_aplicado, cv_nombre, cv_ruta) 
+            $sql = "INSERT INTO postulaciones_g3 (nombre, apellido, correo, puesto_aplicado, cv_nombre, cv_ruta) 
                     VALUES (?, ?, ?, ?, ?, ?)";
             
     

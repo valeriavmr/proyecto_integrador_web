@@ -49,7 +49,7 @@ include_once('../admin/auth.php');
                 <p><?php echo htmlspecialchars("Mascota: ". $nombre_mascota);?></p>
                 <p><?php echo htmlspecialchars("Fecha y hora: ". $turno['horario']);?></p>
                 <p><?php echo htmlspecialchars("Monto: ".$turno['monto']);?></p>
-                <a href="../detalle_turno.php?id_servicio=<?= $turno['id_servicio'] ?>">Ver detalles del turno</a><br>
+                <a href="detalle_turno_trabajador.php?id_servicio=<?= $turno['id_servicio'] ?>">Ver detalles del turno</a><br>
                 <button class='cancelar_turno_btn'><a href="../crud/eliminar_servicio.php?id_servicio=<?= $turno['id_servicio'] ?>">Cancelar turno</a></button>
             </article>
             <?php
