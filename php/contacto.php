@@ -48,14 +48,12 @@
                 <textarea name="mensaje_contacto" id="mensaje_contacto" rows="4" cols="50" required
                 placeholder="¡Cuéntanos tu mensaje!"></textarea><br>
                 <input type="submit" value="Enviar mensaje" id="contacto_btn">
-                <?php if(isset($_SESSION['mensaje'])):?>
-                    <p style="color:green;"><?php echo htmlspecialchars($_SESSION['mensaje'])?></p>
-                <?php endif;
-                unset($_SESSION['mensaje']);?>
-                <?php if(isset($_SESSION['error'])):?>
-                    <p style="color:red;"><?php echo htmlspecialchars($_SESSION['error'])?></p>
-                <?php endif;
-                unset($_SESSION['error']);?>
+                <?php if(isset($_GET['mensaje'])):?>
+                    <p style="color:green;"><?php echo htmlspecialchars($_GET['mensaje'])?></p>
+                <?php endif;?>
+                <?php if(isset($_GET['error'])):?>
+                    <p style="color:red;"><?php echo htmlspecialchars($_GET['error'])?></p>
+                <?php endif;?>
             </fieldset>
         </form>
     </main>

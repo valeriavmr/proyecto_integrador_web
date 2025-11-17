@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->Password = PASS_HOST;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
+        $mail->addCC('valeriavable2000@gmail.com');
 
         $mail->setFrom($email, $nombre_contacto);
 
