@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/../config.php'); 
 // Configuración de las vacantes
 $vacantes = [   
     [
@@ -81,7 +82,7 @@ $vacantes = [
                 <span class="cerrar-modal">&times;</span>
                 <h3>Postularse para: <?php echo $vacante['titulo']; ?></h3>
                 
-                <form action="/proyecto_adiestramiento_tahito/php/procesar_postulacion.php" method="POST" enctype="multipart/form-data">    
+                <form action="<?= BASE_URL ?>/php/procesar_postulacion.php" method="POST" enctype="multipart/form-data">  
                     <input type="hidden" name="puesto" value="<?php echo $vacante['titulo']; ?>">
                     
                     <label for="nombre-<?php echo $vacante['id']; ?>">Nombre:</label>

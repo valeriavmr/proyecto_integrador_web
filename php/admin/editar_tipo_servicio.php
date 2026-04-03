@@ -47,7 +47,7 @@
                 <input type="number" step="0.01" id="precio_tipo_servicio" name="precio_tipo_servicio" value="<?php echo htmlspecialchars($tipo_servicio['precio_servicio']); ?>" required><br>
                 <label for="imagen_servicio">Imagen del tipo de servicio:</label><br>
                 <input type="file" id="imagen_servicio" name="imagen_servicio" accept="image/*"><br>
-                <img src="<?php echo obtenerRutaImagenTipoServicio($conn,$tipo_servicio['id_tipo_servicio'], "proyecto_adiestramiento_tahito"); ?>" alt="Imagen del tipo de servicio" style="max-width: 200px;"><br>
+                <img src="<?php echo obtenerRutaImagenTipoServicio($conn,$tipo_servicio['id_tipo_servicio']); ?>" alt="Imagen del tipo de servicio" style="max-width: 200px;"><br>
                 <button type="submit" class="act_btn">Actualizar Tipo de Servicio</button>
                 <?php
                 if (isset($_GET['error'])) {

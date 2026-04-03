@@ -7,7 +7,7 @@
 
 for($i=0;$i<sizeof($lista_servicios);$i++){
     $servicio = $lista_servicios[$i];
-    $ruta_imagen = obtenerRutaImagenTipoServicio($conn, $servicio['id_tipo_servicio'],"proyecto_adiestramiento_tahito");
+    $ruta_imagen = obtenerRutaImagenTipoServicio($conn, $servicio['id_tipo_servicio']);
     echo "<article>
     <a href='login.php' title='Ingresa para más información sobre " . $servicio['tipo_de_servicio'] . "'>
     <h3>" . $servicio['tipo_de_servicio'] . "</h3><br>

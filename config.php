@@ -8,7 +8,7 @@
 // 1. DEFINIR LA RUTA DE LA CARPETA DEL PROYECTO
 // Esta es la parte de la ruta que viene DESPUÉS de 'htdocs'.
 // Basado en tu ruta C:\xampp\htdocs\2C2025\proyecto_integrador_web
-$project_folder_path = 'proyecto_adiestramiento_tahito';
+$project_folder_path = '2C2025/proyecto_integrador_web';
 
 
 // 2. DEFINIR LA RUTA BASE DEL SERVIDOR (PARA INCLUDES DE PHP)

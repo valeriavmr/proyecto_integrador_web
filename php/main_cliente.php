@@ -77,7 +77,7 @@
             <button id='agregar_mascota_btn' class='btn' onclick="location.href='crud/mascotas.php'">Agregar mascota</button>
         </section>
     </main>
-    </main>
+
     
     <?php include('footer.php'); ?>
 </body>

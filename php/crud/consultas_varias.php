@@ -346,7 +346,7 @@ function deleteTrabajadorPorId($conn, $id_persona){
 //Eliminar a persona por id
 function deletePersonaPorId($conn, $id_persona){
     session_start();
-    include_once('/proyecto_adiestramiento_tahito/config.php');
+    include_once(__DIR__ . '/../../config.php');
 
     $sql = 'DELETE FROM persona_g3 where id_persona = ?';
 
@@ -493,20 +493,21 @@ function obtenerTiposDeServicios($conn) {
 }
 
 //Funcion que devuelve la ruta completa de las imagenes de los tipos de servicios
-function obtenerRutaImagenTipoServicio($conn, $id_tipo_servicio,$nombre_proyecto) {
+function obtenerRutaImagenTipoServicio($conn, $id_tipo_servicio) {
+    include_once(__DIR__ . '/../../config.php');
+
     $sql = "SELECT imagen_servicio FROM tipo_de_servicio_g3 WHERE id_tipo_servicio = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_tipo_servicio);
     $stmt->execute();
     $result = $stmt->get_result();
-        if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
 
-        // Usar el nombre del dominio actual
-        $host = $_SERVER['HTTP_HOST'];
-        return "http://$host/$nombre_proyecto/uploads/" . $row['imagen_servicio'];
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return BASE_URL . "/uploads/" . $row['imagen_servicio'];
     }
-    return null; // Si no hay resultados
+
+    return null;
 }
 
 //Funcion que devuelve un tipo de servicio por id

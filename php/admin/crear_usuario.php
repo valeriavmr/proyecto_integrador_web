@@ -29,9 +29,11 @@
 
     $pass_app = obtenerPassAppPorId($conn,$id_admin);
 
-    if($pass_app == null){
-      header('Location: main_admin.php?mensaje=No se poseen las credenciales necesarias.');
-    }
+    // if($pass_app == null){
+    //   header('Location: main_admin.php?mensaje=No se poseen las credenciales necesarias.');
+    // }
+
+    $warning_pass_app = empty($pass_app);
 
     //Inserto el header
     include('header_admin.php');

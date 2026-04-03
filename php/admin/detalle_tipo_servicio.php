@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +40,7 @@
     <p><strong>Descripción:</strong> <?= nl2br(htmlspecialchars($tipo_servicio['descripcion'])) ?></p>
     <p><strong>Precio:</strong> $<?= number_format($tipo_servicio['precio_servicio'], 2) ?></p>
     <p><strong>Imagen del Tipo de Servicio:</strong></p>
-    <img src="<?= obtenerRutaImagenTipoServicio($conn, $tipo_servicio['id_tipo_servicio'], "proyecto_adiestramiento_tahito") ?>" alt="">
+    <img src="<?= obtenerRutaImagenTipoServicio($conn, $tipo_servicio['id_tipo_servicio']) ?>" alt="">
     <a class="editar_turno_btn" href="editar_tipo_servicio.php?id_tipo_servicio=<?= $tipo_servicio['id_tipo_servicio'] ?>">Editar Tipo de Servicio</a>
     <a class="eliminar_turno_btn" href="crud/eliminar_tipo_servicio.php?id_tipo_servicio=<?= $tipo_servicio['id_tipo_servicio'] ?>">Eliminar Tipo de Servicio</a>
     </section>
