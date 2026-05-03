@@ -1,35 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingreso no autorizado</title>
+    <title>Acceso no autorizado - Tahito</title>
+    <link rel="stylesheet" href="../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../css/login_styles.css?v=<?= time() ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
-    <link rel="stylesheet" href="../css/contacto.css?v=<?= time() ?>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main>
-        <h2>Ingreso No Autorizado</h2>
     <?php
-    if (session_status() == PHP_SESSION_NONE) { 
-                session_start(); 
-            }
-            
-    if(isset($_SESSION['rol']) && $_SESSION['rol'] == 'cliente'){
-
-        echo '<button id="no_autorizado_btn" onclick="window.location.href=\'main_cliente.php\'">Volver a la página de inicio</button>';
-    } else {
-        echo '<button id="no_autorizado_btn" onclick="window.location.href=\'main_guest.php\'">Volver a la página de inicio</button>';
-    }
+    if (session_status() == PHP_SESSION_NONE) { session_start(); }
     ?>
+    <main class="container auth-container">
+        <div class="auth-card" style="text-align: center;">
+            <div class="auth-header">
+                <a href="main_guest.php"><img src="../recursos/logsinfondo.png" alt="Tahito Logo" class="auth-logo"></a>
+                <h2>Acceso no autorizado</h2>
+                <p>No tenés permisos para acceder a esta página.</p>
+            </div>
+            <?php
+            if(isset($_SESSION['rol']) && $_SESSION['rol'] == 'cliente'){
+                echo '<a href="main_cliente.php" class="btn-primary" style="margin-top: 1rem;">Volver al inicio</a>';
+            } else {
+                echo '<a href="main_guest.php" class="btn-primary" style="margin-top: 1rem;">Volver al inicio</a>';
+            }
+            ?>
+        </div>
     </main>
 </body>
 </html>

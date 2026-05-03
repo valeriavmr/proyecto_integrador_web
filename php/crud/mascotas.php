@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
 // 3. OBTENER EL ID, EL USERNAME Y EL ROL DEL USUARIO LOGUEADO
 $username = $_SESSION['username'];
 // Aseguramos obtener el campo 'rol'
-$sql_user = "SELECT id_persona, rol FROM persona_g3 WHERE nombre_de_usuario = ?";
+$sql_user = "SELECT id_persona, rol FROM persona WHERE nombre_de_usuario = ?";
 $stmt_user = $conn->prepare($sql_user);
 $stmt_user->bind_param("s", $username);
 $stmt_user->execute();
@@ -84,7 +84,7 @@ if ($accion === 'agregar') {
     }
 
     
-    $sql = "INSERT INTO mascota_g3 (id_persona, nombre, fecha_de_nacimiento, edad, raza, tamanio, color, imagen_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO mascota (id_persona, nombre, fecha_de_nacimiento, edad, raza, tamanio, color, imagen_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ississss", $id_usuario_logueado, $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url); 
     if ($stmt->execute()) {
@@ -118,12 +118,12 @@ if ($accion === 'actualizar' && isset($_POST['id_mascota'])) {
     // Lógica de doble autorización para UPDATE
     if ($es_administrador) {
         // Administrador: actualiza por ID de mascota (sin id_persona)
-        $sql = "UPDATE mascota_g3 SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=?";
+        $sql = "UPDATE mascota SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssissssi", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url, $id_mascota);
     } else {
         // Cliente: actualiza solo sus mascotas (requiere id_mascota AND id_persona)
-        $sql = "UPDATE mascota_g3 SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=? AND id_persona=?";
+        $sql = "UPDATE mascota SET nombre=?, fecha_de_nacimiento=?, edad=?, raza=?, tamanio=?, color=?, imagen_url=? WHERE id_mascota=? AND id_persona=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssissssii", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $imagen_url, $id_mascota, $id_usuario_logueado);
     }
@@ -144,11 +144,11 @@ if ($accion === 'eliminar') {
         
         // Lógica de doble autorización para DELETE
         if ($es_administrador) {
-            $sql = "DELETE FROM mascota_g3 WHERE id_mascota=?";
+            $sql = "DELETE FROM mascota WHERE id_mascota=?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $id_mascota);
         } else {
-            $sql = "DELETE FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
+            $sql = "DELETE FROM mascota WHERE id_mascota=? AND id_persona=?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ii", $id_mascota, $id_usuario_logueado);
         }
@@ -169,11 +169,11 @@ if ($accion === 'editar' && isset($_GET['id_mascota'])) {
     $id_mascota_editar = $_GET['id_mascota'];
     
     if ($es_administrador) {
-        $sql_editar = "SELECT * FROM mascota_g3 WHERE id_mascota=?";
+        $sql_editar = "SELECT * FROM mascota WHERE id_mascota=?";
         $stmt_editar = $conn->prepare($sql_editar);
         $stmt_editar->bind_param("i", $id_mascota_editar);
     } else {
-        $sql_editar = "SELECT * FROM mascota_g3 WHERE id_mascota=? AND id_persona=?";
+        $sql_editar = "SELECT * FROM mascota WHERE id_mascota=? AND id_persona=?";
         $stmt_editar = $conn->prepare($sql_editar);
         $stmt_editar->bind_param("ii", $id_mascota_editar, $id_usuario_logueado);
     }
@@ -189,11 +189,11 @@ if ($accion === 'editar' && isset($_GET['id_mascota'])) {
 // Lógica de doble autorización para SELECT (Listado)
 if ($es_administrador) {
     // Administrador: ve TODAS las mascotas
-    $sql_select = "SELECT * FROM mascota_g3";
+    $sql_select = "SELECT * FROM mascota";
     $stmt_select = $conn->prepare($sql_select);
 } else {
     // Cliente: ve SOLO sus mascotas
-    $sql_select = "SELECT * FROM mascota_g3 WHERE id_persona = ?";
+    $sql_select = "SELECT * FROM mascota WHERE id_persona = ?";
     $stmt_select = $conn->prepare($sql_select);
     $stmt_select->bind_param("i", $id_usuario_logueado);
 }
@@ -218,12 +218,12 @@ if ($stmt_select) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Mascotas</title>
+    <title>Mis Mascotas - Tahito</title>
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/theme.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/footer_styles.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/main_cliente_style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/perfil_style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/tabla_style.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/menu_style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/form_style.css?v=<?= time() ?>">
 </head>
 <body>
@@ -270,7 +270,7 @@ if ($stmt_select) {
                             <img src="<?php echo htmlspecialchars($mascota_a_editar['imagen_url']); ?>" alt="Foto de <?php echo htmlspecialchars($mascota_a_editar['nombre']); ?>" style="max-width: 150px; height: auto; border-radius: 8px;">
                         </div>
                     <?php endif; ?>
-                    <input type="file" id="imagen" name="imagen" accept="image/*">
+                    <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg, image/jpg, image/webp">
                     <?php if ($mascota_a_editar): ?>
                         <small>Dejar vacío para mantener la imagen actual.</small>
                     <?php endif; ?>

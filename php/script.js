@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const puestoId = this.getAttribute('data-puesto_id');
             const modal = document.getElementById(`modal-${puestoId}`);
             if (modal) {
-                modal.style.display = 'block';
+                modal.style.display = 'flex'; // flex para centrar con align/justify center
+                document.body.style.overflow = 'hidden'; // evita scroll del fondo
             }
         });
     });
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     botonesCerrar.forEach(boton => {
         boton.addEventListener('click', function() {
             this.closest('.modal').style.display = 'none';
+            document.body.style.overflow = '';
         });
     });
 
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modales.forEach(modal => {
             if (event.target == modal) {
                 modal.style.display = 'none';
+                document.body.style.overflow = '';
             }
         });
     }

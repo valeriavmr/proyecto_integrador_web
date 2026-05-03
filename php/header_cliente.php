@@ -1,74 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/proyecto_adiestramiento_tahito/css/header_cliente.css?v=<?= time() ?>">
-</head>
-<body>
-    <header id="header_cliente">
-        <section>
-            <img src="/proyecto_adiestramiento_tahito/recursos/menu_img.png" id="nav_menu_icon" alt="">
-        </section>
-        <section id="nav_cuenta">
-            <a id="link_logout" href="/proyecto_adiestramiento_tahito/php/logout.php" title="Cerrar sesión">
-                <img src="/proyecto_adiestramiento_tahito/recursos/logout_img.png" alt="Cerrar sesión"></a>
-        </section>
-        <nav>
-            <ul id="nav_cliente">
-                <li><img src="/proyecto_adiestramiento_tahito/recursos/logsinfondo.png" alt=""></li>
-                <li><a href="#">
-                    <?php       
-                        require_once('crud/conexion.php');
-                        if (session_status() == PHP_SESSION_NONE) { 
-                                session_start(); 
-                            }
+<!-- Shared Header for authenticated clients -->
+<link rel="stylesheet" href="../css/theme.css?v=<?= time() ?>">
+<link rel="stylesheet" href="../css/header_cliente.css?v=<?= time() ?>">
 
-                    $usuario = $_SESSION['username'];
+<header id="header_cliente">
+    <div class="header-toggle">
+        <img src="../recursos/menu_img.png" id="nav_menu_icon" alt="Menú">
+    </div>
+    <div class="header-logo">
+        <img src="../recursos/logsinfondo.png" alt="Tahito">
+    </div>
+    <div id="nav_cuenta">
+        <a id="link_logout" href="../php/logout.php" title="Cerrar sesión">
+            <img src="../recursos/logout_img.png" alt="Cerrar sesión">
+        </a>
+    </div>
+</header>
 
-                    if($usuario == null){
-                        header("Location: no_autorizado.php");
-                        exit;
-                            }
-                        include_once('crud/consultas_varias.php');
-                        echo obtenerNombreUsuario($conn, $usuario); ?>
-                </a></li>
-                <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/crud/perfil.php"><img src="/proyecto_adiestramiento_tahito/recursos/perfil_icon.png" alt="" class="iconos">Perfil</a></li>
-                <li><a href="crud/mascotas.php"><img src="/proyecto_adiestramiento_tahito/recursos/mascotas_icon.png" alt="" class="iconos">Mis mascotas</a></li>
-                <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/servicios_cliente.php"><img src="/proyecto_adiestramiento_tahito/recursos/servicio_icon.png" alt="" class="iconos">Turnos y servicios</a></li>
-                <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/main_cliente.php"><img src="/proyecto_adiestramiento_tahito/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
-                <li><a href="/proyecto_adiestramiento_tahito/php/logout.php" title="Cerrar sesión" id="link_logout_menu">
-                    <img src="/proyecto_adiestramiento_tahito/recursos/logout_img.png" alt="Cerrar sesión"></a></li>
-            </ul>
-        </nav>
-    </header>
-</body>
+<nav id="nav_sidebar">
+    <ul id="nav_cliente">
+        <li class="nav-user-name">
+            <?php       
+                require_once('crud/conexion.php');
+                if (session_status() == PHP_SESSION_NONE) { session_start(); }
+                $usuario = $_SESSION['username'];
+                if($usuario == null){ header("Location: no_autorizado.php"); exit; }
+                include_once('crud/consultas_varias.php');
+                echo '<span>' . htmlspecialchars(obtenerNombreUsuario($conn, $usuario)) . '</span>';
+            ?>
+        </li>
+        <hr class="nav-divider">
+        <li><a href="../php/crud/perfil.php"><img src="../recursos/perfil_icon.png" alt="" class="iconos">Perfil</a></li>
+        <li><a href="crud/mascotas.php"><img src="../recursos/mascotas_icon.png" alt="" class="iconos">Mis mascotas</a></li>
+        <hr class="nav-divider">
+        <li><a href="../php/servicios_cliente.php"><img src="../recursos/servicio_icon.png" alt="" class="iconos">Turnos y servicios</a></li>
+        <hr class="nav-divider">
+        <li><a href="../php/main_cliente.php"><img src="../recursos/home_icon.png" alt="" class="iconos">Home</a></li>
+        <li><a href="../php/logout.php" id="link_logout_menu">
+            <img src="../recursos/logout_img.png" alt="Cerrar sesión">Cerrar sesión</a></li>
+    </ul>
+</nav>
+
+<div id="nav_overlay"></div>
+
 <script>
-    // Script para mostrar y ocultar el menú al hacer clic en el ícono
-    let menu = document.getElementById("nav_cliente");
-    let icono = document.getElementById("nav_menu_icon");
-
-    console.log(menu);
-
+    const menu = document.getElementById("nav_sidebar");
+    const overlay = document.getElementById("nav_overlay");
+    const icono = document.getElementById("nav_menu_icon");
 
     icono.addEventListener('click', (event) => {
-            event.stopPropagation();
-            menu.classList.toggle('menu_desplegado');
-        });
+        event.stopPropagation();
+        menu.classList.toggle('menu_desplegado');
+        overlay.classList.toggle('visible');
+    });
 
-    document.addEventListener('click', (event) => {
-    if (!menu.contains(event.target) && event.target !== icono) {
+    overlay.addEventListener('click', () => {
         menu.classList.remove('menu_desplegado');
-    }});
-
+        overlay.classList.remove('visible');
+    });
 </script>
-</html>

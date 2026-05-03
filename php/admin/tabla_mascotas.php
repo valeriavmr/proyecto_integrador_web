@@ -77,7 +77,7 @@
         </form>
     </section>
     <section id="volver_s">
-        <a href="mascotas_admin.php">Volver a Administración de mascotas</a>
+        <a href="mascotas_admin.php" class="btn-volver-admin">Volver a Administración de mascotas</a>
     </section>
     </main>
     <?php

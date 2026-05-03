@@ -79,3 +79,24 @@ td > a{
 .boton_excel:hover {
     background-color: #1b5e3f;
 }
+
+/* --- Botón Volver Admin --- */
+.btn-volver-admin {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #2E6009;
+    border: 1px solid #2E6009;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-volver-admin:hover {
+    background-color: #2E6009;
+    color: white;
+}

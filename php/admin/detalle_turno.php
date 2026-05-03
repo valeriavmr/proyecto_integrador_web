@@ -68,7 +68,7 @@
             <?php
             }
             echo "<button class='cancelar_turno_btn'><a href='crud/eliminar_servicio.php?id_servicio=" . $servicio['id_servicio'] . "'>Eliminar turno</a></button>
-            <a href='servicios_admin.php'>Volver a Administración de servicios</a>";
+            <a href="servicios_admin.php" class="btn-volver-admin">Volver a Administración de servicios</a>";
             if($horarioTurno >= $now) {
                 echo "<button class='editar_turno_btn'><a href='editar_turno.php?id_servicio=" . $servicio['id_servicio'] . "'>Editar turno</a></button></article>";
             } else {

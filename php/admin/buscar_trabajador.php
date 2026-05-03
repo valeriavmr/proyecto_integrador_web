@@ -35,10 +35,12 @@
 
         $id_persona = obtenerIdPersona($conn,$usuario);
 
-        // Obtenemos los datos de la persona en la tabla de trabajadores
-        $persona = obtenerTrabajadorPorId($conn, $id_persona);
-
-        $columnNames = array_keys($persona ?? []);
+        // Obtenemos las columnas de la tabla trabajadores directamente
+        $col_result = $conn->query("SHOW COLUMNS FROM trabajadores");
+        $columnNames = [];
+        while ($row = $col_result->fetch_assoc()) {
+            $columnNames[] = $row['Field'];
+        }
 
         // Inicializo los resultados
         $resultados = [];
@@ -52,7 +54,7 @@
             if (in_array($campo_persona, $columnNames)) {
 
                 // Usamos LOWER para hacer la búsqueda insensible a mayúsculas
-                $sql = "SELECT * FROM trabajadores_g3 WHERE LOWER($campo_persona) LIKE ?";
+                $sql = "SELECT * FROM trabajadores WHERE LOWER($campo_persona) LIKE ?";
                 $stmt = $conn->prepare($sql);
                 $param = '%' . strtolower($valor_campo) . '%';
                 $stmt->bind_param("s", $param);
@@ -107,7 +109,7 @@
     </section>
 <?php endif; ?>
 <section id="volver_s">
-        <a href="trabajadores_admin.php">Volver a Administración de trabajadores</a>
+        <a href="trabajadores_admin.php" class="btn-volver-admin">Volver a Administración de trabajadores</a>
 </section>
 </main>
 <?php

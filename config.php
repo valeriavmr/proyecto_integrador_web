@@ -3,30 +3,42 @@
 /**
  * Archivo de Configuración Principal
  * Define las rutas absolutas para que el proyecto sea portable.
+ * 
+ * Funciona tanto con XAMPP/Apache como con el servidor de desarrollo `php -S`.
  */
 
-// 1. DEFINIR LA RUTA DE LA CARPETA DEL PROYECTO
-// Esta es la parte de la ruta que viene DESPUÉS de 'htdocs'.
-// Basado en tu ruta C:\xampp\htdocs\2C2025\proyecto_integrador_web
-$project_folder_path = 'proyecto_adiestramiento_tahito';
+// 1. BASE_PATH — Ruta física en disco a la raíz del proyecto
+//    __DIR__ en config.php siempre apunta al directorio donde está este archivo,
+//    sin importar desde dónde se llame al script. Esto lo hace 100% portable.
+define('BASE_PATH', str_replace('\\', '/', __DIR__));
 
 
-// 2. DEFINIR LA RUTA BASE DEL SERVIDOR (PARA INCLUDES DE PHP)
-// Esto crea una ruta física en el disco duro. Es para uso interno de PHP.
-// $_SERVER['DOCUMENT_ROOT'] es 'C:/xampp/htdocs'
-define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/' . $project_folder_path);
-// En tu caso, BASE_PATH será: "C:/xampp/htdocs/proyecto_adiestramiento_tahito"
+// 2. BASE_URL — URL accesible desde el navegador
+$protocol   = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$server_name = $_SERVER['SERVER_NAME'] ?? 'localhost'; 
+$port        = $_SERVER['SERVER_PORT'] ?? 80;
+
+// Incluye el puerto sólo cuando no es el estándar (80/443)
+$port_str = (!in_array((int)$port, [80, 443])) ? ':' . $port : '';
+
+// Al servir con `php -S` desde la raíz del proyecto, la URL base es simplemente el host.
+// Al servir con XAMPP, se detecta el subfolder del proyecto automáticamente.
+$doc_root    = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT'] ?? '');
+$project_dir = str_replace('\\', '/', __DIR__);
+
+if ($doc_root && strpos($project_dir, $doc_root) === 0) {
+    // Caso XAMPP: el proyecto está dentro de htdocs
+    $subfolder = ltrim(str_replace($doc_root, '', $project_dir), '/');
+    $base_url_path = $subfolder ? '/' . $subfolder : '';
+} else {
+    // Caso `php -S localhost:8000`: el doc_root ES el proyecto
+    $base_url_path = '';
+}
+
+define('BASE_URL', $protocol . $server_name . $port_str . $base_url_path);
 
 
-// 3. DEFINIR LA URL BASE (PARA ENLACES HTML, CSS, JS, IMÁGENES)
-// Esto crea la URL que se usa en el navegador.
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-$server_name = $_SERVER['SERVER_NAME']; // Esto será 'localhost' en tu máquina
-define('BASE_URL', $protocol . $server_name . '/' . $project_folder_path);
-// En tu caso, BASE_URL será: "http://localhost/proyecto_adiestramiento_tahito"
-
-
-//Para los correo, definir el correo y la contraseña para no hardcodearla en el texto
-define('CORREO_HOST','grupos@serviciosya.com.ar');
-define('PASS_HOST','B6UVDn@3pX');
+// 3. Credenciales de correo
+define('CORREO_HOST', 'grupos@serviciosya.com.ar');
+define('PASS_HOST',   'B6UVDn@3pX');
 ?>

@@ -26,7 +26,7 @@ $id_mascota = intval($_GET['id_mascota']);
 $username = $_SESSION['username'];
 
 // Obtener ID y ROL del usuario logueado
-$sql_user = "SELECT id_persona, rol FROM persona_g3 WHERE nombre_de_usuario = ?";
+$sql_user = "SELECT id_persona, rol FROM persona WHERE nombre_de_usuario = ?";
 $stmt_user = $conn->prepare($sql_user);
 $stmt_user->bind_param("s", $username);
 $stmt_user->execute();
@@ -43,12 +43,12 @@ $es_administrador = ($user_data['rol'] === 'admin'); // Suponiendo que 'admin' e
 // 4. LÓGICA DE AUTORIZACIÓN PARA CARGAR LA FICHA
 if ($es_administrador) {
     // Si es administrador: Cargar CUALQUIER mascota por ID.
-    $sql_mascota = "SELECT * FROM mascota_g3 WHERE id_mascota = ?";
+    $sql_mascota = "SELECT * FROM mascota WHERE id_mascota = ?";
     $stmt = $conn->prepare($sql_mascota);
     $stmt->bind_param("i", $id_mascota);
 } else {
     // Si es cliente: Cargar solo sus propias mascotas.
-    $sql_mascota = "SELECT * FROM mascota_g3 WHERE id_mascota = ? AND id_persona = ?";
+    $sql_mascota = "SELECT * FROM mascota WHERE id_mascota = ? AND id_persona = ?";
     $stmt = $conn->prepare($sql_mascota);
     $stmt->bind_param("ii", $id_mascota, $id_usuario);
 }
