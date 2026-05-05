@@ -156,7 +156,7 @@ if (!$id_turno) {
         </form>
             <br>
             <br>
-            <a href="servicios_admin.php">Volver a Administración de turnos</a>
+            <a href="servicios_admin.php" class="btn-volver-admin">Volver a Administración de turnos</a>
         </fieldset>
     </main>
     <?php include('../footer.php'); ?>

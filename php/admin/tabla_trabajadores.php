@@ -76,7 +76,7 @@
             </table>
         </section>
     <section id="volver_s">
-        <a href="trabajadores_admin.php">Volver a Administración de trabajadores</a>
+        <a href="trabajadores_admin.php" class="btn-volver-admin">Volver a Administración de trabajadores</a>
     </section>
     </main>
     <?php

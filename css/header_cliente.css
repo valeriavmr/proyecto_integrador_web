@@ -1,123 +1,118 @@
-/*Configuraciones generales*/
+/* 
+  ===========================================
+  HEADER CLIENTE - STITCH DESIGN TASTE
+  ===========================================
+*/
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+#header_cliente {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background-color: var(--canvas-alabaster);
+  border-bottom: 1px solid var(--whisper-border);
 }
 
-h1{
-    font-family: 'Montserrat', 'sans-serif';
-    font-size: 28px;
-    text-align: center;
-    color:#2E6009;
+.header-toggle img,
+#nav_cuenta img {
+  height: 28px;
+  cursor: pointer;
+  transition: transform var(--spring-duration) var(--spring-easing);
+}
+.header-toggle img:hover,
+#nav_cuenta img:hover {
+  transform: scale(1.1);
 }
 
-h2{
-    font-family: 'Montserrat', 'sans-serif';
-    font-size: 20px;
-    text-align: center;
-    color:#2E6009;
+.header-logo img {
+  height: 45px;
 }
 
-html, body {
+/* Sidebar nav */
+#nav_sidebar {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 280px;
+  height: 100vh;
+  background: var(--pure-surface);
+  border-right: 1px solid var(--whisper-border);
+  box-shadow: 8px 0 30px rgba(0,0,0,0.06);
+  transition: left var(--spring-duration) var(--spring-easing);
+  z-index: 200;
+  overflow-y: auto;
+  padding: 2rem 0;
+}
+
+#nav_sidebar.menu_desplegado {
+  left: 0;
+}
+
+#nav_overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
+  background: rgba(24, 24, 27, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 150;
+}
+
+#nav_overlay.visible {
+  display: block;
+}
+
+#nav_cliente {
+  list-style: none;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-size: 16px;
 }
 
-body {
-  min-height: 100vh;
-  color: #4b4b4b;
+.nav-user-name {
+  padding: 1.5rem 2rem 1rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--charcoal-ink);
 }
 
-header{
-    top:0;
-    max-height: 150px;
-    display: grid;
-    grid-template-columns:1fr 1fr;
-    grid-template-rows: 1fr;
-    align-items: center;
-    justify-items: stretch;
-    background-color: #F0E8DD;
-    font-weight: bold;
-    padding-left: 20px;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+.nav-divider {
+  border: none;
+  border-top: 1px solid var(--whisper-border);
+  margin: 0.5rem 2rem;
 }
 
-#nav_cuenta{
-    justify-self: end;
-    padding-right: 20px;
+#nav_cliente li a {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.9rem 2rem;
+  text-decoration: none;
+  color: var(--muted-bark);
+  font-weight: 500;
+  transition: color 0.2s, background-color 0.2s;
 }
 
-#nav_menu_icon:hover{
-    cursor: pointer;
+#nav_cliente li a:hover {
+  color: var(--charcoal-ink);
+  background-color: var(--canvas-alabaster);
 }
 
-/*Menu hamburguesa*/
-
-#nav_cliente{
-    list-style: none;
-    background-color: #F0E8DD;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    min-height: 100vh;
-    width: 15%;
-    padding: 1rem;
-    padding-top: 0;
-    padding-bottom: 0;
-    z-index: 1000;
-    display: none;
+#nav_cliente li a .iconos {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
 }
 
-#nav_cliente > li > a {
-    text-decoration: none;
-    color: #2E6009;
-    display: block;
-    padding: 0.5rem 0;
-    font-weight: bold;
+#link_logout_menu {
+  color: var(--terracotta-accent) !important;
 }
 
-#nav_cliente > li> img{
-    height: 150px;
-    cursor: pointer;
-}
-
-#link_logout_menu{
-    position: absolute;
-    bottom: 0;
-  }
-
-#nav_cliente.menu_desplegado{
-    display: block;
-}
-
-#nav_cliente > li > a > .iconos{
-    height: 25px;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-#volver_s{
-  text-align: center;
-}
-
-#volver_s > a{
-text-decoration: none;
-color: #F4F4F4;
-font-weight: bold;
-border-radius: 1rem;
-padding: 0.5rem;
-display: inline-block;
-background-color: #2E6009;
-margin: 2rem;
-text-align: center;
+#link_logout_menu:hover {
+  background-color: rgba(224, 122, 95, 0.05) !important;
 }

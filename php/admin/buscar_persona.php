@@ -44,7 +44,7 @@
             if (in_array($campo_persona, $columnNames)) {
 
                 // Usamos LOWER para hacer la búsqueda insensible a mayúsculas
-                $sql = "SELECT * FROM persona_g3 WHERE LOWER($campo_persona) LIKE ?";
+                $sql = "SELECT * FROM persona WHERE LOWER($campo_persona) LIKE ?";
                 $stmt = $conn->prepare($sql);
                 $param = '%' . strtolower($valor_campo) . '%';
                 $stmt->bind_param("s", $param);
@@ -100,7 +100,7 @@
     </section>
 <?php endif; ?>
 <section id="volver_s">
-        <a href="personas_admin.php">Volver a Administración de personas</a>
+        <a href="personas_admin.php" class="btn-volver-admin">Volver a Administración de personas</a>
 </section>
 </main>
 <?php

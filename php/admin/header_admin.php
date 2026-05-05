@@ -1,76 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/proyecto_adiestramiento_tahito/css/header_cliente.css?v=<?= time() ?>">
-    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
-</head>
-<body>
-    <?php
-    require_once('auth.php');
-    ?>
-    <header id="header_cliente">
-        <section>
-            <img src="/proyecto_adiestramiento_tahito/recursos/menu_img.png" id="nav_menu_icon" alt="">
-        </section>
-        <section id="nav_cuenta">
-            <a id="link_logout" href="/proyecto_adiestramiento_tahito/php/logout.php" title="Cerrar sesión">
-                <img src="/proyecto_adiestramiento_tahito/recursos/logout_img.png" alt="Cerrar sesión"></a>
-        </section>
-        <nav>
-            <h2>Perfil de Administrador</h2>
-            <ul id="nav_cliente">
-                <li><img src="/proyecto_adiestramiento_tahito/recursos/logsinfondo.png" alt=""></li>
-                <li><a href="../crud/perfil.php">
-                    <?php       
-                        require_once('../crud/conexion.php');
-                        if (session_status() == PHP_SESSION_NONE) {
-                            session_start();
-                        }
-                        $usuario = $_SESSION['username'];
-                        include_once('../crud/consultas_varias.php');
-                        echo obtenerNombreUsuario($conn, $usuario); ?>
-                </a></li>
-                <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/admin/personas_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/personas_icon.png" alt="" class="iconos">Personas</a></li>
-                <li><a href="/proyecto_adiestramiento_tahito/php/admin/mascotas_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/mascotas_icon.png" alt="" class="iconos">Mascotas</a></li>
-                <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/admin/servicios_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
-                <li><a href="/proyecto_adiestramiento_tahito/php/admin/trabajadores_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/trabajador_icon.png" alt="" class="iconos">Trabajadores</a></li>
-                <hr>
-                <li><a href="/proyecto_adiestramiento_tahito/php/admin/main_admin.php"><img src="/proyecto_adiestramiento_tahito/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
-                <li><a href="/proyecto_adiestramiento_tahito/php/logout.php" title="Cerrar sesión" id="link_logout_menu">
-                    <img src="/proyecto_adiestramiento_tahito/recursos/logout_img.png" alt="Cerrar sesión"></a></li>
-            </ul>
-        </nav>
-    </header>
-</body>
+<?php 
+require_once dirname(__DIR__, 2) . '/config.php'; 
+require_once('auth.php');
+?>
+<!-- Design System: Sidebar header -->
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/theme.css?v=<?= time() ?>">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/header_cliente.css?v=<?= time() ?>">
+
+<style>
+/* Botón Volver - estilo global para todo el panel admin */
+.btn-volver-admin {
+    display: inline-block;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0.65rem 1.4rem;
+    background-color: transparent;
+    color: var(--forest-green, #2E6009);
+    border: 2px solid var(--forest-green, #2E6009);
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.btn-volver-admin:hover {
+    background-color: var(--forest-green, #2E6009);
+    color: #fff;
+}
+</style>
+
+<header id="header_cliente">
+    <div class="header-toggle">
+        <img src="<?php echo BASE_URL; ?>/recursos/menu_img.png" id="nav_menu_icon" alt="Menú">
+    </div>
+    <div class="header-logo">
+        <a href="<?php echo BASE_URL; ?>/php/admin/main_admin.php">
+            <img src="<?php echo BASE_URL; ?>/recursos/logsinfondo.png" alt="Tahito">
+        </a>
+    </div>
+    <div id="nav_cuenta">
+        <a id="link_logout" href="<?php echo BASE_URL; ?>/php/logout.php" title="Cerrar sesión">
+            <img src="<?php echo BASE_URL; ?>/recursos/logout_img.png" alt="Cerrar sesión">
+        </a>
+    </div>
+</header>
+
+<nav id="nav_sidebar">
+    <ul id="nav_cliente">
+        <li class="nav-user-name">
+            <span>
+                <?php       
+                    require_once(BASE_PATH . '/php/crud/conexion.php');
+                    if (session_status() == PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    $usuario = $_SESSION['username'];
+                    include_once(BASE_PATH . '/php/crud/consultas_varias.php');
+                    echo obtenerNombreUsuario($conn, $usuario); 
+                ?>
+            </span>
+        </li>
+        <hr class="nav-divider">
+        <li><a href="<?php echo BASE_URL; ?>/php/admin/personas_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/personas_icon.png" alt="" class="iconos">Personas</a></li>
+        <li><a href="<?php echo BASE_URL; ?>/php/admin/mascotas_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/mascotas_icon.png" alt="" class="iconos">Mascotas</a></li>
+        <hr class="nav-divider">
+        <li><a href="<?php echo BASE_URL; ?>/php/admin/servicios_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
+        <li><a href="<?php echo BASE_URL; ?>/php/admin/trabajadores_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/trabajador_icon.png" alt="" class="iconos">Trabajadores</a></li>
+        <hr class="nav-divider">
+        <li><a href="<?php echo BASE_URL; ?>/php/admin/main_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
+        <li><a href="<?php echo BASE_URL; ?>/php/logout.php" id="link_logout_menu">
+            <img src="<?php echo BASE_URL; ?>/recursos/logout_img.png" alt="Cerrar sesión">Cerrar sesión</a></li>
+    </ul>
+</nav>
+
+<div id="nav_overlay"></div>
+
 <script>
-    // Script para mostrar y ocultar el menú al hacer clic en el ícono
-    let menu = document.getElementById("nav_cliente");
-    let icono = document.getElementById("nav_menu_icon");
+    const menuSidebar  = document.getElementById("nav_sidebar");
+    const menuOverlay  = document.getElementById("nav_overlay");
+    const menuIcono    = document.getElementById("nav_menu_icon");
 
-    console.log(menu);
+    menuIcono.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuSidebar.classList.toggle('menu_desplegado');
+        if (menuOverlay) menuOverlay.classList.toggle('visible');
+    });
 
-
-    icono.addEventListener('click', (event) => {
-            event.stopPropagation();
-            menu.classList.toggle('menu_desplegado');
+    if (menuOverlay) {
+        menuOverlay.addEventListener('click', () => {
+            menuSidebar.classList.remove('menu_desplegado');
+            menuOverlay.classList.remove('visible');
         });
-
-    document.addEventListener('click', (event) => {
-    if (!menu.contains(event.target) && event.target !== icono) {
-        menu.classList.remove('menu_desplegado');
-    }});
-
+    }
 </script>
-</html>

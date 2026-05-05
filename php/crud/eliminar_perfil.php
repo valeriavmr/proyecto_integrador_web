@@ -26,7 +26,7 @@ deleteDireccionPorId($conn, $id_persona);
 deleteTrabajadorPorId($conn,$id_persona);
 
 // Eliminar el usuario de la tabla persona
-$sql = "DELETE FROM persona_g3 WHERE nombre_de_usuario = ?";
+$sql = "DELETE FROM persona WHERE nombre_de_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 

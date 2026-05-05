@@ -1,108 +1,138 @@
-/*General*/
+/* 
+  ===========================================
+  AUTH COMPONENTS - STITCH DESIGN TASTE
+  ===========================================
+*/
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: var(--canvas-alabaster);
 }
 
-html, body {
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.auth-card {
+  background: var(--pure-surface);
+  border: 1px solid var(--whisper-border);
+  border-radius: 2.5rem;
+  padding: 3.5rem 3rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--diffused-shadow);
+  text-align: center;
 }
 
-body {
+.auth-header {
+  margin-bottom: 2.5rem;
+}
+
+.auth-logo {
+  height: 60px;
+  margin-bottom: 1.5rem;
+}
+
+.auth-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+  margin: 0 auto;
+  font-size: 1.05rem;
+}
+
+.auth-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  color: var(--charcoal-ink);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--charcoal-ink);
+  background: var(--canvas-alabaster);
+  border: 1px solid var(--whisper-border-dark);
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color var(--spring-duration) var(--spring-easing), box-shadow 0.2s;
+}
+
+.form-input::placeholder {
+  color: var(--muted-bark);
+  opacity: 0.6;
+}
+
+.form-input:focus {
+  border-color: var(--terracotta-accent);
+  background: var(--pure-surface);
+  box-shadow: 0 0 0 4px rgba(224, 122, 95, 0.15); /* Focus ring */
+}
+
+.w-100 {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.auth-links {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-image: url('../recursos/fondoparalaspantallas.png');
-}
-
-main {
-  display: flex;
-  justify-content: center;
+  gap: 0.8rem;
   align-items: center;
-  flex: 1;
 }
 
-
-
-/*Titulos y subtitulos*/
-
-h1{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 28px;
-    text-align: center;
-    padding: 0.5rem;
-    color:#2E6009;
+.link-secondary {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--muted-bark);
+  font-size: 0.95rem;
+  transition: color 0.2s;
 }
 
-h2{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
-    text-align: center;
-    color:#2E6009;
-    padding: 1rem;
+.link-secondary:hover {
+  color: var(--charcoal-ink);
 }
 
-/*Para los forms*/
-
-form > fieldset{
-    text-align: center;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border-radius: 1rem;
-    background-color: #F0E8DD;
-    border-style: none;
-    box-shadow: #a7866D 0px 0px 5px;
+.link-cancel {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--terracotta-accent);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
 }
 
-form > fieldset > input,select{
-    border-style: none;
-    border-radius: 0.5rem;
-    margin: 0.5rem;
-    width: 100%;
-    max-width: 340px;
-    height: 2rem;
+.link-cancel:hover {
+  color: var(--terracotta-hover);
 }
 
-#btn_login,#btn_rec_pass{
-    border-radius: 0.7rem;
-    border-style:none;
-    background-color: #2E6009;
-    font-weight: bold;
-    color: #F4F4F4;
+.error-text {
+  color: #DC2626; /* Clean red, not pure bright */
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
-#btn_login:hover,#btn_rec_pass:hover,#btn_change_pass:hover{
-    background-color: #a7866D;
-    cursor: pointer;
-}
-
-/*Registro-cancelar*/
-
-#link_registro, label, #link_pass_olvidada{
-    padding: 1rem;
-    margin: 1rem;
-    color: #2E6009;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#link_main{
-    color: red;
-    text-decoration: none;
-}
-
-#btn_change_pass{
-    border-radius: 0.7rem;
-    border-style:none;
-    background-color: #2E6009;
-    font-weight: bold;
-    color: #F4F4F4;
-    padding: 0.5rem;
-    margin: 0.5rem;
+.success-text {
+  color: #16A34A;
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
 }

@@ -1,135 +1,208 @@
-/*Generales*/
+/* 
+  ===================================================
+  SOLICITAR TURNO / FORMULARIOS ADMIN
+  Adiestramiento Tahito Design System (DESIGN.md)
+  ===================================================
+*/
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html, body {
   min-height: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  background-color: #FAFAFA;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  color: #18181B;
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  color: #4b4b4b;
 }
 
+/* --- Main --- */
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   flex: 1;
-  background-image: url('../recursos/fondoparalaspantallas.png');
-  background-size: cover;
+  padding: 2rem 1rem 3rem;
+  background-color: #FAFAFA;
 }
 
-/*Titulos y subtitulos*/
-
-h1{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 28px;
-    text-align: center;
-    padding: 0.5rem;
-    color:#2E6009;
+/* --- Headings --- */
+h1 {
+  font-weight: 700;
+  font-size: 1.75rem;
+  text-align: center;
+  color: #18181B;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
 }
 
-h2{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
-    text-align: center;
-    color:#2E6009;
+h2 {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #18181B;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.25rem;
+  text-align: left;
 }
 
-/*Formulario*/
-
-fieldset{
-    text-align: center;
-    padding: 0.5rem;
-    margin: 2rem;
-    border-radius: 1rem;
-    background-color: #F0E8DD;
-    border-style: none;
-    box-shadow: #a7866D 0px 0px 5px;
+/* --- Fieldset as card --- */
+fieldset {
+  width: 100%;
+  max-width: 520px;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 12px rgba(24, 24, 27, 0.05);
+  text-align: left;
 }
 
-fieldset > form > input,select,textarea{
-    border-style: none;
-    border-radius: 0.5rem;
-    margin: 0.5rem;
-    width: 100%;
-    max-width: 340px;
-    height: 2rem;
+legend {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #71717A;
+  padding: 0 0.5rem;
 }
 
-textarea{
-    height: 100px;
+/* --- Inputs & Selects --- */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem 0;
+  background: #FAFAFA;
+  border: 1.5px solid rgba(226, 232, 240, 0.9);
+  border-radius: 0.65rem;
+  font-size: 0.95rem;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: #18181B;
+  height: auto;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  appearance: auto;
+  -webkit-appearance: auto;
 }
 
-input#solicitar_turno_btn{
-    background-color: #2E6009;
-    color: white;
-    cursor: pointer;
-    margin:0;
+input::placeholder,
+textarea::placeholder {
+  color: #A1A1AA;
 }
 
-input#solicitar_turno_btn:hover{
-    background-color: #a7866D;
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #E07A5F;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.15);
 }
 
-fieldset > a{
-    text-decoration: none;
-    color: #2E6009;
-    font-weight: bold;
+textarea {
+  height: 110px;
+  resize: vertical;
 }
 
-input#editar_turno_btn{
-    background-color: #2E6009;
-    color: white;
-    cursor: pointer;
-    margin:0;
+/* --- Labels --- */
+label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #71717A;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
 }
 
-input#editar_turno_btn:hover{
-    background-color: #a7866D;
+/* --- Primary submit buttons --- */
+input[type="submit"],
+input#solicitar_turno_btn,
+input#editar_turno_btn,
+input#add_tipo_servicio_btn,
+.act_btn {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 2rem;
+  margin: 0.5rem 0 0;
+  background-color: #2E6009;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-input#add_tipo_servicio_btn{
-    background-color: #2E6009;
-    color: white;
-    cursor: pointer;
-    margin:0;
+input[type="submit"]:hover,
+input#solicitar_turno_btn:hover,
+input#editar_turno_btn:hover,
+input#add_tipo_servicio_btn:hover,
+.act_btn:hover {
+  background-color: #245007;
 }
 
-input#add_tipo_servicio_btn:hover{
-    background-color: #a7866D;
+input[type="submit"]:active,
+input#solicitar_turno_btn:active,
+input#editar_turno_btn:active,
+input#add_tipo_servicio_btn:active,
+.act_btn:active {
+  transform: translateY(1px);
 }
 
-/*Seccion volver*/
-#back_section{
-    margin-bottom: 1rem;
-    text-align: center;
+/* --- Error messages --- */
+p[style*="color:red"],
+p[style*="color: red"] {
+  font-size: 0.82rem !important;
+  color: #DC2626 !important;
+  margin-top: 0.35rem;
 }
 
-#back_section > a{
-    text-decoration: none;
-    color: #2E6009;
-    font-weight: bold;
+/* --- Back section --- */
+#back_section {
+  margin: 0.5rem 0 1.5rem;
+  text-align: center;
 }
 
-.act_btn{
-    background-color: #2E6009;
-    color: white;
-    cursor: pointer;
-    margin-top: 1rem;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+#back_section > a {
+  text-decoration: none;
+  color: #2E6009;
+  font-weight: 600;
+}
+
+/* --- File input --- */
+input[type="file"] {
+  font-size: 0.88rem;
+  color: #71717A;
+  cursor: pointer;
+  background: transparent;
+  border: 1.5px dashed rgba(226, 232, 240, 0.9);
+  padding: 0.6rem 1rem;
+}
+
+input[type="file"]:hover {
+  border-color: #E07A5F;
 }

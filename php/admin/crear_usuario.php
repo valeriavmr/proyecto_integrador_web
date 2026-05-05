@@ -20,18 +20,14 @@
     require_once('../crud/conexion.php');
     include_once('../crud/consultas_varias.php');
 
-    //Valido que tenga pass app para que pueda enviar el correo inicial
     if (session_status() == PHP_SESSION_NONE) { session_start(); }
 
     $user_admin = $_SESSION['username'];
 
     $id_admin = obtenerIdPersona($conn,$user_admin);
 
+    // La pass_app se usa solo para enviar el correo inicial, no bloquea el acceso
     $pass_app = obtenerPassAppPorId($conn,$id_admin);
-
-    if($pass_app == null){
-      header('Location: main_admin.php?mensaje=No se poseen las credenciales necesarias.');
-    }
 
     //Inserto el header
     include('header_admin.php');
@@ -153,7 +149,7 @@
         </fieldset>
     </form>
     <section id="volver_s">
-        <a href="personas_admin.php">Volver a Administración de personas</a>
+        <a href="personas_admin.php" class="btn-volver-admin">Volver a Administración de personas</a>
     </section>
     </main>
     <?php
