@@ -768,4 +768,58 @@ function obtenerTiposServicio($conn) {
     }
     return $tipos;
 }
+
+//Funcion que devuelve los insumos con stock bajo, con su nombre y cantidad actual
+function obtenerInsumosConBajoStock($conn) {
+    $sql = "SELECT i.id_insumo, i.nombre_insumo, ii.cantidad_actual FROM insumo i 
+    INNER JOIN inventario_insumo ii ON i.id_insumo = ii.id_insumo WHERE ii.cantidad_actual <= 
+    ii.param_bajo_stock";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $insumos_bajo_stock = [];
+    while ($row = $result->fetch_assoc()) {
+        $insumos_bajo_stock[] = $row;
+    }
+    return $insumos_bajo_stock;
+}
+
+//Funcion que devuelve los productos con stock bajo, con su nombre y cantidad actual
+function obtenerProductosConBajoStock($conn) {
+    $sql = "SELECT p.id_producto, p.nombre_producto, ip.cantidad_actual_producto FROM productos p 
+    INNER JOIN inventario ip ON p.id_producto = ip.id_producto 
+    WHERE ip.cantidad_actual_producto <= ip.param_bajo_stock";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $productos_bajo_stock = [];
+    while ($row = $result->fetch_assoc()) {
+        $productos_bajo_stock[] = $row;
+    }
+    return $productos_bajo_stock;
+}
+
+//Funcion que devuelve la cantidad total de insumos en stock
+function getCantidadTotalInsumos($conn) {
+    $sql = "SELECT COALESCE(SUM(cantidad_actual), 0) AS total_insumos FROM inventario_insumo";
+    $result = $conn->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['total_insumos'];
+    }
+    return 0;
+}
+
+//Funcion que devuelve la cantidad total de productos en stock
+function getCantidadTotalProductos($conn) {
+    $sql = "SELECT COALESCE(SUM(cantidad_actual_producto), 0) AS total_productos FROM inventario";
+    $result = $conn->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['total_productos'];
+    }
+    return 0;
+}
 ?>

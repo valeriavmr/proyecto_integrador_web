@@ -80,6 +80,7 @@ CREATE TABLE persona (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   COMMENT='Usuarios del sistema: clientes, trabajadores y administradores';
 
+ALTER TABLE `persona` CHANGE `rol` `rol` ENUM('cliente','trabajador','admin','gestor') CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL;
 
 CREATE TABLE direccion (
     id_persona  INT PRIMARY KEY,
@@ -230,53 +231,79 @@ CREATE TABLE proveedores (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   COMMENT='Proveedores de insumos y productos (Bernardo)';
 
+--Insumos
+CREATE TABLE insumo (
+    id_insumo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_insumo VARCHAR(100) NOT NULL,
+    descripcion_insumo TEXT,
+    tipo_insumo VARCHAR(50),
+    costo_unidad DECIMAL(10,2) NOT NULL,
+) ENGINE=InnoDB;
+
+CREATE TABLE inventario_insumo (
+    id_stock_insumo INT AUTO_INCREMENT PRIMARY KEY,
+    id_insumo INT NOT NULL,
+    cantidad_actual INT NOT NULL DEFAULT 0,
+    param_bajo_stock INT NOT NULL,
+
+    FOREIGN KEY (id_insumo)
+        REFERENCES insumo(id_insumo)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE movimientos_insumo (
+    id_movimiento INT AUTO_INCREMENT PRIMARY KEY,
+    id_stock_insumo INT NOT NULL,
+    tipo_movimiento ENUM('entrada', 'salida') NOT NULL,
+    cantidad INT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_stock_insumo)
+        REFERENCES inventario_insumo(id_stock_insumo)
+) ENGINE=InnoDB;
+
+--productos
 
 CREATE TABLE productos (
-    id_producto     INT AUTO_INCREMENT PRIMARY KEY,
-    nombre          VARCHAR(100) NOT NULL,
-    descripcion     TEXT,
-    tipo            VARCHAR(100)
-                        COMMENT 'Categoría del producto: alimento, medicamento, accesorio, etc.',
-    precio_venta    DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    stock_actual    INT          NOT NULL DEFAULT 0,
-    stock_minimo    INT          NOT NULL DEFAULT 0
-                        COMMENT 'Alerta de reposición cuando stock_actual <= stock_minimo',
-    activo          TINYINT(1)  NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-  COMMENT='Catálogo de productos e insumos del centro (Valeria)';
+id_producto INT AUTO_INCREMENT PRIMARY KEY,
+nombre_producto VARCHAR(100) NOT NULL,
+descripcion_producto TEXT,
+precio_unitario DECIMAL(10,2) NOT NULL
+) ENGINE=InnoDB;
 
+ALTER TABLE productos 
+ADD imagen_producto VARCHAR(255);
 
-CREATE TABLE movimientos_stock (
-    id_movimiento       INT AUTO_INCREMENT PRIMARY KEY,
-    id_producto         INT NOT NULL,
-    tipo_movimiento     ENUM('entrada','salida','ajuste') NOT NULL,
-    cantidad            INT      NOT NULL,
-    fecha_movimiento    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    referencia_tipo     VARCHAR(50)
-                            COMMENT 'Origen del movimiento: compra | venta | uso_servicio | ajuste',
-    referencia_id       INT
-                            COMMENT 'ID del registro origen (id_compra, id_venta, id_servicio)',
-    CONSTRAINT fk_mov_producto
-        FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
-        ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-  COMMENT='Trazabilidad de movimientos de stock (Valeria)';
+CREATE TABLE inventario (
+id_producto_stock INT AUTO_INCREMENT PRIMARY KEY,
+id_producto INT NOT NULL,
+cantidad_actual_producto INT NOT NULL DEFAULT 0,
+param_bajo_stock INT NOT NULL,
 
+CONSTRAINT fk_inventario_producto
+FOREIGN KEY (id_producto)
+REFERENCES productos(id_producto)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
-CREATE TABLE servicio_insumos (
-    id                  INT AUTO_INCREMENT PRIMARY KEY,
-    id_tipo_servicio    INT NOT NULL,
-    id_producto         INT NOT NULL,
-    cantidad            DECIMAL(10,3) NOT NULL DEFAULT 1
-                            COMMENT 'Cantidad de producto consumida por unidad de servicio',
-    CONSTRAINT fk_si_tipo_serv
-        FOREIGN KEY (id_tipo_servicio) REFERENCES tipo_de_servicio(id_tipo_servicio)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_si_producto
-        FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
-        ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-  COMMENT='Insumos requeridos por cada tipo de servicio (Valeria)';
+CREATE TABLE inventario_movimientos (
+id_movimiento_stock INT AUTO_INCREMENT PRIMARY KEY,
+id_producto_stock INT NOT NULL,
+tipo_movimiento ENUM('entrada', 'salida') NOT NULL,
+fecha_movimiento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+cantidad_producto INT NOT NULL,
+
+CONSTRAINT fk_movimiento_inventario
+FOREIGN KEY (id_producto_stock)
+REFERENCES inventario(id_producto_stock)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+) ENGINE=InnoDB; 
+
+CREATE INDEX idx_inventario_producto ON inventario(id_producto);
+CREATE INDEX idx_movimientos_stock ON inventario_movimientos(id_producto_stock);
+
 
 
 -- ================================================================
