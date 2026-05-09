@@ -94,6 +94,7 @@ $id_persona = $_GET['id_persona'] ?? $_POST['id_persona'] ?? null;
                 <option value="admin">Administrador</option>
                 <option value="cliente">Cliente</option>
                 <option value="trabajador">Trabajador</option>
+                <option value="gestor">Gestor de Inventario</option>
             </select>
 
             <?php if (!$esAdmin): ?>

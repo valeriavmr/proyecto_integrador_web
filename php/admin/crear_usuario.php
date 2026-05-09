@@ -113,6 +113,7 @@
                 <option value="admin">Administrador</option>
                 <option value="cliente">Cliente</option>
                 <option value="trabajador">Trabajador</option>
+                <option value="gestor">Gestor de Inventario</option>
             </select>
             <label for="tel_persona"></label>
             <input type="tel" name="tel_persona" id="tel_persona" minlength="10"

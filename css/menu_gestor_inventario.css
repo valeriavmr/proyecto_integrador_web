@@ -1,0 +1,259 @@
+/*Configuraciones generales*/
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+h1{
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 28px;
+    text-align: center;
+    color:#2E6009;
+}
+
+h2{
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 20px;
+    text-align: center;
+    color:#2E6009;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  min-height: 100vh;
+  color: #4b4b4b;
+  background-color:#F4F4F4;
+}
+
+main {
+    background-color:#F4F4F4;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-items: center;
+}
+
+main > #menu_gestion_gestor_inventario{
+    flex: 1;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    height: fit-content;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+main > h1{
+    grid-column: span 2;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.opc_menu_ap{
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.opc_menu_ap > p,
+.opc_menu_ap > a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 2rem;
+}
+
+.opc_menu_ap:hover{
+    background-color: #2E6009;
+    color: white;
+    cursor: pointer;
+}
+
+.opc_menu_ap > a:hover{
+    color: white;
+}
+
+.opc_menu_ap > a > img,
+.opc_menu_ap > p > img{
+    max-height: 24px;
+}
+
+main > #menu_gestion_gestor_inventario .opc_menu_ap > a > img,
+main > #menu_gestion_gestor_inventario .opc_menu_ap > p > img{
+    max-height: 24px;
+}
+
+/* =========================
+   ALERTAS DE BAJO STOCK
+========================= */
+
+#alertas_bajo_stock {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem auto;
+    max-width: 900px;
+}
+
+/* Card horizontal */
+.alerta_card.horizontal {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 12px;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+/* Hover */
+.alerta_card.horizontal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+/* Icono */
+.icono {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.2rem;
+}
+
+/* Color alerta */
+.icono.alerta {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Texto */
+.info .titulo {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.info .valor {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #4b4b4b;
+}
+
+.info .link {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.icono.alerta {
+    background: #f8d7da;
+}
+
+.icono.warning {
+    background: #fff3cd;
+}
+
+.icono.ok {
+    background: #d4edda;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard {
+    width: 100%;
+    padding: 0 2rem; 
+}
+
+/* CARDS */
+.dashboard_cards {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1;
+    min-width: 220px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    background: transparent;
+    padding: 1.5rem;
+    border-radius: 1rem;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    background-color: #2E6009;
+    color: white;
+    cursor: pointer;
+}
+
+.card .icono {
+    background: none;
+    color: #2E6009;
+    font-size: 1.2rem;
+}
+
+/* Texto normal */
+.card .titulo {
+    color: #4b4b4b;
+}
+
+.card .valor {
+    color: #4b4b4b;
+    text-decoration: none;
+}
+
+/* Hover texto */
+.card:hover .titulo,
+.card:hover .valor,
+.card:hover span,
+.card:hover .icono {
+    color: white;
+}
+
+.card.alerta {
+    position: relative;
+}
+
+.card.alerta::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #dc3545;
+}
