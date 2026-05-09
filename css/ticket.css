@@ -1,0 +1,38 @@
+.ticket-header {
+    text-align: center;
+}
+
+.ticket-logo {
+    width: 70px;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.ticket-divider {
+    text-align: center;
+    margin: 15px 0;
+    letter-spacing: 2px;
+}
+
+.ticket-total {
+    text-align: right;
+    margin-top: 15px;
+}
+
+.ticket-linea {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+#barcode {
+    margin: auto;
+    display: block;
+}
+
+#qrcode {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+/* Estilos del Ticket */

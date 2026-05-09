@@ -1,431 +1,332 @@
 let carrito = [];
 
-
-/*
-========================================
-AGREGAR PRODUCTO
-========================================
-*/
-
-function agregarProducto(id, nombre, precio){
-
+/* ========================================
+   AGREGAR PRODUCTO
+   ======================================== */
+function agregarProducto(id, nombre, precio) {
     let existe = carrito.find(p => p.id == id);
-
-    if(existe){
-
+    if (existe) {
         existe.cantidad++;
-
-    }else{
-
+    } else {
         carrito.push({
             id,
             nombre,
             precio,
-            cantidad:1
+            cantidad: 1
         });
     }
-
     renderCarrito();
 }
 
-
-
-/*
-========================================
-RENDER CARRITO
-========================================
-*/
-
-function renderCarrito(){
-
-    let tbody =
-        document.querySelector("#tablaVenta tbody");
+/* ========================================
+   RENDER CARRITO
+   ======================================== */
+function renderCarrito() {
+    let tbody = document.querySelector("#tablaVenta tbody");
+    if (!tbody) return;
 
     tbody.innerHTML = "";
+    let subtotalGeneral = 0;
 
-    let total = 0;
-
-    carrito.forEach((item,index)=>{
-
-        let subtotal =
-            item.precio * item.cantidad;
-
-        total += subtotal;
+    carrito.forEach((item, index) => {
+        let subtotal = item.precio * item.cantidad;
+        subtotalGeneral += subtotal;
 
         tbody.innerHTML += `
-
             <tr>
-
+                <td>${item.nombre}</td>
                 <td>
-                    ${item.nombre}
+                    <button class="btn" style="padding:2px 8px" onclick="restarCantidad(${index})">-</button>
+                    <span style="margin:0 5px">${item.cantidad}</span>
+                    <button class="btn" style="padding:2px 8px" onclick="sumarCantidad(${index})">+</button>
                 </td>
-
+                <td>$${Number(item.precio).toLocaleString()}</td>
+                <td>$${subtotal.toLocaleString()}</td>
                 <td>
-
-                    <button onclick="restarCantidad(${index})">
-                        -
-                    </button>
-
-                    ${item.cantidad}
-
-                    <button onclick="sumarCantidad(${index})">
-                        +
-                    </button>
-
+                    <button class="btn btn-danger" style="padding:2px 8px" onclick="eliminarProducto(${index})">❌</button>
                 </td>
-
-                <td>
-                    $${item.precio}
-                </td>
-
-                <td>
-                    $${subtotal.toFixed(2)}
-                </td>
-
-                <td>
-
-                    <button
-                        class="btn-danger"
-                        onclick="eliminarProducto(${index})">
-
-                        ❌
-
-                    </button>
-
-                </td>
-
             </tr>
         `;
     });
 
-    document.getElementById("total")
-        .innerText = total.toFixed(2);
+    let iva = subtotalGeneral * 0.21;
+    let total = subtotalGeneral + iva;
+
+    document.getElementById("subtotal").innerText = subtotalGeneral.toFixed(2);
+    document.getElementById("iva").innerText = iva.toFixed(2);
+    document.getElementById("total").innerText = total.toFixed(2);
 }
 
-
-
-/*
-========================================
-SUMAR CANTIDAD
-========================================
-*/
-
-function sumarCantidad(index){
-
+function sumarCantidad(index) {
     carrito[index].cantidad++;
-
     renderCarrito();
 }
 
-
-
-/*
-========================================
-RESTAR CANTIDAD
-========================================
-*/
-
-function restarCantidad(index){
-
+function restarCantidad(index) {
     carrito[index].cantidad--;
-
-    if(carrito[index].cantidad <= 0){
-
-        carrito.splice(index,1);
+    if (carrito[index].cantidad <= 0) {
+        carrito.splice(index, 1);
     }
-
     renderCarrito();
 }
 
-
-
-/*
-========================================
-ELIMINAR PRODUCTO
-========================================
-*/
-
-function eliminarProducto(index){
-
-    carrito.splice(index,1);
-
+function eliminarProducto(index) {
+    carrito.splice(index, 1);
     renderCarrito();
 }
 
-
-
-/*
-========================================
-GUARDAR VENTA
-========================================
-*/
-
-function guardarVenta(){
-
-    // VALIDAR CARRITO
-    if(carrito.length === 0){
-
-        Swal.fire({
-            icon:'warning',
-            title:'Carrito vacío'
-        });
-
+/* ========================================
+   GUARDAR VENTA
+   ======================================== */
+function guardarVenta() {
+    if (carrito.length === 0) {
+        Swal.fire({ icon: 'warning', title: 'Carrito vacío' });
         return;
     }
 
-
     Swal.fire({
-
         title: 'Confirmar venta',
-
         text: '¿Desea registrar la venta?',
-
         icon: 'question',
-
         showCancelButton: true,
-
         confirmButtonText: 'Sí, vender',
-
         cancelButtonText: 'Cancelar'
-
-    }).then((result)=>{
-
-        if(result.isConfirmed){
-
+    }).then((result) => {
+        if (result.isConfirmed) {
             procesarVenta();
         }
     });
 }
 
+function procesarVenta() {
+    const total = document.getElementById("total").innerText;
+    const idPersona = document.getElementById("idPersona").value; // ID real de la DB
+    const idMascota = document.getElementById("mascotaSelect").value; // ID real de la DB
 
-
-/*
-========================================
-PROCESAR VENTA
-========================================
-*/
-
-function procesarVenta(){
-
-    let total =
-        document.getElementById("total")
-        .innerText;
-
-    fetch("guardar_venta.php",{
-
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json"
-        },
-
-        body:JSON.stringify({
+    fetch("guardar_venta.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
             carrito,
-            total
+            total,
+            id_cliente: idPersona,
+            id_mascota: idMascota
         })
-
     })
-
-    .then(async res => {
-
-        let text = await res.text();
-
-        console.log(text);
-
-        return JSON.parse(text);
-    })
-
+    .then(res => res.json())
     .then(data => {
-
-        // ÉXITO
-        if(data.success){
-
+        if (data.success) {
             Swal.fire({
-
-                icon:'success',
-
-                title:'Venta registrada',
-
-                text:data.message,
-
-                showDenyButton:true,
-
-                confirmButtonText:'OK',
-
-                denyButtonText:'🖨️ Imprimir Ticket'
-
-            }).then((result)=>{
-
-                // IMPRIMIR
-                if(result.isDenied){
-
-                    Swal.close();
-
-                    setTimeout(()=>{
-
-                        imprimirTicket();
-
-                    },300);
-
-                }else{
-
-                    carrito = [];
-
-                    renderCarrito();
+                icon: 'success',
+                title: 'Venta registrada',
+                showDenyButton: true,
+                confirmButtonText: 'OK',
+                denyButtonText: '🖨️ Imprimir Ticket'
+            }).then((result) => {
+                if (result.isDenied) {
+                    imprimirTicket();
+                } else {
+                    location.reload(); // Recargar para limpiar todo
                 }
             });
-
-        }else{
-
-            Swal.fire({
-
-                icon:'error',
-
-                title:'Error',
-
-                text:data.message
-            });
+        } else {
+            Swal.fire({ icon: 'error', title: 'Error', text: data.message });
         }
     })
-
     .catch(error => {
-
         console.error(error);
-
-        Swal.fire({
-
-            icon:'error',
-
-            title:'Error de conexión'
-        });
+        Swal.fire({ icon: 'error', title: 'Error de conexión' });
     });
 }
 
-
-
-/*
-========================================
-BUSCADOR AJAX
-========================================
-*/
-
-const buscador =
-    document.getElementById("buscar");
-
-
-buscador.addEventListener("keyup", ()=>{
-
-    let texto =
-        buscador.value;
-
-    buscarProductos(texto);
+/* ========================================
+   BUSCADORES (PRODUCTOS Y CLIENTES)
+   ======================================== */
+document.getElementById("buscar")?.addEventListener("keyup", (e) => {
+    buscarProductos(e.target.value);
 });
 
+function buscarProductos(texto) {
+    fetch("buscar_productos.php?q=" + encodeURIComponent(texto))
+        .then(res => res.json())
+        .then(data => renderProductos(data));
+}
 
-
-function buscarProductos(texto){
-
-    fetch(
-
-        "buscar_productos.php?q="
-
-        + encodeURIComponent(texto)
-
-    )
-
-    .then(res=>res.json())
-
-    .then(data=>{
-
-        renderProductos(data);
-    })
-
-    .catch(error=>{
-
-        console.error(error);
+function renderProductos(productos) {
+    let tbody = document.getElementById("tbodyProductos");
+    tbody.innerHTML = "";
+    productos.forEach(p => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${p.nombre}</td>
+                <td>${p.tipo}</td>
+                <td>${p.stock_actual}</td>
+                <td>$${p.precio_venta}</td>
+                <td>
+                    <button class="btn" onclick="agregarProducto(${p.id_producto}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precio_venta})">➡️</button>
+                </td>
+            </tr>`;
     });
 }
 
+const inputCliente =
+    document.getElementById("buscarCliente");
 
+if(inputCliente){
 
-/*
-========================================
-RENDER PRODUCTOS AJAX
-========================================
-*/
+    inputCliente.addEventListener("keyup", (e) => {
 
-function renderProductos(productos){
+        let texto = e.target.value;
 
-    let tbody =
-        document.getElementById("tbodyProductos");
+        if(texto.length < 2){
 
-    tbody.innerHTML = "";
+            document.getElementById(
+                "listaClientes"
+            ).innerHTML = "";
 
+            return;
+        }
 
-    productos.forEach(producto=>{
+        fetch(
+            "buscar_cliente.php?q="
+            + encodeURIComponent(texto)
+        )
 
-        tbody.innerHTML += `
+        .then(res => res.json())
 
-            <tr>
+        .then(data => {
 
-                <td>
-                    ${producto.nombre}
-                </td>
+            console.log("CLIENTES:", data);
 
-                <td>
-                    ${producto.tipo}
-                </td>
+            renderClientes(data);
 
-                <td>
-                    ${producto.stock_actual}
-                </td>
+        })
 
-                <td>
-                    $${producto.precio_venta}
-                </td>
+        .catch(error => {
 
-                <td>
+            console.error(
+                "Error AJAX:",
+                error
+            );
 
-                    <button
-                        class="btn"
+        });
 
-                        onclick="agregarProducto(
+    });
+}
+function renderClientes(clientes){
 
-                            ${producto.id_producto},
+    let lista =
+        document.getElementById("listaClientes");
 
-                            '${producto.nombre.replace(/'/g, "\\'")}',
+    lista.innerHTML = "";
 
-                            ${producto.precio_venta}
+    if(clientes.length === 0){
 
-                        )">
+        lista.innerHTML = `
+            <div class="item-cliente">
+                Sin resultados
+            </div>
+        `;
 
-                        ➡️
+        return;
+    }
 
-                    </button>
+    clientes.forEach(c => {
 
-                </td>
+        lista.innerHTML += `
 
-            </tr>
+            <div
+                class="item-cliente"
+
+                onclick="seleccionarCliente(
+
+                    ${c.id_persona},
+
+                    '${c.nombre} ${c.apellido}'
+
+                )">
+
+                ${c.nombre} ${c.apellido}
+
+            </div>
         `;
     });
 }
 
 
 
-/*
-========================================
-IMPRIMIR TICKET
-========================================
-*/
+function seleccionarCliente(id, nombreCompleto) {
+    document.getElementById("buscarCliente").value = nombreCompleto;
+    document.getElementById("idPersona").value = id;
+    document.getElementById("ticketCliente").innerText = nombreCompleto;
+    document.getElementById("listaClientes").innerHTML = "";
+    cargarMascotas(id);
+}
 
+/* ========================================
+   GESTIÓN DE MASCOTAS
+   ======================================== */
+function cargarMascotas(idPersona) {
+    fetch("buscar_mascotas.php?id_persona=" + idPersona)
+        .then(res => res.json())
+        .then(data => {
+            let select = document.getElementById("mascotaSelect");
+            select.innerHTML = '<option value="">🐾 Seleccionar mascota</option>';
+            data.forEach(m => {
+                select.innerHTML += `<option value="${m.id_mascota}">${m.nombre}</option>`;
+            });
+        });
+}
+
+document.getElementById("mascotaSelect").addEventListener("change", (e) => {
+    let texto = e.target.options[e.target.selectedIndex].text;
+    document.getElementById("ticketMascota").innerText = e.target.value ? texto : "-";
+});
+
+/* ========================================
+   UTILIDADES
+   ======================================== */
 function imprimirTicket(){
-
-    window.print();
-
+    // Espera pequeña para que renderice DOM
+    setTimeout(() => {
+        window.print();
+    }, 400);
     window.onafterprint = () => {
-
-        carrito = [];
-
-        renderCarrito();
+        setTimeout(() => {
+            location.reload();
+        }, 300);
     };
+}
+
+function generarQR() {
+    const qrContainer = document.getElementById("qrcode");
+    if (qrContainer) {
+        qrContainer.innerHTML = "";
+        new QRCode(qrContainer, { text: "Tahito Veterinaria", width: 80, height: 80 });
+    }
+}
+
+// Iniciar
+generarQR();
+
+const mascotaSelect =
+    document.getElementById("mascotaSelect");
+
+if(mascotaSelect){
+
+    mascotaSelect.addEventListener("change", (e) => {
+
+        let texto =
+            e.target.options[
+                e.target.selectedIndex
+            ].text;
+
+        document.getElementById(
+            "ticketMascota"
+        ).innerText =
+
+            e.target.value
+            ? texto
+            : "-";
+    });
 }
