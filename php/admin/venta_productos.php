@@ -2,7 +2,53 @@
 include '../crud/conexion.php'; 
 // Generamos un número de venta aleatorio
 $numeroVenta = rand(1000, 9999);
+
+/* =========================
+   CARDS DASHBOARD
+========================= */
+
+$totalProductos = mysqli_fetch_assoc(
+
+    mysqli_query(
+        $conn,
+        "SELECT COUNT(*) total
+         FROM productos"
+    )
+);
+
+$totalVacunas = mysqli_fetch_assoc(
+
+    mysqli_query(
+        $conn,
+        "SELECT COUNT(*) total
+         FROM productos
+         WHERE tipo='Vacuna'"
+    )
+);
+
+$stockBajo = mysqli_fetch_assoc(
+
+    mysqli_query(
+        $conn,
+        "SELECT COUNT(*) total
+         FROM productos
+         WHERE stock_actual <= 5"
+    )
+);
+
+$totalMedicamentos = mysqli_fetch_assoc(
+
+    mysqli_query(
+        $conn,
+        "SELECT COUNT(*) total
+         FROM productos
+         WHERE tipo='Medicamento'"
+    )
+);
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -44,11 +90,11 @@ $numeroVenta = rand(1000, 9999);
 
         <ul class="menu">
 
-            <li><a href="#">🏠 Inicio</a></li>
-            <li><a href="#">📅 Turnos</a></li>
-            <li><a href="#">🐶 Pacientes</a></li>
+            <li><a href="main_admin.php">🏠 Inicio</a></li>
+            <li><a href="add_turno_admin.php">📅 Turnos</a></li>
+            <li><a href="mascotas_admin.php">🐶 Pacientes</a></li>
             <li><a href="#">📋 Historia Clínica</a></li>
-            <li><a href="#">✂️ Servicios</a></li>
+            <li><a href="servicios_admin.php">✂️ Servicios</a></li>
             <li><a href="#">📦 Insumos</a></li>
             <li><a href="#">🧾 Stock</a></li>
 
@@ -59,7 +105,7 @@ $numeroVenta = rand(1000, 9999);
             <li><a href="#">🚚 Proveedores</a></li>
             <li><a href="#">💰 Gestión Económica</a></li>
             <li><a href="#">📊 Reportes</a></li>
-            <li><a href="#">👤 Usuarios</a></li>
+            <li><a href="personas_admin.php">👤 Usuarios</a></li>
             <li><a href="#">⚙️ Configuración</a></li>
 
         </ul>
@@ -86,28 +132,166 @@ $numeroVenta = rand(1000, 9999);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <!-- CONTENIDO -->
 <div class="main-content">
     
         <div class="container">
+            <!-- CARDS DASHBOARD -->
+            <div class="cards-dashboard">
+
+                <!-- PRODUCTOS -->
+                <div class="dashboard-card">
+
+                    <div class="card-top">
+
+                        <span class="card-icon">
+                            📦
+                        </span>
+
+                        <span class="card-title">
+                            Productos
+                        </span>
+
+                    </div>
+
+                    <div class="card-number">
+
+                        <?= $totalProductos['total'] ?>
+
+                    </div>
+
+                    <a href="../stock/index.php"
+                    class="card-link">
+
+                        Ver stock →
+
+                    </a>
+
+                </div>
+
+
+                <!-- MEDICAMENTOS -->
+                <div class="dashboard-card">
+
+                    <div class="card-top">
+
+                        <span class="card-icon">
+                            💊
+                        </span>
+
+                        <span class="card-title">
+                            Medicamentos
+                        </span>
+
+                    </div>
+
+                    <div class="card-number">
+
+                        <?= $totalMedicamentos['total'] ?>
+
+                    </div>
+
+                    <a href="../stock/index.php"
+                    class="card-link">
+
+                        Ver stock →
+
+                    </a>
+
+                </div>
+
+
+                <!-- VACUNAS -->
+                <div class="dashboard-card">
+
+                    <div class="card-top">
+
+                        <span class="card-icon">
+                            💉
+                        </span>
+
+                        <span class="card-title">
+                            Vacunas
+                        </span>
+
+                    </div>
+
+                    <div class="card-number">
+
+                        <?= $totalVacunas['total'] ?>
+
+                    </div>
+
+                    <a href="../stock/index.php"
+                    class="card-link">
+
+                        Ver stock →
+
+                    </a>
+
+                </div>
+
+
+                <!-- STOCK BAJO -->
+                <div class="dashboard-card alerta">
+
+                    <div class="card-top">
+
+                        <span class="card-icon">
+                            ⚠️
+                        </span>
+
+                        <span class="card-title">
+                            Stock Bajo
+                        </span>
+
+                    </div>
+
+                    <div class="card-number">
+
+                        <?= $stockBajo['total'] ?>
+
+                    </div>
+
+                    <a href="../stock/index.php"
+                    class="card-link">
+
+                        Ver stock →
+
+                    </a>
+
+                </div>
+
+            </div>
         
             <h1>Venta de Productos</h1>
-
+            
             <div class="grid">
 
             <!-- PANEL IZQUIERDO: PRODUCTOS -->
             <div class="card">
+                <div class="filtros-categoria">
+
+                    <button class="filtro-btn active" data-categoria="todos">
+                        Todos
+                    </button>
+
+                    <button class="filtro-btn" data-categoria="Medicamento">
+                        Medicamentos
+                    </button>
+
+                    <button class="filtro-btn" data-categoria="Vacuna">
+                        Vacunas
+                    </button>
+
+                    <button class="filtro-btn" data-categoria="Otros">
+                        Otros
+                    </button>
+
+                </div>
+
+                <br>
+                    
                 <input type="text" id="buscar" placeholder="🔍 Buscar producto por nombre o categoría...">
                 <br><br>
 
@@ -127,9 +311,8 @@ $numeroVenta = rand(1000, 9999);
                                 FROM productos WHERE activo = 1";
                         $result = mysqli_query($conn, $sql);
 
-                        while($row = mysqli_fetch_assoc($result)){
-                        ?>
-                            <tr>
+                        while($row = mysqli_fetch_assoc($result)){ ?>
+                            <tr data-categoria="<?= $row['tipo'] ?>">
                                 <td><?= htmlspecialchars($row['nombre']) ?></td>
                                 <td><?= htmlspecialchars($row['tipo']) ?></td>
                                 <td><?= $row['stock_actual'] ?></td>

@@ -330,3 +330,62 @@ if(mascotaSelect){
             : "-";
     });
 }
+
+/* ========================================
+   FILTRO POR CATEGORIA
+======================================== */
+
+const botonesFiltro =
+    document.querySelectorAll(".filtro-btn");
+
+botonesFiltro.forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+        botonesFiltro.forEach(b =>
+            b.classList.remove("active")
+        );
+
+        btn.classList.add("active");
+
+        const categoria =
+            btn.dataset.categoria;
+
+        const filas =
+            document.querySelectorAll(
+                "#tbodyProductos tr"
+            );
+
+        filas.forEach(fila => {
+
+            if(
+                categoria === "todos"
+            ){
+                fila.style.display = "";
+                return;
+            }
+
+            const categoriaFila =
+                fila.dataset.categoria;
+
+            if(
+                categoriaFila === categoria
+            ){
+                fila.style.display = "";
+            }
+            else{
+                fila.style.display = "none";
+            }
+
+        });
+
+    });
+
+});
+
+function nuevoCliente(){
+
+    window.location.href =
+    "crear_usuario.php";
+
+}

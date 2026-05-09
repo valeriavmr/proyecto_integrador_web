@@ -1,41 +1,37 @@
 @media print {
-    body {
-        background: white;
-        margin: 0;
-        padding: 0;
-        font-family: "Courier New", monospace;
+
+    body * {
+        visibility: hidden;
     }
 
-    .grid > div:first-child, 
-    .btn, 
-    input, 
-    select, 
-    h1 {
-        display: none !important;
-    }
-
-    .grid {
-        display: block;
+    #ticket,
+    #ticket * {
+        visibility: visible;
     }
 
     #ticket {
+
+        position: absolute;
+        left: 0;
+        top: 0;
+
         width: 80mm;
+
+        background: white;
+
+        padding: 10px;
+
         margin: 0;
-        padding: 5mm;
-        box-shadow: none;
-        border: none;
     }
 
-    table th, table td {
-        font-size: 11px;
-        padding: 2px 0;
-    }
+    .btn,
+    .sidebar,
+    .main-content h1,
+    #buscar,
+    #buscarCliente,
+    #listaClientes,
+    #mascotaSelect {
 
-    .ticket-total {
-        font-size: 16px;
+        display: none !important;
     }
-}
-
-#listaClientes:empty{
-display:none;
 }
