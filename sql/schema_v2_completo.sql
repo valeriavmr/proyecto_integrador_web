@@ -265,27 +265,29 @@ CREATE TABLE movimientos_insumo (
 --productos
 
 CREATE TABLE productos (
-id_producto INT AUTO_INCREMENT PRIMARY KEY,
-nombre_producto VARCHAR(100) NOT NULL,
-descripcion_producto TEXT,
-precio_unitario DECIMAL(10,2) NOT NULL
-) ENGINE=InnoDB;
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_producto VARCHAR(100) NOT NULL,
+    descripcion_producto TEXT,
+    precio_unitario DECIMAL(10,2) NOT NULL
+    ) ENGINE=InnoDB;
 
-ALTER TABLE productos 
-ADD imagen_producto VARCHAR(255);
+    ALTER TABLE productos 
+    ADD imagen_producto VARCHAR(255),
+    ADD tipo ENUM('Otro','Vacuna','Medicamento') NOT NULL DEFAULT 'Otro',
+    ADD activo	TINYINT(1) NOT NULL DEFAULT 1;
 
 CREATE TABLE inventario (
-id_producto_stock INT AUTO_INCREMENT PRIMARY KEY,
-id_producto INT NOT NULL,
-cantidad_actual_producto INT NOT NULL DEFAULT 0,
-param_bajo_stock INT NOT NULL,
+    id_producto_stock INT AUTO_INCREMENT PRIMARY KEY,
+    id_producto INT NOT NULL,
+    cantidad_actual_producto INT NOT NULL DEFAULT 0,
+    param_bajo_stock INT NOT NULL,
 
-CONSTRAINT fk_inventario_producto
-FOREIGN KEY (id_producto)
-REFERENCES productos(id_producto)
-ON DELETE CASCADE
-ON UPDATE CASCADE
-) ENGINE=InnoDB;
+    CONSTRAINT fk_inventario_producto
+    FOREIGN KEY (id_producto)
+    REFERENCES productos(id_producto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE inventario_movimientos (
 id_movimiento_stock INT AUTO_INCREMENT PRIMARY KEY,
@@ -345,32 +347,46 @@ CREATE TABLE compra_detalle (
 -- ================================================================
 
 CREATE TABLE ventas (
-    id_venta        INT AUTO_INCREMENT PRIMARY KEY,
-    id_cliente      INT NULL
-                        COMMENT 'FK a persona (cliente). NULL = venta anónima',
-    fecha_venta     DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    total           DECIMAL(12,2) NOT NULL DEFAULT 0.00,
-    CONSTRAINT fk_venta_cliente
-        FOREIGN KEY (id_cliente) REFERENCES persona(id_persona)
-        ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-  COMMENT='Cabecera de venta de productos al público (Yuske)';
+    id_venta INT AUTO_INCREMENT PRIMARY KEY,
+    total DECIMAL(10,2) NOT NULL,
+    id_persona INT NULL,
+    id_mascota INT NULL,
+    fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_ventas_persona
+    FOREIGN KEY (id_persona)
+    REFERENCES persona(id_persona)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+    CONSTRAINT fk_ventas_mascota
+    FOREIGN KEY (id_mascota)
+    REFERENCES mascota(id_mascota)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE venta_detalle (
-    id_detalle      INT AUTO_INCREMENT PRIMARY KEY,
-    id_venta        INT NOT NULL,
-    id_producto     INT NOT NULL,
-    cantidad        INT           NOT NULL DEFAULT 1,
+CREATE TABLE detalle_venta (
+    id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+    id_venta INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL,
-    CONSTRAINT fk_vd_venta
-        FOREIGN KEY (id_venta) REFERENCES ventas(id_venta)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_vd_producto
-        FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
-        ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-  COMMENT='Ítems detallados de cada venta (Yuske)';
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT fk_detalle_venta
+    FOREIGN KEY (id_venta)
+    REFERENCES ventas(id_venta)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    CONSTRAINT fk_detalle_producto
+    FOREIGN KEY (id_producto)
+    REFERENCES productos(id_producto)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- ================================================================

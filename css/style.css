@@ -201,3 +201,101 @@ input, select {
 
     border-left:6px solid #ef4444;
 }
+.ventas-recientes{
+
+    margin-top:25px;
+}
+
+.ventas-recientes h3{
+
+    margin-top:0;
+    margin-bottom:15px;
+
+    font-size:18px;
+}
+
+.tabla-ventas-recientes{
+
+    width:100%;
+    border-collapse:collapse;
+}
+
+.tabla-ventas-recientes th{
+
+    background:#f3f4f6;
+
+    color:#374151;
+
+    font-size:14px;
+
+    text-align:left;
+
+    padding:12px;
+}
+
+.tabla-ventas-recientes td{
+
+    padding:12px;
+
+    border-bottom:1px solid #e5e7eb;
+
+    font-size:14px;
+
+    color:#374151;
+}
+
+.tabla-ventas-recientes tr:hover{
+
+    background:#f9fafb;
+}
+
+.btn-accion{
+
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    width:30px;
+    height:30px;
+
+    margin-right:6px;
+
+    border-radius:8px;
+
+    background:#f3f4f6;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    transition:.2s;
+}
+
+.btn-accion:hover{
+
+    background:#d1fae5;
+
+    transform:translateY(-2px);
+}
+
+.ver-todas-ventas{
+
+    text-align:center;
+
+    margin-top:15px;
+}
+
+.ver-todas-ventas a{
+
+    color:#047857;
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+.ver-todas-ventas a:hover{
+
+    text-decoration:underline;
+}
