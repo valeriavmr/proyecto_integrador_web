@@ -77,6 +77,7 @@ include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
                     <th>Stock Actual</th>
                     <th>Stock Mínimo</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
 
@@ -120,7 +121,10 @@ include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
                                 ✔ Normal
                             <?php endif; ?>
                         </td>
-
+                        </td>
+                <td><a href="#" title="Eliminar insumo">❌</a><br>
+                <a href="#" title="Modificar insumo">✏️</a>
+            </td>
                     </tr>
 
                 <?php endwhile; ?>
@@ -140,7 +144,9 @@ include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
         </table>
 
             </section>
-
+<section id="volver_s">
+        <a href="gestion_insumos.php" class="btn-volver-admin">Volver a Gestión de insumos</a>
+    </section>
 </main>
 
 <?php

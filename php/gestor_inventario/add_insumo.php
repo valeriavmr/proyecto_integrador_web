@@ -30,9 +30,10 @@ require_once(BASE_PATH . '/php/admin/auth.php');
             <label for="tipo">Tipo de Insumo:</label>
             <select id="tipo" name="tipo" required>
                 <option value="">Seleccione un tipo</option>
-                <option value="materia_prima">Materia Prima</option>
-                <option value="Medicamento">Medicamento</option>
-                <option value="suministro">Suministro</option>
+                <option value="equipamiento">Equipamiento</option>
+                <option value="medicinas">Medicinas</option>
+                <option value="consumibles">Consumibles</option>
+                <option value="cuidado_y_aseo">Cuidado y Aseo</option>
                 <option value="otro">Otro</option>
             </select>
 
@@ -48,6 +49,9 @@ require_once(BASE_PATH . '/php/admin/auth.php');
             <input type="submit" id="add_insumo_btn" value="Agregar Insumo">
         </form>
         </fieldset>
+        <section id="back_section">
+        <a href="gestion_insumos.php" class="btn-volver-admin">Volver a Gestión de insumos</a>
+    </section>
     </main>
     <?php
     include('../footer.php');

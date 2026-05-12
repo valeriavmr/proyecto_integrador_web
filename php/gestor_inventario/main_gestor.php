@@ -72,7 +72,7 @@
         </article>
 
         <article class="opc_menu_ap">
-            <a href="#">
+            <a href="../admin/venta_productos.php">
                 <img src="../../recursos/img/ventas_icon.png" alt="">
                 Ventas
             </a>

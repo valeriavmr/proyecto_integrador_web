@@ -1,5 +1,9 @@
 <?php 
-include '../crud/conexion.php'; 
+include '../crud/conexion.php';
+include_once('auth.php');
+
+//Busco el rol del usuario
+$rol = $_SESSION['rol'];
 // Generamos un número de venta aleatorio
 $numeroVenta = rand(1000, 9999);
 
@@ -150,11 +154,18 @@ $ventasRecientes = mysqli_query($conn, $sqlVentasRecientes);
 
         <ul class="menu">
 
-            <li><a href="main_admin.php">🏠 Inicio</a></li>
+            <li><?php if($rol=='admin'):?>
+                <a href="main_admin.php">
+                <?php else: ?>
+                <a href="../gestor_inventario/main_gestor.php">
+                <?php endif;?>
+            🏠 Inicio</a></li>
+            <?php if($rol=='admin'):?>
             <li><a href="add_turno_admin.php">📅 Turnos</a></li>
             <li><a href="mascotas_admin.php">🐶 Pacientes</a></li>
             <li><a href="#">📋 Historia Clínica</a></li>
             <li><a href="servicios_admin.php">✂️ Servicios</a></li>
+            <?php endif;?>
             <li><a href="../gestor_inventario/gestion_insumos.php">📦 Insumos</a></li>
             <li><a href="../gestor_inventario/inventario_productos.php">🧾 Stock</a></li>
 
@@ -165,9 +176,10 @@ $ventasRecientes = mysqli_query($conn, $sqlVentasRecientes);
             <li><a href="#">🚚 Proveedores</a></li>
             <li><a href="#">💰 Gestión Económica</a></li>
             <li><a href="#">📊 Reportes</a></li>
+            <?php if($rol=='admin'):?>
             <li><a href="personas_admin.php">👤 Usuarios</a></li>
             <li><a href="#">⚙️ Configuración</a></li>
-
+            <?php endif;?>
         </ul>
     </div>
 
@@ -182,7 +194,7 @@ $ventasRecientes = mysqli_query($conn, $sqlVentasRecientes);
                 <div>
                     <strong>Administrador</strong>
                     <br>
-                    <small>Rol: Administrador</small>
+                    <small>Rol: <?php echo $rol ?></small>
                 </div>
         </div>
 

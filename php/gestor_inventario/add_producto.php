@@ -30,9 +30,8 @@ require_once(BASE_PATH . '/php/admin/auth.php');
             <label for="tipo">Tipo de Producto:</label>
             <select id="tipo" name="tipo" required>
                 <option value="">Seleccione un tipo</option>
-                <option value="Alimento">Alimento</option>
-                <option value="Juguete">Juguete</option>
-                <option value="Accesorio">Accesorio</option>
+                <option value="Vacuna">Vacuna</option>
+                <option value="Medicamento">Medicamento</option>
                 <option value="Otro">Otro</option>
             </select>
 
@@ -51,6 +50,9 @@ require_once(BASE_PATH . '/php/admin/auth.php');
             <input type="submit" id="add_producto_btn" value="Agregar Producto">
         </form>
         </fieldset>
+        <section id="back_section">
+        <a href="gestion_productos.php" class="btn-volver-admin">Volver a Gestión de productos</a>
+        </section>
     </main>
     <?php
     include('../footer.php');

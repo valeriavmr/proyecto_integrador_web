@@ -20,6 +20,8 @@ $sql = "SELECT
             p.descripcion_producto,
             p.precio_unitario,
             p.imagen_producto,
+            p.tipo,
+            p.activo,
             i.cantidad_actual_producto,
             i.param_bajo_stock
         FROM inventario i
@@ -69,6 +71,9 @@ $result = $conn->query($sql);
             <th>Precio</th>
             <th>Stock</th>
             <th>Estado</th>
+            <th>Tipo</th>
+            <th>Activo</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -103,7 +108,16 @@ $result = $conn->query($sql);
                         ✔ Normal
                     <?php endif; ?>
                 </td>
-
+                <td><?= $row['tipo']; ?></td>
+                <td><?php if($row['activo']==1):?>
+                    Sí
+                    <?php else: ?>
+                    No
+                    <?php endif; ?>
+                </td>
+                <td><a href="#" title="Eliminar producto">❌</a><br>
+                <a href="#" title="Modificar producto">✏️</a>
+            </td>
             </tr>
 
         <?php endwhile; ?>
@@ -117,6 +131,9 @@ $result = $conn->query($sql);
     </tbody>
 </table>
 </section>
+<section id="volver_s">
+        <a href="gestion_productos.php" class="btn-volver-admin">Volver a Gestión de productos</a>
+    </section>
 </main>
 </body>
 </html>

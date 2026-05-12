@@ -28,7 +28,7 @@
             <article class="opc_menu_ap"><a href="#">
                 <img src="../../recursos/img/trazabilidad_insumo_icon.png" alt=""> Trazabilidad de un insumo</a></article>
             <article class="opc_menu_ap"><a href="#">
-                <img src="../../recursos/img/comprar_insumos_icon.png" alt=""> Comprar insumos</a></article>
+                <img src="../../recursos/img/buscar_insumo_icon.png" alt=""> Buscar un insumo</a></article>
         </section>
     </main>
     <?php

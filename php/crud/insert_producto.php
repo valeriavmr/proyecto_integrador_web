@@ -14,6 +14,7 @@ if ($conn->connect_error) {
 $nombre = $_POST['nombre'];
 $descripcion = $_POST['descripcion'];
 $precio = $_POST['precio_unitario'];
+$tipo = $_POST['tipo'];
 $param_bajo_stock = $_POST['param_bajo_stock'];
 
 // =======================
@@ -56,11 +57,11 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
 // 3. Insertar producto
 // =======================
 
-$sqlProducto = "INSERT INTO productos (nombre_producto, descripcion_producto, precio_unitario, imagen_producto)
-                VALUES (?, ?, ?, ?)";
+$sqlProducto = "INSERT INTO productos (nombre_producto, descripcion_producto, precio_unitario, imagen_producto, tipo, activo)
+                VALUES (?, ?, ?, ?, ?,1)";
 
 $stmt = $conn->prepare($sqlProducto);
-$stmt->bind_param("ssds", $nombre, $descripcion, $precio, $nombreArchivo);
+$stmt->bind_param("ssdss", $nombre, $descripcion, $precio, $nombreArchivo, $tipo);
 
 if (!$stmt->execute()) {
     die("Error al insertar producto: " . $stmt->error);

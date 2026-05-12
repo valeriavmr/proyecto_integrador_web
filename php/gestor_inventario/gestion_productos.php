@@ -28,7 +28,7 @@
             <article class="opc_menu_ap"><a href="#">
                 <img src="../../recursos/img/trazabilidad_producto_icon.png" alt=""> Trazabilidad de un producto</a></article>
             <article class="opc_menu_ap"><a href="#">
-                <img src="../../recursos/img/comprar_producto_icon.png" alt=""> Comprar productos</a></article>
+                <img src="../../recursos/img/buscar_producto_icon.png" alt=""> Buscar un producto</a></article>
         </section>
     </main>
     <?php
