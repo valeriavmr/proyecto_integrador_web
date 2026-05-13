@@ -93,7 +93,7 @@
         </article>
 
         <article class="opc_menu_ap">
-            <a href="#">
+            <a href="gestion_economica.php">
                 <img src="../../recursos/img/gestion_economica_icon.png" alt="">
                 Gestión económica
             </a>

@@ -240,6 +240,13 @@ CREATE TABLE insumo (
     costo_unidad DECIMAL(10,2) NOT NULL,
 ) ENGINE=InnoDB;
 
+ ALTER TABLE insumo
+    ADD id_proveedor INT,
+    ADD CONSTRAINT fk_producto_proveedor
+    FOREIGN KEY (id_proveedor)
+    REFERENCES proveedores(id_proveedor)
+    ON UPDATE CASCADE;
+
 CREATE TABLE inventario_insumo (
     id_stock_insumo INT AUTO_INCREMENT PRIMARY KEY,
     id_insumo INT NOT NULL,
@@ -275,6 +282,13 @@ CREATE TABLE productos (
     ADD imagen_producto VARCHAR(255),
     ADD tipo ENUM('Otro','Vacuna','Medicamento') NOT NULL DEFAULT 'Otro',
     ADD activo	TINYINT(1) NOT NULL DEFAULT 1;
+
+    ALTER TABLE productos
+    ADD id_proveedor INT,
+    ADD CONSTRAINT fk_producto_proveedor
+    FOREIGN KEY (id_proveedor)
+    REFERENCES proveedores(id_proveedor)
+    ON UPDATE CASCADE;
 
 CREATE TABLE inventario (
     id_producto_stock INT AUTO_INCREMENT PRIMARY KEY,

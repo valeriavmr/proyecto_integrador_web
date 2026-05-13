@@ -822,4 +822,18 @@ function getCantidadTotalProductos($conn) {
     }
     return 0;
 }
+
+function getProveedores($conn) {
+    $sql = "SELECT * FROM proveedores";
+    $result = $conn->query($sql);
+    $proveedores = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $proveedores[] = $row;
+        }
+    }else{
+        return []; // Retorna vacío si no hay proveedores en la base
+    }
+    return $proveedores;
+}
 ?>

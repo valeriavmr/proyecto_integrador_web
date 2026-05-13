@@ -16,6 +16,8 @@ require_once(BASE_PATH . '/php/admin/auth.php');
 <body>
     <?php
     include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    require_once(BASE_PATH . '/php/crud/conexion.php');
+    require_once(BASE_PATH . '/php/crud/consultas_varias.php');
     ?>
     <main>
         <h1>Agregar Insumo</h1>
@@ -44,7 +46,15 @@ require_once(BASE_PATH . '/php/admin/auth.php');
             <input type="number" id="param_bajo_stock" name="param_bajo_stock" min="0" required>
 
             <label for="proveedor">Proveedor:</label>
-            <input type="text" id="proveedor" name="proveedor" required>
+            <select id="proveedor" name="id_proveedor">
+                <option value="">Seleccione un proveedor</option>
+                <?php
+                $proveedores = getProveedores($conn);
+                foreach ($proveedores as $proveedor) {
+                    echo "<option value=\"{$proveedor['id_proveedor']}\">" . htmlspecialchars($proveedor['nombre_proveedor']) . "</option>";
+                }
+                ?>
+            </select>
 
             <input type="submit" id="add_insumo_btn" value="Agregar Insumo">
         </form>

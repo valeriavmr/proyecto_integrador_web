@@ -30,6 +30,9 @@
             <article class="opc_menu_ap"><a href="#">
                 <img src="../../recursos/img/buscar_insumo_icon.png" alt=""> Buscar un insumo</a></article>
         </section>
+        <section id="volver_s">
+            <a href="main_gestor.php" class="btn-volver-admin">Volver al menú principal</a>
+        </section>
     </main>
     <?php
     include('../footer.php');

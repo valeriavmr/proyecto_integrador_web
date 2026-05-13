@@ -12,9 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre']);
     $descripcion = trim($_POST['descripcion']);
     $tipo = trim($_POST['tipo']);
+
     $costo = $_POST['costo_unidad'];
 
-    // cantidad mínima aceptable
+    // Cantidad mínima aceptable
     $param_bajo_stock = $_POST['param_bajo_stock'];
 
     // =========================
@@ -42,35 +43,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insertar insumo
         // =========================
 
-        $stmt = $conn->prepare("
-            INSERT INTO insumo
-            (
-                nombre_insumo,
-                descripcion_insumo,
-                tipo_insumo,
-                costo_unidad
-            )
-            VALUES (?, ?, ?, ?)
-        ");
+        if (empty($_POST['id_proveedor'])) {
 
-        $stmt->bind_param(
-            "sssd",
-            $nombre,
-            $descripcion,
-            $tipo,
-            $costo
-        );
+            // SIN proveedor
 
-        $stmt->execute();
+            $sqlInsumo = "
+                INSERT INTO insumo
+                (
+                    nombre_insumo,
+                    descripcion_insumo,
+                    tipo_insumo,
+                    costo_unidad,
+                    id_proveedor
+                )
+                VALUES (?, ?, ?, ?, NULL)
+            ";
+
+            $stmt = $conn->prepare($sqlInsumo);
+
+            if (!$stmt) {
+                throw new Exception(
+                    "Error en prepare insumo: " . $conn->error
+                );
+            }
+
+            $stmt->bind_param(
+                "sssd",
+                $nombre,
+                $descripcion,
+                $tipo,
+                $costo
+            );
+
+        } else {
+
+            // CON proveedor
+
+            $id_proveedor = (int) $_POST['id_proveedor'];
+
+            $sqlInsumo = "
+                INSERT INTO insumo
+                (
+                    nombre_insumo,
+                    descripcion_insumo,
+                    tipo_insumo,
+                    costo_unidad,
+                    id_proveedor
+                )
+                VALUES (?, ?, ?, ?, ?)
+            ";
+
+            $stmt = $conn->prepare($sqlInsumo);
+
+            if (!$stmt) {
+                throw new Exception(
+                    "Error en prepare insumo: " . $conn->error
+                );
+            }
+
+            $stmt->bind_param(
+                "sssdi",
+                $nombre,
+                $descripcion,
+                $tipo,
+                $costo,
+                $id_proveedor
+            );
+        }
+
+        // =========================
+        // Ejecutar insert insumo
+        // =========================
+
+        if (!$stmt->execute()) {
+            throw new Exception(
+                "Error al insertar insumo: " . $stmt->error
+            );
+        }
 
         // Obtener ID generado
-        $id_insumo = $conn->insert_id;
+        $id_insumo = $stmt->insert_id;
 
         // =========================
         // Insertar inventario
         // =========================
 
-        $stmt2 = $conn->prepare("
+        $sqlInventario = "
             INSERT INTO inventario_insumo
             (
                 id_insumo,
@@ -78,7 +136,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 param_bajo_stock
             )
             VALUES (?, 0, ?)
-        ");
+        ";
+
+        $stmt2 = $conn->prepare($sqlInventario);
+
+        if (!$stmt2) {
+            throw new Exception(
+                "Error en prepare inventario: " . $conn->error
+            );
+        }
 
         $stmt2->bind_param(
             "ii",
@@ -86,7 +152,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $param_bajo_stock
         );
 
-        $stmt2->execute();
+        // =========================
+        // Ejecutar insert inventario
+        // =========================
+
+        if (!$stmt2->execute()) {
+            throw new Exception(
+                "Error al insertar inventario: " . $stmt2->error
+            );
+        }
 
         // =========================
         // Confirmar transacción
@@ -94,7 +168,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $conn->commit();
 
-        header("Location: ../gestor_inventario/gestion_insumos.php?success=1");
+        header(
+            "Location: ../gestor_inventario/gestion_insumos.php?success=1"
+        );
+
         exit;
 
     } catch (Exception $e) {
@@ -102,7 +179,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Revertir cambios si algo falla
         $conn->rollback();
 
-        echo "Error al insertar insumo: " . $e->getMessage();
+        die(
+            "Error al insertar insumo: " .
+            $e->getMessage()
+        );
     }
 }
 ?>

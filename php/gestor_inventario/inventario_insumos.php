@@ -14,6 +14,7 @@ $filtro = $_GET['filtro'] ?? null;
 // =======================
 
 $sql = "SELECT 
+            i.id_insumo,
             ii.id_stock_insumo,
             i.nombre_insumo,
             i.descripcion_insumo,
@@ -77,6 +78,7 @@ include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
                     <th>Stock Actual</th>
                     <th>Stock Mínimo</th>
                     <th>Estado</th>
+                    <th>Proveedor</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -121,9 +123,15 @@ include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
                                 ✔ Normal
                             <?php endif; ?>
                         </td>
+                        <td>
+                            <?php if($row['id_proveedor'] ?? null): $proveedorNombre = getProveedorNombre($conn, $row['id_proveedor']); ?>
+                                <?= htmlspecialchars($proveedorNombre) ?>
+                            <?php else: ?>
+                                Sin proveedor asignado
+                            <?php endif; ?>
                         </td>
-                <td><a href="#" title="Eliminar insumo">❌</a><br>
-                <a href="#" title="Modificar insumo">✏️</a>
+                <td><a href="eliminar_insumo.php?id=<?= $row['id_insumo'] ?>" title="Eliminar insumo">❌</a><br>
+                <a href="modificar_insumo.php?id=<?= $row['id_insumo'] ?>" title="Modificar insumo">✏️</a>
             </td>
                     </tr>
 

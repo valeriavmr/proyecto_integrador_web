@@ -19,16 +19,10 @@
     include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
     ?>
     <main>
-        <h1>Gestión de Productos</h1>
+        <h1>Gestión Económica</h1>
         <section id="menu_gestion">
-            <article class="opc_menu_ap"><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_productos.php">
-                <img src="../../recursos/img/inventario_productos_icon.png" alt=""> Inventario de productos</a></article>
-            <article class="opc_menu_ap"><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/add_producto.php">
-                <img src="../../recursos/img/add_producto_icon.png" alt=""> Agregar un producto</a></article>
             <article class="opc_menu_ap"><a href="#">
-                <img src="../../recursos/img/trazabilidad_producto_icon.png" alt=""> Trazabilidad de un producto</a></article>
-            <article class="opc_menu_ap"><a href="#">
-                <img src="../../recursos/img/buscar_producto_icon.png" alt=""> Buscar un producto</a></article>
+                <img src="../../recursos/img/comprar_productos_icon.png" alt=""> Realizar una compra</a></article>
         </section>
         <section id="volver_s">
             <a href="main_gestor.php" class="btn-volver-admin">Volver al menú principal</a>

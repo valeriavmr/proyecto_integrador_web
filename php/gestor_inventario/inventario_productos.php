@@ -15,6 +15,7 @@ $filtro = $_GET['filtro'] ?? null;
 // =======================
 
 $sql = "SELECT 
+            p.id_producto,
             i.id_producto_stock,
             p.nombre_producto,
             p.descripcion_producto,
@@ -22,6 +23,7 @@ $sql = "SELECT
             p.imagen_producto,
             p.tipo,
             p.activo,
+            p.id_proveedor,
             i.cantidad_actual_producto,
             i.param_bajo_stock
         FROM inventario i
@@ -54,13 +56,13 @@ $result = $conn->query($sql);
     include_once(BASE_PATH . '/php/crud/consultas_varias.php');
 ?>
 <main>
-<section>
     <h1>Inventario de Productos</h1>
 
 <?php if ($filtro === 'bajo_stock'): ?>
     <h2>⚠ Productos con bajo stock</h2>
-    <a href="gestion_productos.php">Ver todos</a>
+    <a href="inventario_productos.php" class="btn-volver-admin">Ver todos</a>
 <?php endif; ?>
+<section>
 
 <table border="1" cellpadding="10" cellspacing="0">
     <thead>
@@ -73,6 +75,7 @@ $result = $conn->query($sql);
             <th>Estado</th>
             <th>Tipo</th>
             <th>Activo</th>
+            <th>Proveedor</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -115,8 +118,15 @@ $result = $conn->query($sql);
                     No
                     <?php endif; ?>
                 </td>
-                <td><a href="#" title="Eliminar producto">❌</a><br>
-                <a href="#" title="Modificar producto">✏️</a>
+                <td>
+                    <?php if($row['id_proveedor'] ?? null): $proveedorNombre = getProveedorNombre($conn, $row['id_proveedor']); ?>
+                    <?php echo htmlspecialchars($proveedorNombre) ?>
+                    <?php else: ?>
+                        Sin proveedor asignado
+                    <?php endif; ?>
+                </td>
+                <td><a href="eliminar_producto.php?id=<?= $row['id_producto']; ?>" title="Eliminar producto">❌</a><br>
+                <a href="modificar_producto.php?id=<?= $row['id_producto']; ?>" title="Modificar producto">✏️</a>
             </td>
             </tr>
 

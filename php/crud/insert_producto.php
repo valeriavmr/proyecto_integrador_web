@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../../config.php';
-
 require('conexion.php');
 
 if ($conn->connect_error) {
@@ -11,10 +10,11 @@ if ($conn->connect_error) {
 // 1. Obtener datos
 // =======================
 
-$nombre = $_POST['nombre'];
-$descripcion = $_POST['descripcion'];
+$nombre = trim($_POST['nombre']);
+$descripcion = trim($_POST['descripcion']);
 $precio = $_POST['precio_unitario'];
 $tipo = $_POST['tipo'];
+
 $param_bajo_stock = $_POST['param_bajo_stock'];
 
 // =======================
@@ -36,7 +36,7 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
 
     $ext = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
 
-    // Validaciones básicas
+    // Validaciones
     $permitidos = ['jpg', 'jpeg', 'png', 'webp'];
 
     if (!in_array($ext, $permitidos)) {
@@ -50,36 +50,114 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
     // Nombre único
     $nombreArchivo = uniqid("prod_") . "." . $ext;
 
-    move_uploaded_file($archivoTmp, $directorio . $nombreArchivo);
+    if (!move_uploaded_file($archivoTmp, $directorio . $nombreArchivo)) {
+        die("Error al subir la imagen.");
+    }
 }
 
 // =======================
 // 3. Insertar producto
 // =======================
 
-$sqlProducto = "INSERT INTO productos (nombre_producto, descripcion_producto, precio_unitario, imagen_producto, tipo, activo)
-                VALUES (?, ?, ?, ?, ?,1)";
+if (empty($_POST['id_proveedor'])) {
 
-$stmt = $conn->prepare($sqlProducto);
-$stmt->bind_param("ssdss", $nombre, $descripcion, $precio, $nombreArchivo, $tipo);
+    // SIN proveedor
 
+    $sqlProducto = "INSERT INTO productos
+    (
+        nombre_producto,
+        descripcion_producto,
+        precio_unitario,
+        imagen_producto,
+        tipo,
+        activo,
+        id_proveedor
+    )
+    VALUES (?, ?, ?, ?, ?, 1, NULL)";
+
+    $stmt = $conn->prepare($sqlProducto);
+
+    if (!$stmt) {
+        die("Error en prepare productos: " . $conn->error);
+    }
+
+    $stmt->bind_param(
+        "ssdss",
+        $nombre,
+        $descripcion,
+        $precio,
+        $nombreArchivo,
+        $tipo
+    );
+
+} else {
+
+    // CON proveedor
+
+    $id_proveedor = (int) $_POST['id_proveedor'];
+
+    $sqlProducto = "INSERT INTO productos
+    (
+        nombre_producto,
+        descripcion_producto,
+        precio_unitario,
+        imagen_producto,
+        tipo,
+        activo,
+        id_proveedor
+    )
+    VALUES (?, ?, ?, ?, ?, 1, ?)";
+
+    $stmt = $conn->prepare($sqlProducto);
+
+    if (!$stmt) {
+        die("Error en prepare productos: " . $conn->error);
+    }
+
+    $stmt->bind_param(
+        "ssdssi",
+        $nombre,
+        $descripcion,
+        $precio,
+        $nombreArchivo,
+        $tipo,
+        $id_proveedor
+    );
+}
+
+// Ejecutar insert producto
 if (!$stmt->execute()) {
     die("Error al insertar producto: " . $stmt->error);
 }
 
-// Obtener ID del producto recién creado
+// Obtener ID generado
 $id_producto = $stmt->insert_id;
 
 // =======================
-// 4. Insertar en inventario
+// 4. Insertar inventario
 // =======================
 
-$sqlInventario = "INSERT INTO inventario (id_producto, cantidad_actual_producto, param_bajo_stock)
-                  VALUES (?, 0, ?)";
+$sqlInventario = "INSERT INTO inventario
+(
+    id_producto,
+    cantidad_actual_producto,
+    param_bajo_stock
+)
+VALUES (?, 0, ?)";
 
 $stmt2 = $conn->prepare($sqlInventario);
-$stmt2->bind_param("ii", $id_producto, $param_bajo_stock);
 
+if (!$stmt2) {
+    die("Error en prepare inventario: " . $conn->error);
+}
+
+$stmt2->bind_param(
+    "ii",
+    $id_producto,
+    $param_bajo_stock
+);
+
+// Ejecutar insert inventario
 if (!$stmt2->execute()) {
     die("Error al insertar inventario: " . $stmt2->error);
 }
@@ -88,7 +166,11 @@ if (!$stmt2->execute()) {
 // 5. Redirección
 // =======================
 
-header("Location: " . BASE_URL . "/php/gestor_inventario/gestion_productos.php?success=1");
-exit();
+header(
+    "Location: " .
+    BASE_URL .
+    "/php/gestor_inventario/gestion_productos.php?success=1"
+);
 
+exit();
 ?>
