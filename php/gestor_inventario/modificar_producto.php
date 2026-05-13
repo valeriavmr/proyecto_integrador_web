@@ -164,6 +164,28 @@ $proveedores = $conn->query($sqlProv);
                 value="<?= htmlspecialchars($producto['param_bajo_stock']); ?>"
             >
 
+            <!-- Activo -->
+            <label for="activo">¿El producto está activo?</label>
+            <select id="activo" name="activo" required>
+
+                <option value="">Seleccione una opción</option>
+
+                <option 
+                    value="1"
+                    <?= $producto['activo'] == 1 ? 'selected' : ''; ?>
+                >
+                    Sí
+                </option>
+
+                <option 
+                    value="0"
+                    <?= $producto['activo'] == 0 ? 'selected' : ''; ?>
+                >
+                    No
+                </option>
+
+            </select>
+
             <!-- Proveedor -->
             <label for="id_proveedor">Proveedor:</label>
 

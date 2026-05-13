@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../config.php';
 require('conexion.php');
 
@@ -18,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Campo de inventario
     $param_bajo_stock = $_POST['param_bajo_stock'] ?? null;
+    $activo = $_POST['activo'] ?? null;
 
     // =========================
     // Validaciones básicas
@@ -29,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         empty($descripcion) ||
         empty($tipo) ||
         !is_numeric($precio_unitario) ||
-        !is_numeric($param_bajo_stock)
+        !is_numeric($param_bajo_stock) ||
+        !is_numeric($activo)
     ) {
         die("Datos inválidos.");
     }
@@ -46,27 +49,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Actualizar tabla productos
         // =========================
 
-        $stmtProducto = $conn->prepare("
-            UPDATE productos
-            SET
-                nombre_producto = ?,
-                descripcion_producto = ?,
-                tipo = ?,
-                precio_unitario = ?
-            WHERE id_producto = ?
-        ");
+        if (empty($_POST['id_proveedor'])) {
 
-        $stmtProducto->bind_param(
-            "sssdi",
-            $nombre,
-            $descripcion,
-            $tipo,
-            $precio_unitario,
-            $id_producto
-        );
+            // SIN proveedor
 
+            $stmtProducto = $conn->prepare("
+                UPDATE productos
+                SET
+                    nombre_producto = ?,
+                    descripcion_producto = ?,
+                    tipo = ?,
+                    precio_unitario = ?,
+                    activo = ?,
+                    id_proveedor = NULL
+                WHERE id_producto = ?
+            ");
+
+            if (!$stmtProducto) {
+                throw new Exception(
+                    "Error en prepare producto: " . $conn->error
+                );
+            }
+
+            $stmtProducto->bind_param(
+                "sssdii",
+                $nombre,
+                $descripcion,
+                $tipo,
+                $precio_unitario,
+                $activo,
+                $id_producto
+            );
+
+        } else {
+
+            // CON proveedor
+
+            $id_proveedor = (int) $_POST['id_proveedor'];
+
+            $stmtProducto = $conn->prepare("
+                UPDATE productos
+                SET
+                    nombre_producto = ?,
+                    descripcion_producto = ?,
+                    tipo = ?,
+                    precio_unitario = ?,
+                    activo = ?,
+                    id_proveedor = ?
+                WHERE id_producto = ?
+            ");
+
+            if (!$stmtProducto) {
+                throw new Exception(
+                    "Error en prepare producto: " . $conn->error
+                );
+            }
+
+            $stmtProducto->bind_param(
+                "sssdiii",
+                $nombre,
+                $descripcion,
+                $tipo,
+                $precio_unitario,
+                $activo,
+                $id_proveedor,
+                $id_producto
+            );
+        }
+
+        // Ejecutar update producto
         if (!$stmtProducto->execute()) {
-            throw new Exception("Error al actualizar producto: " . $stmtProducto->error);
+            throw new Exception(
+                "Error al actualizar producto: " .
+                $stmtProducto->error
+            );
         }
 
         // =========================
@@ -80,14 +136,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             WHERE id_producto = ?
         ");
 
+        if (!$stmtInventario) {
+            throw new Exception(
+                "Error en prepare inventario: " .
+                $conn->error
+            );
+        }
+
         $stmtInventario->bind_param(
             "ii",
             $param_bajo_stock,
             $id_producto
         );
 
+        // Ejecutar update inventario
         if (!$stmtInventario->execute()) {
-            throw new Exception("Error al actualizar inventario: " . $stmtInventario->error);
+            throw new Exception(
+                "Error al actualizar inventario: " .
+                $stmtInventario->error
+            );
         }
 
         // =========================
@@ -97,20 +164,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->commit();
 
         // =========================
-        // Redirección con mensaje
+        // Redirección
         // =========================
 
-        header("Location: ../gestor_inventario/inventario_productos.php?success=1");
+        header(
+            "Location: ../gestor_inventario/inventario_productos.php?success=1"
+        );
+
         exit();
 
     } catch (Exception $e) {
 
+        // Revertir cambios
         $conn->rollback();
 
-        die("Error al actualizar el producto: " . $e->getMessage());
+        die(
+            "Error al actualizar el producto: " .
+            $e->getMessage()
+        );
     }
 
 } else {
 
     die("Método no permitido.");
 }
+?>
