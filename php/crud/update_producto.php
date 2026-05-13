@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $precio_unitario = $_POST['precio_unitario'] ?? null;
 
-    // Campo de inventario
+    // Inventario
     $param_bajo_stock = $_POST['param_bajo_stock'] ?? null;
     $activo = $_POST['activo'] ?? null;
 
@@ -46,12 +46,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->begin_transaction();
 
         // =========================
-        // Actualizar tabla productos
+        // Manejo de imagen
         // =========================
 
-        if (empty($_POST['id_proveedor'])) {
+        $nombreArchivo = null;
+        $hayNuevaImagen = false;
 
-            // SIN proveedor
+        if (
+            isset($_FILES['imagen']) &&
+            $_FILES['imagen']['error'] === 0
+        ) {
+
+            $directorio = BASE_PATH . "/uploads/productos/";
+
+            if (!is_dir($directorio)) {
+                mkdir($directorio, 0777, true);
+            }
+
+            $archivoTmp = $_FILES['imagen']['tmp_name'];
+            $nombreOriginal = $_FILES['imagen']['name'];
+
+            $ext = strtolower(
+                pathinfo($nombreOriginal, PATHINFO_EXTENSION)
+            );
+
+            $permitidos = [
+                'jpg',
+                'jpeg',
+                'png',
+                'webp',
+                'jfif'
+            ];
+
+            $ext = trim(strtolower($ext));
+
+            if (!in_array($ext, $permitidos)) {
+
+                throw new Exception(
+                    "Formato de imagen no permitido: " . $ext
+                );
+            }
+
+            if (!in_array($ext, $permitidos)) {
+                throw new Exception(
+                    "Formato de imagen no permitido"
+                );
+            }
+
+            if ($_FILES['imagen']['size'] > 2 * 1024 * 1024) {
+                throw new Exception(
+                    "La imagen supera los 2MB"
+                );
+            }
+
+            $nombreArchivo = uniqid("prod_") . "." . $ext;
+
+            if (
+                !move_uploaded_file(
+                    $archivoTmp,
+                    $directorio . $nombreArchivo
+                )
+            ) {
+                throw new Exception(
+                    "Error al subir imagen"
+                );
+            }
+
+            $hayNuevaImagen = true;
+        }
+
+        // =========================
+        // ACTUALIZAR PRODUCTO
+        // =========================
+
+        $sinProveedor = empty($_POST['id_proveedor']);
+
+        // =====================================================
+        // CASO 1:
+        // SIN proveedor + SIN imagen
+        // =====================================================
+
+        if ($sinProveedor && !$hayNuevaImagen) {
 
             $stmtProducto = $conn->prepare("
                 UPDATE productos
@@ -65,12 +140,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 WHERE id_producto = ?
             ");
 
-            if (!$stmtProducto) {
-                throw new Exception(
-                    "Error en prepare producto: " . $conn->error
-                );
-            }
-
             $stmtProducto->bind_param(
                 "sssdii",
                 $nombre,
@@ -80,10 +149,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $activo,
                 $id_producto
             );
+        }
 
-        } else {
+        // =====================================================
+        // CASO 2:
+        // SIN proveedor + CON imagen
+        // =====================================================
 
-            // CON proveedor
+        elseif ($sinProveedor && $hayNuevaImagen) {
+
+            $stmtProducto = $conn->prepare("
+                UPDATE productos
+                SET
+                    nombre_producto = ?,
+                    descripcion_producto = ?,
+                    tipo = ?,
+                    precio_unitario = ?,
+                    activo = ?,
+                    imagen_producto = ?,
+                    id_proveedor = NULL
+                WHERE id_producto = ?
+            ");
+
+            $stmtProducto->bind_param(
+                "sssdisi",
+                $nombre,
+                $descripcion,
+                $tipo,
+                $precio_unitario,
+                $activo,
+                $nombreArchivo,
+                $id_producto
+            );
+        }
+
+        // =====================================================
+        // CASO 3:
+        // CON proveedor + SIN imagen
+        // =====================================================
+
+        elseif (!$sinProveedor && !$hayNuevaImagen) {
 
             $id_proveedor = (int) $_POST['id_proveedor'];
 
@@ -99,12 +204,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 WHERE id_producto = ?
             ");
 
-            if (!$stmtProducto) {
-                throw new Exception(
-                    "Error en prepare producto: " . $conn->error
-                );
-            }
-
             $stmtProducto->bind_param(
                 "sssdiii",
                 $nombre,
@@ -117,7 +216,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
         }
 
+        // =====================================================
+        // CASO 4:
+        // CON proveedor + CON imagen
+        // =====================================================
+
+        else {
+
+            $id_proveedor = (int) $_POST['id_proveedor'];
+
+            $stmtProducto = $conn->prepare("
+                UPDATE productos
+                SET
+                    nombre_producto = ?,
+                    descripcion_producto = ?,
+                    tipo = ?,
+                    precio_unitario = ?,
+                    activo = ?,
+                    imagen_producto = ?,
+                    id_proveedor = ?
+                WHERE id_producto = ?
+            ");
+
+            $stmtProducto->bind_param(
+                "sssdissi",
+                $nombre,
+                $descripcion,
+                $tipo,
+                $precio_unitario,
+                $activo,
+                $nombreArchivo,
+                $id_proveedor,
+                $id_producto
+            );
+        }
+
+        // =========================
         // Ejecutar update producto
+        // =========================
+
         if (!$stmtProducto->execute()) {
             throw new Exception(
                 "Error al actualizar producto: " .
@@ -126,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // =========================
-        // Actualizar tabla inventario
+        // Actualizar inventario
         // =========================
 
         $stmtInventario = $conn->prepare("
@@ -136,20 +273,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             WHERE id_producto = ?
         ");
 
-        if (!$stmtInventario) {
-            throw new Exception(
-                "Error en prepare inventario: " .
-                $conn->error
-            );
-        }
-
         $stmtInventario->bind_param(
             "ii",
             $param_bajo_stock,
             $id_producto
         );
 
-        // Ejecutar update inventario
         if (!$stmtInventario->execute()) {
             throw new Exception(
                 "Error al actualizar inventario: " .
@@ -158,14 +287,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // =========================
-        // Confirmar transacción
+        // Confirmar cambios
         // =========================
 
         $conn->commit();
-
-        // =========================
-        // Redirección
-        // =========================
 
         header(
             "Location: ../gestor_inventario/inventario_productos.php?success=1"
@@ -175,7 +300,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } catch (Exception $e) {
 
-        // Revertir cambios
         $conn->rollback();
 
         die(

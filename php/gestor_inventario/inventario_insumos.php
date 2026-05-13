@@ -130,7 +130,7 @@ include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
                                 Sin proveedor asignado
                             <?php endif; ?>
                         </td>
-                <td><a href="eliminar_insumo.php?id=<?= $row['id_insumo'] ?>" title="Eliminar insumo">❌</a><br>
+                <td><a href="eliminar_insumo.php?id=<?= $row['id_insumo'] ?>" title="Eliminar insumo">❌</a>
                 <a href="modificar_insumo.php?id=<?= $row['id_insumo'] ?>" title="Modificar insumo">✏️</a>
             </td>
                     </tr>

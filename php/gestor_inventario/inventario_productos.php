@@ -125,7 +125,7 @@ $result = $conn->query($sql);
                         Sin proveedor asignado
                     <?php endif; ?>
                 </td>
-                <td><a href="eliminar_producto.php?id=<?= $row['id_producto']; ?>" title="Eliminar producto">❌</a><br>
+                <td><a href="eliminar_producto.php?id=<?= $row['id_producto']; ?>" title="Eliminar producto">❌</a>
                 <a href="modificar_producto.php?id=<?= $row['id_producto']; ?>" title="Modificar producto">✏️</a>
             </td>
             </tr>
