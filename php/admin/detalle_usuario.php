@@ -150,7 +150,7 @@
         <?php endif;?>
     </main>
     <section id="volver_s">
-        <a href="personas_admin.php">Volver a Administración de personas</a>
+        <a href="personas_admin.php" class="btn-volver-admin">Volver a Administración de personas</a>
     </section>
     <?php
     include('../footer.php');

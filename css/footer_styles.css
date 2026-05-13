@@ -1,73 +1,94 @@
-/*Generales*/
+/* 
+  ===========================================
+  FOOTER COMPONENTS - STITCH DESIGN TASTE
+  ===========================================
+*/
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+#footer {
+  margin-top: 4rem;
+  padding: 4rem 2rem 2rem 2rem;
+  background-color: var(--charcoal-ink);
+  color: var(--pure-surface);
+  border-radius: 2rem 2rem 0 0;
 }
 
-html, body {
-  min-height: 100%;
-  margin: 0;
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  text-align: center;
+}
+
+#contacto_section h3 {
+  font-family: var(--font-display);
+  color: var(--pure-surface);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-links {
+  list-style: none;
   padding: 0;
-  box-sizing: border-box;
-}
-
-body {
+  margin: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  gap: 1.2rem;
+  align-items: center;
 }
 
-/*Titulos y subtitulos*/
-
-h3{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
-    text-align: center;
-    color:#2E6009;
-    padding: 1rem;
+.footer-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--muted-bark);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 500;
 }
 
-/*Seccion de contacto*/
-#contacto_section{
-    color:#4b4b4b;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-    padding-bottom: 1rem;
+.footer-links a:hover {
+  color: var(--terracotta-accent);
 }
 
-#contacto_section > article > ul{
-    list-style: none;
-    display: flex;
-    flex-direction: row;
+.footer-links img {
+  width: 24px;
+  height: 24px;
+  filter: grayscale(100%) brightness(200%);
+  transition: filter 0.2s;
 }
 
-#contacto_section > article > ul > li{
-    line-height: 20px;
-    margin-right: 2rem;
+.footer-links a:hover img {
+  filter: grayscale(0%);
 }
 
-#contacto_section > article > ul > li > a{
-    text-decoration: none;
-    color:#4b4b4b;
+.footer-credits {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted-bark);
+  font-size: 0.9rem;
 }
 
-#contacto_section > article > ul > li > a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
+.footer-credits p {
+  color: var(--muted-bark);
+  margin-bottom: 0.5rem;
 }
 
-#footer{
-    display: flex;
-    flex-direction: column;
-    background-color: #F0E8DD;
-    width: 100%;
-    max-height: 200px;
-    text-align: center;
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    align-items: end;
+  }
+  
+  .footer-links {
+    align-items: flex-start;
+  }
+  
+  .footer-credits {
+    text-align: right;
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
 }

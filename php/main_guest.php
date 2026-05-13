@@ -4,21 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adiestramiento canino Tahito</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <!-- Design System Theme -->
+    <link rel="stylesheet" href="../css/theme.css?v=<?= time() ?>">
     <link rel="stylesheet" href="../css/main_guest_styles.css?v=<?= time() ?>">
+    
     <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
 </head>
 <body>
-    <header>
+    <header class="container main-header">
         <a class="img" href="main_guest.php">
-            <img src="../recursos/logsinfondo.png" alt="">
+            <img src="../recursos/logsinfondo.png" alt="Tahito Logo">
         </a>
         <nav>
             <ul id="nav_menu">
@@ -28,30 +26,31 @@
             </ul>
         </nav>
         <div id="nav_registro">
-            <a id="link_registro" href="registro.php">Registrarse</a>
-            <a id="link_login" href="login.php">Ingresar</a>
+            <a id="link_login" href="login.php" class="nav-link">Ingresar</a>
+            <a id="link_registro" href="registro.php" class="btn-primary" style="padding: 0.5rem 1rem;">Registrarse</a>
         </div>
     </header>
     <main>
-        <section id="hero">
-        <article>
-            <div>
-            <h2>Adiestramiento Canino Tahito</h2>
-            <br>
-            <p>
-            Adiestramiento positivo CABA<br>
-            Técnicas modernas con amor<br>
-            Servicios a domicilio<br>
-            Consultas por mensaje directo</p>
-            <br><br><br>
-            <button id="btn_hero"><a href="login.php">Empezar</a></button>
-            </div>
-            <img src="../recursos/adiestramiento-canino-hero.avif" alt="adiestramiento canino">
-        </article>
+        <section id="hero" class="container">
+            <article class="hero-split">
+                <div class="hero-content">
+                    <h1>Adiestramiento Canino <br/><span class="text-accent">Tahito</span></h1>
+                    <p class="hero-subtitle">
+                        Técnicas modernas enfocadas en educación positiva y empatía para ti y tu mascota. Servicios a domicilio en CABA diseñados para transformar el comportamiento con cariño.
+                    </p>
+                    <a href="login.php" class="btn-primary mt-4">Comenzar ahora</a>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-image-wrapper">
+                        <img src="../recursos/adiestramiento-canino-hero.avif" alt="adiestramiento canino">
+                    </div>
+                </div>
+            </article>
         </section>
-        <section id="servicios">
+        
+        <section id="servicios" class="container">
             <h2>Nuestros Servicios</h2>
-            <div id="tarjetas_s">
+            <div id="tarjetas_s" class="services-masonry">
                 <?php
                 include('servicios.php');
                 ?>

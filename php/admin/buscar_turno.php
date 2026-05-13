@@ -48,7 +48,7 @@ if (session_status() == PHP_SESSION_NONE) {
             if (in_array($campo_turno, $columnNames)) {
 
                 // Usamos LOWER para hacer la búsqueda insensible a mayúsculas
-                $sql = "SELECT * FROM servicio_g3 WHERE LOWER($campo_turno) LIKE ?";
+                $sql = "SELECT * FROM servicio WHERE LOWER($campo_turno) LIKE ?";
                 $stmt = $conn->prepare($sql);
                 $param = '%' . strtolower($valor_campo) . '%';
                 $stmt->bind_param("s", $param);
@@ -106,7 +106,7 @@ if (session_status() == PHP_SESSION_NONE) {
     </section>
 <?php endif; ?>
 <section id="volver_s">
-        <a href="servicios_admin.php">Volver a Administración de servicios</a>
+        <a href="servicios_admin.php" class="btn-volver-admin">Volver a Administración de servicios</a>
 </section>
 </main>
 <?php

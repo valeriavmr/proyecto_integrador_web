@@ -1,187 +1,128 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
-    font-family: 'Roboto', sans-serif;
+/* 
+  ===========================================
+  TRABAJA CON NOSOTROS - STITCH DESIGN TASTE
+  ===========================================
+*/
+
+.vacantes-hero {
+  padding: 5rem 2rem 3rem 2rem;
+  text-align: center;
 }
 
-html, body {
-    min-height: 100vh;
-    width: 100%;
-    margin: 0;
-    font-size: 16px;
-    color: #4b4b4b;
-    background-color: #f4f4f9;
+.vacantes-hero h1 {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  margin-bottom: 1rem;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
+.vacantes-hero p {
+  font-size: 1.1rem;
+  margin: 0 auto;
 }
 
-h1 {
-    font-family: 'Montserrat', 'sans-serif';
-    font-size: 28px;
-    text-align: center;
-    color: #2E6009;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-h2 {
-    font-family: 'Montserrat', 'sans-serif';
-    font-size: 20px;
-    text-align: center;
-    color: #2E6009;
-}
-
-
-
-header {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 10px 30px; 
-    background-color: #F0E8DD;
-    font-weight: bold;
-}
-
-header > .img > img {
-    height: 100px; 
-    display: block;
-}
-
-
-header nav {
-    flex-grow: 1; 
-    text-align: right; 
-}
-
-
-ul {
-    list-style: none;
-    display: flex;
-
-    justify-content: space-evenly; /* Distribuye el espacio entre los elementos */
-    align-items: center;
-    padding: 0 40px; 
-    margin: 0;
-}
-
-ul > li > a {
-    text-decoration: none;
-    color: #2E6009;
-    font-weight: bold;
-}
-
-ul > li > a:hover {
-    color: #a7866D;
-}
-
-
-/* ================================================= */
-/* 3. CONTENIDO PRINCIPAL (MAIN) - SIMPLIFICADO */
-/* ================================================= */
-
-main {
-    display: block;
-    width: 100%;
-    padding: 0 20px; 
-    background-color: #F4F4F4; 
-    flex-grow: 1; 
-}
-
-/* ================================================= */
-/* 4. TARJETAS DE VACANTES Y MODAL */
-/* ================================================= */
-
+/* Zig-Zag Grid (anti 3-col equal) */
 .vacantes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  padding: 2rem 2rem 6rem 2rem;
 }
 
 .tarjeta-vacante {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
+  background: var(--pure-surface);
+  border: 1px solid var(--whisper-border);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--diffused-shadow);
+  transition: transform var(--spring-duration) var(--spring-easing), border-color 0.2s;
 }
 
-.tarjeta-vacante img {
-    width: 100%;
-    height: auto;
-    max-height: 150px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 15px;
+.tarjeta-vacante:hover {
+  transform: translateY(-6px);
+  border-color: var(--terracotta-accent);
 }
 
-.boton-aplicar {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-    font-size: 1em;
+.tarjeta-img-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
 }
 
-/* --- Estilos del Modal (Formulario) --- */
+.tarjeta-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--spring-duration) var(--spring-easing);
+}
 
+.tarjeta-vacante:hover .tarjeta-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.tarjeta-body {
+  padding: 2rem;
+}
+
+.tarjeta-body h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.tarjeta-body p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Modal */
 .modal {
-    display: none; 
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4); 
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(24, 24, 27, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.abierto {
+  display: flex;
 }
 
 .modal-contenido {
-    background-color: #fefefe;
-    margin: 10% auto; 
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 8px;
-    position: relative;
+  position: relative;
+  background: var(--pure-surface);
+  border-radius: 2rem;
+  padding: 3rem;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .cerrar-modal {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--muted-bark);
+  transition: color 0.2s;
+  line-height: 1;
 }
 
-.cerrar-modal:hover,
-.cerrar-modal:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+.cerrar-modal:hover {
+  color: var(--terracotta-accent);
 }
 
-/* Estilos de formulario */
-.modal-contenido form label, .modal-contenido form input {
-    display: block;
-    margin-bottom: 10px;
+.modal-contenido h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.modal-contenido form input[type="text"],
-.modal-contenido form input[type="email"],
-.modal-contenido form input[type="file"] {
-    width: 95%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+@media (max-width: 768px) {
+  .vacantes-grid {
+    grid-template-columns: 1fr;
+  }
 }

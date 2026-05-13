@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirmar = $_POST['confirmar'];
 
     // Traer la contraseña actual del usuario
-    $sql = "SELECT password FROM persona_g3 WHERE nombre_de_usuario = ?";
+    $sql = "SELECT password FROM persona WHERE nombre_de_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hash = password_hash($nueva, PASSWORD_DEFAULT);
 
             // Guardar en la BD
-            $sql_update = "UPDATE persona_g3 SET password=? WHERE nombre_de_usuario=?";
+            $sql_update = "UPDATE persona SET password=? WHERE nombre_de_usuario=?";
             $stmt_update = $conn->prepare($sql_update);
             $stmt_update->bind_param("ss", $hash, $username);
 
@@ -98,9 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" id="confirmar" name="confirmar" required>
                 </div>
                 
-                <button type="submit" class="btn-guardar">Actualizar Contraseña</button>
-                <button type="button" class="btn-volver" onclick="window.location.href='<?php echo BASE_URL; ?>/php/crud/perfil.php'">
-        Volver al Perfil</button>
+                <div class="botones-acciones" style="margin-top: 20px;">
+                    <button type="submit" class="btn-guardar" style="margin-top: 0;">Actualizar Contraseña</button>
+                    <a href="<?php echo BASE_URL; ?>/php/crud/perfil.php" class="btn-outline">Volver al Perfil</a>
+                </div>
 
             </form>
             

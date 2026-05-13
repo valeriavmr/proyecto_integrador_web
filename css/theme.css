@@ -1,0 +1,113 @@
+/* 
+   ===============================================
+   ADIESTRAMIENTO CANINO TAHITO - STITCH DESIGN TASTE
+   ===============================================
+*/
+
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,400&f[]=satoshi@700,500,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* Colors */
+  --canvas-alabaster: #FAFAFA;
+  --pure-surface: #FFFFFF;
+  --charcoal-ink: #18181B;
+  --muted-bark: #71717A;
+  --whisper-border: rgba(226,232,240,0.6);
+  --whisper-border-dark: rgba(200,210,225,0.8);
+  --terracotta-accent: #E07A5F;
+  --terracotta-hover: #D0694E;
+  
+  /* Typography */
+  --font-display: 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Satoshi', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Layout constraints */
+  --max-width: 1400px;
+  
+  /* Motion & Physics */
+  --spring-duration: 0.4s;
+  --spring-easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --fluid-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Shadows */
+  --diffused-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05),
+                     0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+/* Base normalization & Anti-patterns protection */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--canvas-alabaster);
+  color: var(--charcoal-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--charcoal-ink);
+  margin-top: 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+p {
+  color: var(--muted-bark);
+  max-width: 65ch;
+}
+
+/* No generic mouse cursors for buttons, use pointer */
+button, a {
+  cursor: pointer;
+}
+
+/* No ugly pure black selection */
+::selection {
+  background-color: var(--terracotta-accent);
+  color: var(--pure-surface);
+}
+
+/* Reusable Utilities */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--terracotta-accent);
+  color: var(--pure-surface);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  text-decoration: none;
+  transition: transform var(--spring-duration) var(--spring-easing),
+              background-color var(--fluid-easing) 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: var(--terracotta-hover);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(1px); /* tactile feel */
+}
+
+/* Layout container */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+}

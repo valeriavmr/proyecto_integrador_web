@@ -80,9 +80,8 @@
         </fieldset>
         </form>
         <section id="volver_s">
-        <?php if($_SESSION['rol']=='admin'):?><a href="tabla_trabajadores.php">
-        Volver a la lista de trabajadores</a>
-        <?php elseif($_SESSION['rol']=='trabajador'):?><a href="../trabajador/perfil_trabajador.php">Volver a Perfil</a>
+        <?php if($_SESSION['rol']=='admin'):?><a href="tabla_trabajadores.php" class="btn-volver-admin">Volver a la lista de trabajadores</a>
+        <?php elseif($_SESSION['rol']=='trabajador'):?><a href="../trabajador/perfil_trabajador.php" class="btn-volver-admin">Volver a Perfil</a>
         <?php endif;?>
         </section>
     </section>

@@ -1,6 +1,5 @@
 <?php
 include '../crud/conexion.php'; 
-include('header_admin.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -51,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <?php include('header_admin.php'); ?>
 <main>
     <h1>Registrar nueva mascota</h1>
 

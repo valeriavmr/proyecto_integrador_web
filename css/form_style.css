@@ -7,7 +7,7 @@
 
 .formulario-edicion h1 {
     text-align: center;
-    font-family: var(--fuente-titulos);
+    font-family: var(--font-display);
     margin-bottom: 20px;
 }
 
@@ -25,7 +25,7 @@
     display: block; /* Pone el label en su propia línea */
     font-weight: 600;
     margin-bottom: 8px;
-    color: var(--color-texto-secundario);
+    color: var(--muted-bark);
 }
 
 .form-group input[type="text"],
@@ -36,10 +36,10 @@
 {
     width: 100%;
     padding: 12px;
-    border: 1px solid var(--color-borde);
+    border: 1px solid var(--whisper-border-dark);
     border-radius: 8px;
     font-size: 1em;
-    font-family: var(--fuente-texto);
+    font-family: var(--font-body);
     box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -47,8 +47,8 @@
 /* Efecto visual al hacer clic en un campo */
 .form-group input:focus {
     outline: none;
-    border-color: var(--color-primario);
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: var(--terracotta-accent);
+    box-shadow: 0 0 5px rgba(224, 122, 95, 0.5);
 }
 
 /* --- Estilo para el Botón de Guardar --- */
@@ -56,12 +56,12 @@
     display: block; /* Ocupa todo el ancho */
     width: 100%;
     padding: 15px;
-    background-color: var(--color-primario);
+    background-color: var(--terracotta-accent);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 1.1em;
-    font-family: var(--fuente-titulos);
+    font-family: var(--font-display);
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -69,7 +69,7 @@
 }
 
 .btn-guardar:hover {
-    background-color: var(--color-primario-hover);
+    background-color: var(--terracotta-hover);
 }
 /* --- Estilos para Mensajes de Éxito/Error --- */
 .mensaje {
@@ -78,7 +78,7 @@
     border-radius: 8px;
     text-align: center;
     font-weight: 600;
-    font-family: var(--fuente-texto);
+    font-family: var(--font-body);
 }
 
 .mensaje.exito {
@@ -98,7 +98,7 @@
     display: block;
     text-align: center;
     margin-top: 20px;
-    color: var(--color-primario);
+    color: var(--terracotta-accent);
     text-decoration: none;
     font-weight: 600;
 }
@@ -110,6 +110,6 @@
 
 .formulario-edicion-mascota h1 {
     text-align: center;
-    font-family: var(--fuente-titulos);
+    font-family: var(--font-display);
     margin-bottom: 20px;
 }

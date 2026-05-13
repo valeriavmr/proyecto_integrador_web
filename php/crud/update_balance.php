@@ -14,7 +14,7 @@ if (empty($mes_anio) || empty($tipo_servicio) || $pagado === null) {
     exit;
 }
 
-$sql = "UPDATE servicio_g3 
+$sql = "UPDATE servicio 
         SET pagado = ? 
         WHERE tipo_de_servicio = ? 
         AND DATE_FORMAT(horario, '%Y-%m') = ?";

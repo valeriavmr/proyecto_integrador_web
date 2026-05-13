@@ -6,7 +6,7 @@ $username = $_POST['username'];
 $pass = $_POST['pass'];
 
 #Primero busco al usuarios
-$sql = "SELECT nombre_de_usuario, password, rol FROM persona_g3 WHERE nombre_de_usuario = ?";
+$sql = "SELECT nombre_de_usuario, password, rol FROM persona WHERE nombre_de_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
@@ -35,6 +35,9 @@ if ($result->num_rows > 0) {
     }elseif($rol=='trabajador'){
         $_SESSION['rol'] = 'trabajador';
         header('Location: ../trabajador/main_trabajador.php');
+    }elseif($rol=='gestor'){
+        $_SESSION['rol']='gestor';
+        header('Location: ../gestor_inventario/main_gestor.php');
     }
     exit;
     }else {

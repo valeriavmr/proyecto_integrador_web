@@ -150,7 +150,7 @@
         <?php endif;?>
     </main>
     <section id="volver_s">
-        <a href="main_trabajador.php">Volver a la página principal</a>
+        <a href="main_trabajador.php" class="btn-volver-admin">Volver a la página principal</a>
     </section>
     <?php
     include('../footer.php');

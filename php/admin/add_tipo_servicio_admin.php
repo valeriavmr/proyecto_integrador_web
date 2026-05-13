@@ -35,7 +35,7 @@
         <?php endif; ?>
     </fieldset>
     <section id="back_section">
-        <a href="servicios_admin.php">Volver a Administración de servicios</a>
+        <a href="servicios_admin.php" class="btn-volver-admin">Volver a Administración de servicios</a>
     </section>
     </main>
     <?php

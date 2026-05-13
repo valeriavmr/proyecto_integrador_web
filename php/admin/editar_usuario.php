@@ -94,6 +94,7 @@ $id_persona = $_GET['id_persona'] ?? $_POST['id_persona'] ?? null;
                 <option value="admin">Administrador</option>
                 <option value="cliente">Cliente</option>
                 <option value="trabajador">Trabajador</option>
+                <option value="gestor">Gestor de Inventario</option>
             </select>
 
             <?php if (!$esAdmin): ?>
@@ -126,8 +127,8 @@ $id_persona = $_GET['id_persona'] ?? $_POST['id_persona'] ?? null;
         </form>
     </section>
     <section id="volver_s">
-        <?php if($_SESSION['rol']=='admin'):?><a href="tabla_personas.php">Volver a registro de personas</a>
-            <?php elseif($_SESSION['rol']=='trabajador'):?><a href="../trabajador/perfil_trabajador.php">Volver a Perfil</a>
+        <?php if($_SESSION['rol']=='admin'):?><a href="tabla_personas.php" class="btn-volver-admin">Volver a registro de personas</a>
+            <?php elseif($_SESSION['rol']=='trabajador'):?><a href="../trabajador/perfil_trabajador.php" class="btn-volver-admin">Volver a Perfil</a>
             <?php endif;?>
     </section>
 </main>

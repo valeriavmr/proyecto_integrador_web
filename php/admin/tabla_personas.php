@@ -71,7 +71,7 @@
         </form>
     </section>
     <section id="volver_s">
-        <a href="personas_admin.php">Volver a Administración de personas</a>
+        <a href="personas_admin.php" class="btn-volver-admin">Volver a Administración de personas</a>
     </section>
     </main>
     <?php
