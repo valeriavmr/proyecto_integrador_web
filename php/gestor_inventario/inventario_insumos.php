@@ -34,27 +34,29 @@ if ($filtro === 'bajo_stock') {
 $result = $conn->query($sql);
 ?>
 
+<?php
+include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario de Insumos</title>
 
     <link rel="stylesheet" href="../../css/menu_gestor_inventario.css">
     <link rel="stylesheet" href="../../css/tablas_admin.css">
+    <link rel="stylesheet" href="../../css/buscar_persona.css">
 
     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
+
+    <title>Inventario de Insumos</title>
 </head>
 
 <body>
-
-<?php
-include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
-?>
-
 <main>
 
     <h1>Inventario de Insumos</h1>
@@ -130,7 +132,7 @@ include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
                                 Sin proveedor asignado
                             <?php endif; ?>
                         </td>
-                <td><a href="eliminar_insumo.php?id=<?= $row['id_insumo'] ?>" title="Eliminar insumo">❌</a>
+                <td><a href="eliminar_insumo.php?id=<?= $row['id_insumo'] ?>" title="Eliminar insumo" id="eliminar-insumo">❌</a>
                 <a href="modificar_insumo.php?id=<?= $row['id_insumo'] ?>" title="Modificar insumo">✏️</a>
             </td>
                     </tr>
@@ -162,4 +164,14 @@ include('../footer.php');
 ?>
 
 </body>
+<script>
+    const eliminarLinks = document.querySelectorAll('#eliminar-insumo');
+    eliminarLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este insumo?')) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 </html>

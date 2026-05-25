@@ -25,9 +25,9 @@
                 <img src="../../recursos/img/inventario_productos_icon.png" alt=""> Inventario de productos</a></article>
             <article class="opc_menu_ap"><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/add_producto.php">
                 <img src="../../recursos/img/add_producto_icon.png" alt=""> Agregar un producto</a></article>
-            <article class="opc_menu_ap"><a href="#">
+            <article class="opc_menu_ap"><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/trazabilidad_productos.php">
                 <img src="../../recursos/img/trazabilidad_producto_icon.png" alt=""> Trazabilidad de un producto</a></article>
-            <article class="opc_menu_ap"><a href="#">
+            <article class="opc_menu_ap"><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/buscar_producto.php">
                 <img src="../../recursos/img/buscar_producto_icon.png" alt=""> Buscar un producto</a></article>
         </section>
         <section id="volver_s">
