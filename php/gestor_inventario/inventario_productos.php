@@ -36,6 +36,14 @@ if ($filtro === 'bajo_stock') {
 
 $result = $conn->query($sql);
 ?>
+
+<?php
+    include_once __DIR__ . '\..\..\config.php';
+    require_once(BASE_PATH . '/php/admin/auth.php');
+    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    include_once(BASE_PATH . '/php/crud/consultas_varias.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,18 +52,14 @@ $result = $conn->query($sql);
     <title>Pagina de inicio</title>
     <link rel="stylesheet" href="../../css/menu_gestor_inventario.css">
     <link rel="stylesheet" href="../../css/tablas_admin.css">
+    <link rel="stylesheet" href="../../css/buscar_persona.css">
     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
 </head>
 <body>
-<?php
-    include_once __DIR__ . '\..\..\config.php';
-    require_once(BASE_PATH . '/php/admin/auth.php');
-    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
-    include_once(BASE_PATH . '/php/crud/consultas_varias.php');
-?>
 <main>
+    <br>
     <h1>Inventario de Productos</h1>
 
 <?php if ($filtro === 'bajo_stock'): ?>
@@ -125,7 +129,7 @@ $result = $conn->query($sql);
                         Sin proveedor asignado
                     <?php endif; ?>
                 </td>
-                <td><a href="eliminar_producto.php?id=<?= $row['id_producto']; ?>" title="Eliminar producto">❌</a><br>
+                <td><a href="eliminar_producto.php?id=<?= $row['id_producto']; ?>" title="Eliminar producto" id="eliminar-producto">❌</a>
                 <a href="modificar_producto.php?id=<?= $row['id_producto']; ?>" title="Modificar producto">✏️</a>
             </td>
             </tr>
@@ -145,5 +149,19 @@ $result = $conn->query($sql);
         <a href="gestion_productos.php" class="btn-volver-admin">Volver a Gestión de productos</a>
     </section>
 </main>
+<?php
+include_once(BASE_PATH . '/php/footer.php');
+?>
 </body>
+
+<script>
+    const eliminarLinks = document.querySelectorAll('#eliminar-producto');
+    eliminarLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 </html>

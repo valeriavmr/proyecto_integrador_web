@@ -25,9 +25,9 @@
                 <img src="../../recursos/img/gestion_insumos_icon.png" alt=""> Inventario de insumos</a></article>
             <article class="opc_menu_ap"><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/add_insumo.php">
                 <img src="../../recursos/img/agregar_insumo_icon.png" alt=""> Agregar insumo</a></article>
-            <article class="opc_menu_ap"><a href="#">
+            <article class="opc_menu_ap"><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/trazabilidad_insumos.php">
                 <img src="../../recursos/img/trazabilidad_insumo_icon.png" alt=""> Trazabilidad de un insumo</a></article>
-            <article class="opc_menu_ap"><a href="#">
+            <article class="opc_menu_ap"><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/buscar_insumo.php">
                 <img src="../../recursos/img/buscar_insumo_icon.png" alt=""> Buscar un insumo</a></article>
         </section>
         <section id="volver_s">
