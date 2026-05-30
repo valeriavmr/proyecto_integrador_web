@@ -33,6 +33,19 @@
         <article class="opc_menu_ap"><a href="trabajadores_admin.php"><img src="../../recursos/trabajador_icon.png" alt=""> Gestión de trabajadores</a></article>
         
         <article class="opc_menu_ap"><a href="venta_productos.php"><img src="../../recursos/shopping-cart.png" alt="">      Venta de Productos</a></article>
+        <article class="opc_menu_ap">
+            <a href="proveedores_admin.php">
+                <img src="../../recursos/lista_personas_icon.png" alt="">
+                Gestión de proveedores
+            </a>
+        </article>
+
+        <article class="opc_menu_ap">
+            <a href="historia_clinica_admin.php">
+                <img src="../../recursos/mascotas_icon.png" alt="">
+                Historia clínica
+            </a>
+        </article>
 
     </section>
     </main>
