@@ -142,6 +142,7 @@ input#editar_turno_btn,
 input#add_tipo_servicio_btn,
 input#add_insumo_btn,
 input#add_producto_btn,
+input#add_proveedor_btn,
 .act_btn {
   display: block;
   width: 100%;
@@ -165,6 +166,7 @@ input#editar_turno_btn:hover,
 input#add_tipo_servicio_btn:hover,
 input#add_insumo_btn:hover,
 input#add_producto_btn:hover,
+input#add_proveedor_btn:hover,
 .act_btn:hover {
   background-color: #245007;
 }
@@ -175,6 +177,7 @@ input#editar_turno_btn:active,
 input#add_tipo_servicio_btn:active,
 input#add_insumo_btn:active,
 input#add_producto_btn:active,
+input#add_proveedor_btn:active,
 .act_btn:active {
   transform: translateY(1px);
 }

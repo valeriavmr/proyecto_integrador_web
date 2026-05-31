@@ -35,6 +35,7 @@ DROP TABLE IF EXISTS proveedores_g3;
 DROP TABLE IF EXISTS rentabilidad_g3;
 DROP TABLE IF EXISTS persona_g3;
 
+
 -- ----------------------------------------------------------------
 -- Limpieza tablas NUEVAS sin sufijo (para reimportaciones limpias)
 -- ----------------------------------------------------------------
@@ -57,6 +58,9 @@ DROP TABLE IF EXISTS tipo_de_servicio;
 DROP TABLE IF EXISTS productos;
 DROP TABLE IF EXISTS proveedores;
 DROP TABLE IF EXISTS persona;
+DROP TABLE IF EXISTS insumo;
+DROP TABLE IF EXISTS inventario_insumo;
+DROP TABLE IF EXISTS movimientos_insumo;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -231,13 +235,13 @@ CREATE TABLE proveedores (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   COMMENT='Proveedores de insumos y productos (Bernardo)';
 
---Insumos
+-- Insumos
 CREATE TABLE insumo (
     id_insumo INT AUTO_INCREMENT PRIMARY KEY,
     nombre_insumo VARCHAR(100) NOT NULL,
     descripcion_insumo TEXT,
     tipo_insumo VARCHAR(50),
-    costo_unidad DECIMAL(10,2) NOT NULL,
+    costo_unidad DECIMAL(10,2) NOT NULL
 ) ENGINE=InnoDB;
 
  ALTER TABLE insumo
@@ -269,7 +273,7 @@ CREATE TABLE movimientos_insumo (
         REFERENCES inventario_insumo(id_stock_insumo)
 ) ENGINE=InnoDB;
 
---productos
+-- productos
 
 CREATE TABLE productos (
     id_producto INT AUTO_INCREMENT PRIMARY KEY,
@@ -283,9 +287,9 @@ CREATE TABLE productos (
     ADD tipo ENUM('Otro','Vacuna','Medicamento') NOT NULL DEFAULT 'Otro',
     ADD activo	TINYINT(1) NOT NULL DEFAULT 1;
 
-    ALTER TABLE productos
+ALTER TABLE productos
     ADD id_proveedor INT,
-    ADD CONSTRAINT fk_producto_proveedor
+    ADD CONSTRAINT fk_productos_proveedor
     FOREIGN KEY (id_proveedor)
     REFERENCES proveedores(id_proveedor)
     ON UPDATE CASCADE;
@@ -442,7 +446,7 @@ CREATE TABLE rentabilidad (
 -- Auto-calcula ingresos y costos cruzando las tablas reales.
 -- Usar esta vista para los reportes y gráficos de rentabilidad.
 -- ================================================================
-
+/*
 CREATE OR REPLACE VIEW v_rentabilidad_mensual AS
 SELECT
     -- Identificador del período
@@ -572,7 +576,7 @@ LEFT JOIN rentabilidad AS r
     ON r.periodo_anio = ref.anio AND r.periodo_mes = ref.mes
 
 ORDER BY periodo_anio DESC, periodo_mes DESC;
-
+*/
 
 -- ================================================================
 -- FIN DEL SCHEMA v2

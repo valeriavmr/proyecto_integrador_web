@@ -63,8 +63,10 @@ require_once('auth.php');
         <hr class="nav-divider">
         <li><a href="<?php echo BASE_URL; ?>/php/admin/personas_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/personas_icon.png" alt="" class="iconos">Personas</a></li>
         <li><a href="<?php echo BASE_URL; ?>/php/admin/mascotas_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/mascotas_icon.png" alt="" class="iconos">Mascotas</a></li>
+        <li><a href="<?php echo BASE_URL; ?>/php/admin/historia_clinica_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/lista_mascotas_icon.png" alt="" class="iconos">Historia Clínica</a></li>
         <hr class="nav-divider">
         <li><a href="<?php echo BASE_URL; ?>/php/admin/servicios_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
+        <li><a href="<?php echo BASE_URL; ?>/php/admin/proveedores_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/personas_icon.png" alt="" class="iconos">Proveedores</a></li>
         <li><a href="<?php echo BASE_URL; ?>/php/admin/trabajadores_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/trabajador_icon.png" alt="" class="iconos">Trabajadores</a></li>
         <hr class="nav-divider">
         <li><a href="<?php echo BASE_URL; ?>/php/admin/main_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
