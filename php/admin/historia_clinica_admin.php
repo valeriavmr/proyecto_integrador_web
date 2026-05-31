@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,36 +15,37 @@
 
 <body>
 
-<?php
-require_once('auth.php');
-include('header_admin.php');
-?>
+    <?php
+    require_once('auth.php');
+    include('header_admin.php');
+    ?>
 
-<main>
+    <main>
 
-    <h2>Historia Clínica</h2>
+        <h1>Historia Clínica</h1>
 
-    <section id="menu_gestion">
+        <section id="menu_gestion">
 
-        <article class="opc_menu_ap">
-            <a href="tabla_historias_clinicas.php">
-                <img src="../../recursos/lista_mascotas_icon.png" alt="">
-                Listado de historias clínicas
-            </a>
-        </article>
+            <article class="opc_menu_ap">
+                <a href="tabla_historias_clinicas.php">
+                    <img src="../../recursos/lista_mascotas_icon.png" alt="">
+                    Gestionar historias clínicas
+                </a>
+            </article>
 
-        <article class="opc_menu_ap">
-            <a href="buscar_mascota.php">
-                <img src="../../recursos/search_negro_icon.png" alt="">
-                Buscar mascota
-            </a>
-        </article>
+            <article class="opc_menu_ap">
+                <a href="mascotas_sin_historia.php">
+                    <img src="../../recursos/add_mascota.png" alt="">
+                    Registrar primera atención
+                </a>
+            </article>
 
-    </section>
+        </section>
 
-</main>
+    </main>
 
-<?php include('../footer.php'); ?>
+    <?php include('../footer.php'); ?>
 
 </body>
+
 </html>

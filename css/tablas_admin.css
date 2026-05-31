@@ -100,3 +100,102 @@ td > a{
     background-color: #2E6009;
     color: white;
 }
+
+.evolucion-clinica {
+    width: 90%;
+    max-width: 1000px;
+    margin: 2rem auto;
+}
+
+.atencion-card {
+    background: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-left: 6px solid #2E6009;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.atencion-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.atencion-header h4 {
+    margin: 0;
+    color: #2E6009;
+    font-size: 20px;
+}
+
+.atencion-profesional {
+    color: #555;
+    font-weight: 600;
+}
+
+.servicio-clinico {
+    margin-bottom: 16px;
+    color: #555;
+}
+
+.bloque-clinico {
+    background: #f7f7f7;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+}
+
+.bloque-clinico h5 {
+    margin: 0 0 6px 0;
+    color: #2E6009;
+    font-size: 15px;
+}
+
+.bloque-clinico p {
+    margin: 0;
+    line-height: 1.5;
+    color: #333;
+    text-align: left;
+}
+
+.acciones-clinicas {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.acciones-clinicas img {
+    width: 22px;
+    height: 22px;
+}
+
+
+.resumen-mascota {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.dato-resumen {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    min-width: 150px;
+}
+
+.dato-resumen strong {
+    display: block;
+    color: #2E6009;
+    margin-bottom: 5px;
+}
+
+.dato-resumen span {
+    color: #333;
+}
