@@ -17,15 +17,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($nombre && $fecha_nac && $raza && $tamanio && $color && $duenio) {
 
+        // Resolver dueño: puede venir como ID o como nombre/apellido
+        $id_persona = null;
+
+        if (is_numeric($duenio)) {
+            $stmt_duenio = $conn->prepare("
+                SELECT id_persona
+                FROM persona
+                WHERE id_persona = ?
+                AND rol = 'cliente'
+                AND activo = 1
+                LIMIT 1
+            ");
+            $stmt_duenio->bind_param("i", $duenio);
+        } else {
+            $buscar = "%$duenio%";
+
+            $stmt_duenio = $conn->prepare("
+                SELECT id_persona
+                FROM persona
+                WHERE CONCAT(nombre, ' ', apellido) LIKE ?
+                AND rol = 'cliente'
+                AND activo = 1
+                LIMIT 1
+            ");
+            $stmt_duenio->bind_param("s", $buscar);
+        }
+
+        $stmt_duenio->execute();
+        $result_duenio = $stmt_duenio->get_result();
+
+        if ($row_duenio = $result_duenio->fetch_assoc()) {
+            $id_persona = (int)$row_duenio['id_persona'];
+        } else {
+            echo "<p class='mensaje-error'>No se encontró un cliente activo con ese ID o nombre.</p>";
+            exit;
+        }
+
+        $stmt_duenio->close();
+
         $stmt = $conn->prepare("INSERT INTO mascota 
             (nombre, fecha_de_nacimiento, edad, raza, tamanio, color, id_persona)
-            VALUES (?, ?, ?, ?, ?, ?, ?)");
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
 
         if (!$stmt) {
             die("Error en la preparación de la consulta: " . $conn->error);
         }
 
-        $stmt->bind_param("ssissss", $nombre, $fecha_nac, $edad, $raza, $tamanio, $color, $duenio);
+        $stmt->bind_param(
+            "ssisssi",
+            $nombre,
+            $fecha_nac,
+            $edad,
+            $raza,
+            $tamanio,
+            $color,
+            $id_persona
+        );
 
         if ($stmt->execute()) {
             echo "<script>alert('Mascota registrada con éxito 🐾'); window.location='mascotas_admin.php';</script>";

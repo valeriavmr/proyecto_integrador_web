@@ -836,4 +836,36 @@ function getProveedores($conn) {
     }
     return $proveedores;
 }
+
+
+function obtenerHistoriasClinicas($conn)
+{
+    $sql = "
+        SELECT
+            m.id_mascota,
+            m.nombre AS mascota,
+            m.raza,
+            p.nombre AS nombre_duenio,
+            p.apellido AS apellido_duenio,
+            h.id_historia,
+            h.fecha_apertura
+        FROM mascota m
+        INNER JOIN persona p
+            ON p.id_persona = m.id_persona
+        LEFT JOIN historia_clinica h
+            ON h.id_mascota = m.id_mascota
+        ORDER BY m.nombre
+    ";
+
+    $result = $conn->query($sql);
+
+    $historias = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $historias[] = $row;
+    }
+
+    return $historias;
+}
+
 ?>

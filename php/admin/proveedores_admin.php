@@ -46,6 +46,13 @@
                     Historial de compras
                 </a>
             </article>
+            
+            <article class="opc_menu_ap">
+                <a href="registrar_compra_proveedor.php">
+                    <img src="../../recursos/lista_servicios_icon.png" alt="">
+                    Registrar compra
+                </a>
+            </article>
         </section>
     </main>
 

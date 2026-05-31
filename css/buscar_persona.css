@@ -224,3 +224,10 @@ main > section.resultados-ancho > h3 {
     padding-left: 1rem;
 }
 
+.compra-nueva {
+    background-color: #fff3cd !important;
+}
+
+.compra-nueva td {
+    font-weight: 700;
+}

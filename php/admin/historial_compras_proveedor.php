@@ -43,11 +43,12 @@ while ($row = $resultado_proveedores->fetch_assoc()) {
    Búsqueda
 ========================== */
 
-$id_proveedor = $_POST['id_proveedor'] ?? '';
+$id_proveedor = $_POST['id_proveedor'] ?? $_GET['id_proveedor'] ?? '';
+$id_compra_nueva = $_GET['id_compra_nueva'] ?? null;
 
 $compras = [];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id_proveedor)) {
+if (!empty($id_proveedor)) {
 
     $sql = "
         SELECT
@@ -101,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id_proveedor)) {
             <?php foreach ($proveedores as $proveedor): ?>
                 <option
                     value="<?= htmlspecialchars($proveedor['id_proveedor']) ?>"
-                    <?= ($id_proveedor == $proveedor['id_proveedor']) ? 'selected' : '' ?>
+                    <?= ((string)$id_proveedor === (string)$proveedor['id_proveedor']) ? 'selected' : '' ?>
                 >
                     <?= htmlspecialchars($proveedor['nombre']) ?>
                 </option>
@@ -117,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id_proveedor)) {
 
     </form>
 
-    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+    <?php if (!empty($id_proveedor)): ?>
 
         <?php if (!empty($compras)): ?>
 
@@ -145,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id_proveedor)) {
 
                         <?php foreach ($compras as $compra): ?>
 
-                            <tr>
+                            <tr class="<?= ($id_compra_nueva == $compra['id_compra']) ? 'compra-nueva' : '' ?>">
 
                                 <td>
                                     <?= htmlspecialchars($compra['id_compra']) ?>

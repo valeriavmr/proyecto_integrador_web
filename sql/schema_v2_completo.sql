@@ -148,15 +148,25 @@ CREATE TABLE mascota (
 
 
 CREATE TABLE historia_clinica (
-    id_historia             INT AUTO_INCREMENT PRIMARY KEY,
-    id_mascota              INT NOT NULL,
-    fecha_apertura          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    id_historia INT AUTO_INCREMENT PRIMARY KEY,
+
+    id_mascota INT NOT NULL,
+
+    fecha_apertura DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
     observaciones_generales TEXT,
+
+    UNIQUE KEY uk_historia_mascota (id_mascota),
+
     CONSTRAINT fk_hist_mascota
-        FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota)
-        ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-  COMMENT='Historia clínica de cada mascota (1:1 con mascota)';
+        FOREIGN KEY (id_mascota)
+        REFERENCES mascota(id_mascota)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COMMENT='Historia clínica única de cada mascota';
 
 
 -- ================================================================
@@ -195,28 +205,51 @@ CREATE TABLE servicio (
 
 
 CREATE TABLE atencion_clinica (
-    id_atencion         INT AUTO_INCREMENT PRIMARY KEY,
-    id_historia         INT NOT NULL,
-    id_servicio         INT NULL
-                            COMMENT 'Turno que originó esta atención (puede ser NULL si es ingreso manual)',
-    id_profesional      INT NULL
-                            COMMENT 'Persona con rol trabajador que atendió',
-    fecha_atencion      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    motivo_consulta     VARCHAR(255),
-    diagnostico         TEXT,
-    tratamiento         TEXT,
-    observaciones       TEXT,
+    id_atencion INT AUTO_INCREMENT PRIMARY KEY,
+
+    id_historia INT NOT NULL,
+
+    id_servicio INT DEFAULT NULL
+        COMMENT 'Turno/servicio que originó la atención',
+
+    id_profesional INT DEFAULT NULL
+        COMMENT 'Veterinario o trabajador que realizó la atención',
+
+    fecha_atencion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    motivo_consulta VARCHAR(255),
+
+    diagnostico TEXT,
+
+    tratamiento TEXT,
+
+    observaciones TEXT,
+
+    KEY idx_historia (id_historia),
+    KEY idx_servicio (id_servicio),
+    KEY idx_profesional (id_profesional),
+
     CONSTRAINT fk_aten_historia
-        FOREIGN KEY (id_historia) REFERENCES historia_clinica(id_historia)
-        ON DELETE CASCADE ON UPDATE CASCADE,
+        FOREIGN KEY (id_historia)
+        REFERENCES historia_clinica(id_historia)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
     CONSTRAINT fk_aten_servicio
-        FOREIGN KEY (id_servicio) REFERENCES servicio(id_servicio)
-        ON DELETE SET NULL ON UPDATE CASCADE,
+        FOREIGN KEY (id_servicio)
+        REFERENCES servicio(id_servicio)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE,
+
     CONSTRAINT fk_aten_profesional
-        FOREIGN KEY (id_profesional) REFERENCES persona(id_persona)
-        ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-  COMMENT='Registro clínico detallado de cada atención (Bernardo)';
+        FOREIGN KEY (id_profesional)
+        REFERENCES persona(id_persona)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COMMENT='Registro detallado de consultas, diagnósticos y tratamientos';
 
 
 -- ================================================================
@@ -441,12 +474,16 @@ CREATE TABLE rentabilidad (
   COMMENT='Ajustes manuales por período para el cálculo de rentabilidad (Rodrigo)';
 
 
+ALTER TABLE historia_clinica
+ADD UNIQUE KEY uk_historia_mascota (id_mascota);
+
+
 -- ================================================================
 -- VIEW — v_rentabilidad_mensual
 -- Auto-calcula ingresos y costos cruzando las tablas reales.
 -- Usar esta vista para los reportes y gráficos de rentabilidad.
 -- ================================================================
-/*
+
 CREATE OR REPLACE VIEW v_rentabilidad_mensual AS
 SELECT
     -- Identificador del período
@@ -576,7 +613,7 @@ LEFT JOIN rentabilidad AS r
     ON r.periodo_anio = ref.anio AND r.periodo_mes = ref.mes
 
 ORDER BY periodo_anio DESC, periodo_mes DESC;
-*/
+
 
 -- ================================================================
 -- FIN DEL SCHEMA v2
