@@ -1,38 +1,94 @@
+/* 
+   ===============================================
+   TICKET — STITCH DESIGN SYSTEM
+   Receipt / sale ticket styling
+   ===============================================
+*/
+
+/* ── Ticket Header ── */
 .ticket-header {
-    text-align: center;
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+.ticket-header h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.35rem;
+  margin: 0.25rem 0;
+  letter-spacing: -0.02em;
+}
+
+.ticket-header div {
+  font-size: 0.82rem;
+  color: var(--muted-bark);
 }
 
 .ticket-logo {
-    width: 70px;
-    display: block;
-    margin: 0 auto 10px;
+  width: 55px;
+  display: block;
+  margin: 0 auto 0.5rem;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
 }
 
+/* ── Ticket Divider ── */
 .ticket-divider {
-    text-align: center;
-    margin: 15px 0;
-    letter-spacing: 2px;
+  text-align: center;
+  margin: 0.85rem 0;
+  border: none;
+  border-bottom: 1.5px dashed var(--whisper-border-dark);
+  font-size: 0;
+  height: 0;
+  overflow: hidden;
+  color: transparent;
+}
+
+/* ── Ticket Totals ── */
+.ticket-linea {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
 }
 
 .ticket-total {
-    text-align: right;
-    margin-top: 15px;
+  text-align: right;
+  margin-top: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--charcoal-ink);
+  font-variant-numeric: tabular-nums;
+  padding: 0.6rem 0.8rem;
+  background: var(--surface-subtle);
+  border-radius: var(--radius-md);
 }
 
-.ticket-linea {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
-}
-
+/* ── Barcode ── */
 #barcode {
-    margin: auto;
-    display: block;
+  margin: 0.75rem auto;
+  display: block;
 }
 
+/* ── QR Code ── */
 #qrcode {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: center;
 }
-/* Estilos del Ticket */
+
+/* ── Ticket table numbers ── */
+#tablaVenta td:nth-child(2),
+#tablaVenta td:nth-child(3),
+#tablaVenta td:nth-child(4) {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+#tablaVenta th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

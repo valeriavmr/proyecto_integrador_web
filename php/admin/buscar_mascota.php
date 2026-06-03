@@ -17,7 +17,7 @@
     require_once('auth.php');
 
     // Header admin
-    include('header_admin.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
 
     // Conexión y consultas
     require('../crud/conexion.php');

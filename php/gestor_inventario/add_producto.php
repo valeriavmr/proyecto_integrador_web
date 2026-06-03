@@ -15,7 +15,7 @@ require_once(BASE_PATH . '/php/admin/auth.php');
 </head>
 <body>
     <?php
-    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
     require_once(BASE_PATH . '/php/crud/conexion.php');
     require_once(BASE_PATH . '/php/crud/consultas_varias.php');
     ?>

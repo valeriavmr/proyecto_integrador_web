@@ -16,7 +16,7 @@ require_once('../crud/conexion.php');
 </head>
 <body>
     <?php
-    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
     $id_insumo = $_GET['id'] ?? null;
     if (!$id_insumo) {
         echo "<p>ID de insumo no proporcionado.</p>";

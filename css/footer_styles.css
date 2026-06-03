@@ -7,9 +7,10 @@
 #footer {
   margin-top: 4rem;
   padding: 4rem 2rem 2rem 2rem;
-  background-color: var(--charcoal-ink);
-  color: var(--pure-surface);
+  background-color: var(--pure-surface);
+  color: var(--charcoal-ink);
   border-radius: 2rem 2rem 0 0;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
 }
 
 .footer-grid {
@@ -21,7 +22,7 @@
 
 #contacto_section h3 {
   font-family: var(--font-display);
-  color: var(--pure-surface);
+  color: var(--charcoal-ink);
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
 }
@@ -40,37 +41,37 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  color: var(--muted-bark);
+  color: var(--stone-neutral);
   text-decoration: none;
   transition: color 0.2s ease;
   font-weight: 500;
 }
 
 .footer-links a:hover {
-  color: var(--terracotta-accent);
+  color: var(--forest-mid);
 }
 
 .footer-links img {
   width: 24px;
   height: 24px;
-  filter: grayscale(100%) brightness(200%);
+  filter: grayscale(100%) opacity(0.7);
   transition: filter 0.2s;
 }
 
 .footer-links a:hover img {
-  filter: grayscale(0%);
+  filter: grayscale(0%) opacity(1);
 }
 
 .footer-credits {
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--muted-bark);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--stone-neutral);
   font-size: 0.9rem;
 }
 
 .footer-credits p {
-  color: var(--muted-bark);
+  color: var(--stone-neutral);
   margin-bottom: 0.5rem;
 }
 

@@ -20,7 +20,7 @@
     }
 
     require_once('auth.php');
-    include('header_admin.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
 
     // Recuperar los valores posibles de trabajadores y mascotas
     require_once('../crud/conexion.php');

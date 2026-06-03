@@ -24,7 +24,7 @@
         require_once('auth.php');
 
         //Inserto el header
-        include('header_admin.php');
+        include_once(__DIR__ . '/../includes/sidebar.php');
 
         $id_persona = $_GET['id_persona'] ?? null;
 

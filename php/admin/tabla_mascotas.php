@@ -13,7 +13,7 @@
     <?php
     require_once('auth.php');
     //Incluyo el header
-    include('header_admin.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
 
     //Recupero los datos de la tabla
     require_once('../crud/conexion.php');

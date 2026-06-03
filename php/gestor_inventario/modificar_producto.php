@@ -65,7 +65,7 @@ $proveedores = $conn->query($sqlProv);
 
 <body>
 
-<?php include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php'); ?>
+<?php include_once(__DIR__ . '/../includes/sidebar.php'); ?>
 
 <main>
 

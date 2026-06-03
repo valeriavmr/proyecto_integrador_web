@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina de inicio</title>
-    <link rel="stylesheet" href="../../css/menu_gestor_inventario.css">
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/menu_gestor_inventario.css?v=<?= time() ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
@@ -13,7 +14,7 @@
     <?php
     include_once __DIR__ . '\..\..\config.php';
     require_once(BASE_PATH . '/php/admin/auth.php');
-    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
     include_once(BASE_PATH . '/php/crud/consultas_varias.php');
     ?>
 <main class="dashboard">
@@ -22,36 +23,40 @@
 
 <section class="dashboard_cards">
 
-    <article class="card">
-        <div class="icono">💉</div>
-        <div class="info">
-            <p class="titulo">Insumos en stock</p>
-            <p class="valor"><?php echo getCantidadTotalInsumos($conn); ?></p>
+    <article class="dashboard-card">
+        <div class="card-top">
+            <div class="card-icon">💉</div>
+            <p class="card-title">Insumos en stock</p>
         </div>
+        <p class="card-number"><?php echo getCantidadTotalInsumos($conn); ?></p>
     </article>
 
-    <article class="card">
-        <div class="icono">🛍️</div>
-        <div class="info">
-            <p class="titulo">Productos en stock</p>
-            <p class="valor"><?php echo getCantidadTotalProductos($conn);?></p>
+    <article class="dashboard-card">
+        <div class="card-top">
+            <div class="card-icon">🛍️</div>
+            <p class="card-title">Productos en stock</p>
         </div>
+        <p class="card-number"><?php echo getCantidadTotalProductos($conn);?></p>
     </article>
 
-    <article class="card alerta">
-        <div class="icono">⚠</div>
-        <div class="info">
-            <p class="titulo">Insumos con bajo stock</p>
-            <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_insumos.php?filtro=bajo_stock"><p class="valor"><?php echo count(obtenerInsumosConBajoStock($conn)); ?></p></a>
+    <article class="dashboard-card alerta">
+        <div class="card-top">
+            <div class="card-icon">⚠</div>
+            <p class="card-title">Insumos bajo stock</p>
         </div>
+        <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_insumos.php?filtro=bajo_stock" class="card-link">
+            <p class="card-number"><?php echo count(obtenerInsumosConBajoStock($conn)); ?></p>
+        </a>
     </article>
 
-    <article class="card alerta">
-        <div class="icono">⚠</div>
-        <div class="info">
-            <p class="titulo">Productos con bajo stock</p>
-            <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_productos.php?filtro=bajo_stock"><p class="valor"><?php echo count(obtenerProductosConBajoStock($conn)); ?></p></a>
+    <article class="dashboard-card alerta">
+        <div class="card-top">
+            <div class="card-icon">⚠</div>
+            <p class="card-title">Productos bajo stock</p>
         </div>
+        <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_productos.php?filtro=bajo_stock" class="card-link">
+            <p class="card-number"><?php echo count(obtenerProductosConBajoStock($conn)); ?></p>
+        </a>
     </article>
 
 </section>
@@ -86,7 +91,7 @@
         </article>
 
         <article class="opc_menu_ap">
-            <a href="#">
+            <a href="<?php echo BASE_URL; ?>/php/admin/reportes.php">
                 <img src="../../recursos/pdf_icon.png" alt="">
                 Reportes
             </a>

@@ -9,7 +9,7 @@
 <body>
     <?php
     require_once('auth.php');
-    include('header_admin.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
     ?>
     <main>
     <h2>Gestión de Mascotas</h2>

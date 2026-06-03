@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina de inicio</title>
-    <link rel="stylesheet" href="../../css/menus_admin.css">
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/menus_admin.css?v=<?= time() ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
@@ -12,7 +13,7 @@
 <body>
     <?php
     require_once('auth.php');
-    include('header_admin.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
     ?>
     <main>
     <h1>Menú de gestión</h1>
@@ -33,6 +34,12 @@
         <article class="opc_menu_ap"><a href="trabajadores_admin.php"><img src="../../recursos/trabajador_icon.png" alt=""> Gestión de trabajadores</a></article>
         
         <article class="opc_menu_ap"><a href="venta_productos.php"><img src="../../recursos/shopping-cart.png" alt="">      Venta de Productos</a></article>
+
+        <article class="opc_menu_ap"><a href="reportes.php">
+            <img src="../../recursos/pdf_icon.png" alt=""> Reportes</a></article>
+
+        <article class="opc_menu_ap"><a href="rentabilidad.php">
+            <img src="../../recursos/balance_icono.png" alt=""> Rentabilidad</a></article>
 
     </section>
     </main>

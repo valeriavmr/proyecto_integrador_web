@@ -24,7 +24,7 @@ $sql ="SELECT
 $result = $conn->query($sql);
 ?>
 <?php
-include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+include_once(__DIR__ . '/../includes/sidebar.php');
 ?>
 
 <!DOCTYPE html>

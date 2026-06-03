@@ -82,112 +82,69 @@ $subtotal = 0;
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Ticket Venta #<?= $venta['id_venta'] ?></title>
 
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/ticket.css?v=<?= time() ?>">
+
     <style>
-
-        body{
-            font-family:'Segoe UI', Arial, sans-serif;
-            background:#f5f5f5;
-            padding:30px;
+        body { padding: 2rem; }
+        #ticket {
+            width: 80mm;
+            background: var(--pure-surface);
+            margin: auto;
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-card);
+            border-radius: var(--radius-lg);
         }
-
-        #ticket{
-            width:80mm;
-            background:white;
-            margin:auto;
-            padding:15px;
-            font-family:"Courier New", monospace;
-            box-shadow:0 4px 12px rgba(0,0,0,0.12);
+        .divider {
+            text-align: center;
+            margin: 0.75rem 0;
+            border-bottom: 1.5px dashed var(--whisper-border-dark);
+            font-size: 0;
+            height: 0;
+            overflow: hidden;
+            color: transparent;
         }
-
-        .ticket-header{
-            text-align:center;
+        .right { text-align: right; font-size: 0.82rem; }
+        .total {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-align: right;
+            margin-top: 0.75rem;
+            font-variant-numeric: tabular-nums;
         }
-
-        .ticket-logo{
-            width:70px;
-            display:block;
-            margin:0 auto 10px;
+        .acciones {
+            text-align: center;
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
         }
+        table { font-size: 0.78rem; }
+        th { border-bottom: 1px dashed var(--charcoal-ink); background: none; }
+        td { border-bottom: none; padding: 0.25rem 0; }
 
-        .divider{
-            text-align:center;
-            margin:12px 0;
-        }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-            font-size:12px;
-        }
-
-        th, td{
-            padding:4px 0;
-            text-align:left;
-        }
-
-        th{
-            border-bottom:1px dashed #000;
-        }
-
-        .right{
-            text-align:right;
-        }
-
-        .total{
-            font-size:18px;
-            font-weight:bold;
-            text-align:right;
-            margin-top:12px;
-        }
-
-        .acciones{
-            text-align:center;
-            margin-top:20px;
-        }
-
-        .btn{
-            background:#198754;
-            color:white;
-            border:none;
-            padding:10px 15px;
-            border-radius:8px;
-            cursor:pointer;
-            text-decoration:none;
-        }
-
-        @media print{
-
-            body{
-                background:white;
-                padding:0;
-                margin:0;
+        @media print {
+            body { background: white; padding: 0; margin: 0; }
+            body * { visibility: hidden; }
+            #ticket, #ticket * { visibility: visible; }
+            #ticket {
+                position: absolute;
+                top: 0;
+                left: 0;
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
             }
-
-            body *{
-                visibility:hidden;
-            }
-
-            #ticket,
-            #ticket *{
-                visibility:visible;
-            }
-
-            #ticket{
-                position:absolute;
-                top:0;
-                left:0;
-                box-shadow:none;
-                margin:0;
-            }
-
-            .acciones{
-                display:none !important;
-            }
+            .acciones { display: none !important; }
         }
-
     </style>
 
 </head>

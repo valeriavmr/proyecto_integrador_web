@@ -17,7 +17,7 @@
         require_once('auth.php');
 
         //Inserto el header
-        include('header_admin.php');
+        include_once(__DIR__ . '/../includes/sidebar.php');
 
         //Para traer el valor de los filtros
         require('../crud/conexion.php');

@@ -71,90 +71,24 @@ $result = mysqli_stmt_get_result($stmt);
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Historial de Ventas</title>
 
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/style.css?v=<?= time() ?>">
 
     <style>
-
-        body{
-            font-family:'Segoe UI', Arial, sans-serif;
-            background:#f5f5f5;
-            margin:0;
-            padding:30px;
+        body { padding: 2rem; }
+        .card { max-width: 1100px; margin: 0 auto; }
+        h1 { margin-top: 0; }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
         }
-
-        .card{
-            background:white;
-            padding:25px;
-            border-radius:16px;
-            box-shadow:0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        h1{
-            margin-top:0;
-        }
-
-        .top-bar{
-            display:flex;
-            justify-content:space-between;
-            gap:15px;
-            margin-bottom:20px;
-        }
-
-        input{
-            flex:1;
-            padding:10px;
-            border:1px solid #ccc;
-            border-radius:8px;
-        }
-
-        .btn{
-            background:#198754;
-            color:white;
-            border:none;
-            padding:10px 15px;
-            border-radius:8px;
-            text-decoration:none;
-            cursor:pointer;
-        }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-        }
-
-        th, td{
-            padding:12px;
-            border-bottom:1px solid #e5e7eb;
-            text-align:left;
-        }
-
-        th{
-            background:#f3f4f6;
-        }
-
-        tr:hover{
-            background:#f9fafb;
-        }
-
-        .btn-accion{
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            width:30px;
-            height:30px;
-            border-radius:8px;
-            background:#f3f4f6;
-            text-decoration:none;
-            margin-right:5px;
-        }
-
-        .btn-accion:hover{
-            background:#d1fae5;
-        }
-
+        .top-bar input { flex: 1; }
     </style>
 
 </head>

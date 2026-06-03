@@ -30,7 +30,7 @@
     $pass_app = obtenerPassAppPorId($conn,$id_admin);
 
     //Inserto el header
-    include('header_admin.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
     ?>
         <h1>Nuevo usuario</h1>
         <main>

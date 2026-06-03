@@ -6,8 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Insumos</title>
-    <link rel="stylesheet" href="../../css/menu_gestor_inventario.css">
-    <link rel="stylesheet" href="../../css/menus_admin.css">
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/menu_gestor_inventario.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/menus_admin.css?v=<?= time() ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
@@ -16,7 +17,7 @@
     <?php
     include_once __DIR__ . '\..\..\config.php';
     require_once(BASE_PATH . '/php/admin/auth.php');
-    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
     ?>
     <main>
         <h1>Gestión de Productos</h1>

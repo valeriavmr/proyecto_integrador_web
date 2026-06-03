@@ -1,259 +1,336 @@
-/*Configuraciones generales*/
+/* 
+   ===============================================
+   MENU GESTOR INVENTARIO — STITCH DESIGN SYSTEM
+   Inventory manager dashboard + menu
+   ===============================================
+*/
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-}
-
-h1{
-    font-family: 'Montserrat', 'sans-serif';
-    font-size: 28px;
-    text-align: center;
-    color:#2E6009;
-}
-
-h2{
-    font-family: 'Montserrat', 'sans-serif';
-    font-size: 20px;
-    text-align: center;
-    color:#2E6009;
-}
-
+/* ── Base ── */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 16px;
 }
 
 body {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
   min-height: 100vh;
-  color: #4b4b4b;
-  background-color:#F4F4F4;
+  color: var(--charcoal-ink);
+  background-color: var(--surface-muted);
+  font-family: var(--font-body);
 }
 
+/* ── Headings ── */
+h1 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--charcoal-ink);
+  letter-spacing: -0.02em;
+}
+
+h1::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--forest-mid), var(--emerald-glow));
+  border-radius: 100px;
+  margin: 0.75rem auto 0;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink-secondary);
+}
+
+/* ── Main Content ── */
 main {
-    background-color:#F4F4F4;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-items: center;
+  background-color: var(--surface-muted);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1;
 }
 
-main > #menu_gestion_gestor_inventario{
-    flex: 1;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: repeat(2, 1fr);
-    height: fit-content;
-    gap: 2rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+main > h1 {
+  grid-column: span 2;
+  margin-bottom: 0.5rem;
+  margin-top: 2rem;
 }
 
-main > h1{
-    grid-column: span 2;
-    margin-bottom: 1rem;
-    margin-top: 2rem;
+/* ═════════════════════════════════
+   DASHBOARD
+   ═════════════════════════════════ */
+.dashboard {
+  width: 100%;
+  padding: 0 2rem;
 }
 
-.opc_menu_ap{
-    border-radius: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* ── Dashboard Cards Row ── */
+.dashboard_cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-card {
+  background: var(--surface-elevated);
+  border-radius: var(--radius-card);
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--whisper-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+  transition: transform var(--transition-spring),
+              box-shadow var(--transition-normal),
+              border-color var(--transition-normal);
+  animation: fadeInUp 0.5s var(--ease-smooth) both;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-card:nth-child(1) { animation-delay: 0.05s; }
+.dashboard-card:nth-child(2) { animation-delay: 0.10s; }
+.dashboard-card:nth-child(3) { animation-delay: 0.15s; }
+.dashboard-card:nth-child(4) { animation-delay: 0.20s; }
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--emerald-subtle);
+}
+
+.dashboard-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--forest-mid), var(--emerald-glow));
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.dashboard-card:hover::before {
+  opacity: 1;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-icon {
+  font-size: 1.5rem;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--emerald-wash);
+}
+
+.card-title {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted-bark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.card-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0.5rem 0;
+  color: var(--charcoal-ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.card-link {
+  text-decoration: none;
+  color: var(--emerald-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+  transition: color var(--transition-fast),
+              letter-spacing var(--transition-normal);
+}
+
+.card-link:hover {
+  color: var(--forest-mid);
+  letter-spacing: 0.04em;
+}
+
+/* ── Alert Card ── */
+.dashboard-card.alerta {
+  border-left: 4px solid var(--status-danger);
+}
+
+.dashboard-card.alerta::before {
+  background: linear-gradient(90deg, var(--status-danger), #F97316);
+  opacity: 1;
+}
+
+.dashboard-card.alerta .card-icon {
+  background: var(--status-danger-bg);
+}
+
+.dashboard-card.alerta .card-link {
+  color: var(--status-danger);
+}
+
+/* ═════════════════════════════════
+   LOW STOCK ALERTS
+   ═════════════════════════════════ */
+#alertas_bajo_stock {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem auto;
+  max-width: 900px;
+  flex-wrap: wrap;
+}
+
+.alerta_card.horizontal {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  background: var(--surface-elevated);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--whisper-border);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-spring),
+              box-shadow var(--transition-normal);
+}
+
+.alerta_card.horizontal:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+}
+
+/* ═════════════════════════════════
+   MENU GRID
+   ═════════════════════════════════ */
+main > #menu_gestion_gestor_inventario {
+  display: grid;
+  justify-content: center;
+  align-items: stretch;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin: 1.5rem auto 2.5rem;
+  max-width: 700px;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  main > #menu_gestion_gestor_inventario {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+}
+
+/* ── Menu Option Cards ── */
+.opc_menu_ap {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--whisper-border);
+  background: var(--surface-elevated);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform var(--transition-spring),
+              box-shadow var(--transition-normal),
+              border-color var(--transition-normal);
+  animation: fadeInUp 0.5s var(--ease-smooth) both;
+  position: relative;
+}
+
+.opc_menu_ap:nth-child(1) { animation-delay: 0.05s; }
+.opc_menu_ap:nth-child(2) { animation-delay: 0.10s; }
+.opc_menu_ap:nth-child(3) { animation-delay: 0.15s; }
+.opc_menu_ap:nth-child(4) { animation-delay: 0.20s; }
+.opc_menu_ap:nth-child(5) { animation-delay: 0.25s; }
+.opc_menu_ap:nth-child(6) { animation-delay: 0.30s; }
+
+.opc_menu_ap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--forest-mid), var(--emerald-glow));
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.opc_menu_ap:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--emerald-subtle);
+}
+
+.opc_menu_ap:hover::before {
+  opacity: 1;
 }
 
 .opc_menu_ap > p,
 .opc_menu_ap > a {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: var(--ink-secondary);
+  padding: 1.5rem 1.75rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color var(--transition-fast);
 }
 
-.opc_menu_ap:hover{
-    background-color: #2E6009;
-    color: white;
-    cursor: pointer;
-}
-
-.opc_menu_ap > a:hover{
-    color: white;
+.opc_menu_ap:hover > a,
+.opc_menu_ap:hover > p {
+  color: var(--forest-mid);
 }
 
 .opc_menu_ap > a > img,
-.opc_menu_ap > p > img{
-    max-height: 24px;
+.opc_menu_ap > p > img {
+  max-height: 28px;
+  width: 28px;
+  object-fit: contain;
+  opacity: 0.8;
+  transition: opacity var(--transition-fast),
+              transform var(--transition-spring);
 }
 
 main > #menu_gestion_gestor_inventario .opc_menu_ap > a > img,
-main > #menu_gestion_gestor_inventario .opc_menu_ap > p > img{
-    max-height: 24px;
+main > #menu_gestion_gestor_inventario .opc_menu_ap > p > img {
+  max-height: 28px;
+  width: 28px;
 }
 
-/* =========================
-   ALERTAS DE BAJO STOCK
-========================= */
-
-#alertas_bajo_stock {
-    display: flex;
-    gap: 1rem;
-    margin: 2rem auto;
-    max-width: 900px;
-}
-
-/* Card horizontal */
-.alerta_card.horizontal {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    background: #ffffff;
-    padding: 1rem;
-    border-radius: 12px;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    transition: 0.2s ease;
-}
-
-/* Hover */
-.alerta_card.horizontal:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-}
-
-/* Icono */
-.icono {
-    width: 45px;
-    height: 45px;
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 1.2rem;
-}
-
-/* Color alerta */
-.icono.alerta {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-/* Texto */
-.info .titulo {
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.info .valor {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #4b4b4b;
-}
-
-.info .link {
-    font-size: 0.8rem;
-    color: #888;
-}
-
-.icono.alerta {
-    background: #f8d7da;
-}
-
-.icono.warning {
-    background: #fff3cd;
-}
-
-.icono.ok {
-    background: #d4edda;
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-.dashboard {
-    width: 100%;
-    padding: 0 2rem; 
-}
-
-/* CARDS */
-.dashboard_cards {
-    display: flex;
-    gap: 1rem;
-    margin: 2rem 0;
-    flex-wrap: wrap;
-}
-
-.card {
-    flex: 1;
-    min-width: 220px;
-
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-
-    background: transparent;
-    padding: 1.5rem;
-    border-radius: 1rem;
-
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-    transition: 0.2s ease;
-}
-
-.card:hover {
-    background-color: #2E6009;
-    color: white;
-    cursor: pointer;
-}
-
-.card .icono {
-    background: none;
-    color: #2E6009;
-    font-size: 1.2rem;
-}
-
-/* Texto normal */
-.card .titulo {
-    color: #4b4b4b;
-}
-
-.card .valor {
-    color: #4b4b4b;
-    text-decoration: none;
-}
-
-/* Hover texto */
-.card:hover .titulo,
-.card:hover .valor,
-.card:hover span,
-.card:hover .icono {
-    color: white;
-}
-
-.card.alerta {
-    position: relative;
-}
-
-.card.alerta::after {
-    content: "";
-    position: absolute;
-    top: 10px;
-    right: 10px;
-
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #dc3545;
+.opc_menu_ap:hover > a > img,
+.opc_menu_ap:hover > p > img {
+  opacity: 1;
+  transform: scale(1.1);
 }

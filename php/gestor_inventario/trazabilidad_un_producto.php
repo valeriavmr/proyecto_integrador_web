@@ -8,7 +8,7 @@ include_once __DIR__ . '\..\..\config.php';
 require_once(BASE_PATH . '/php/admin/auth.php');
 
 // Header
-include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+include_once(__DIR__ . '/../includes/sidebar.php');
 
 // Conexión
 require(BASE_PATH . '/php/crud/conexion.php');

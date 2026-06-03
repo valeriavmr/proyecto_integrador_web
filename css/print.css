@@ -1,37 +1,70 @@
+/* 
+   ===============================================
+   PRINT — STITCH DESIGN SYSTEM
+   Optimized print layout for ticket receipts
+   ===============================================
+*/
+
 @media print {
 
-    body * {
-        visibility: hidden;
-    }
+  /* Hide everything first */
+  body * {
+    visibility: hidden;
+  }
 
-    #ticket,
-    #ticket * {
-        visibility: visible;
-    }
+  /* Show only the ticket */
+  #ticket,
+  #ticket * {
+    visibility: visible;
+  }
 
-    #ticket {
+  #ticket {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+    background: white;
+    padding: 8px;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    font-family: 'Satoshi', 'Segoe UI', sans-serif;
+    font-size: 12px;
+    color: #000;
+  }
 
-        position: absolute;
-        left: 0;
-        top: 0;
+  /* Force mono for numbers */
+  #ticket .ticket-total,
+  #ticket .ticket-linea span,
+  #tablaVenta td {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
 
-        width: 80mm;
+  /* Hide non-printable elements */
+  .btn,
+  .sidebar,
+  .main-content h1,
+  #buscar,
+  #buscarCliente,
+  #listaClientes,
+  #mascotaSelect,
+  .filtros-categoria,
+  .cards-dashboard,
+  .ventas-recientes,
+  .cliente-box button {
+    display: none !important;
+  }
 
-        background: white;
+  /* Clean dividers for print */
+  .ticket-divider {
+    border-bottom: 1px dashed #999;
+    margin: 6px 0;
+  }
 
-        padding: 10px;
-
-        margin: 0;
-    }
-
-    .btn,
-    .sidebar,
-    .main-content h1,
-    #buscar,
-    #buscarCliente,
-    #listaClientes,
-    #mascotaSelect {
-
-        display: none !important;
-    }
+  /* Remove color backgrounds */
+  .ticket-total {
+    background: none;
+    padding: 4px 0;
+  }
 }
