@@ -39,7 +39,7 @@ if (!$id_turno) {
     <link rel="stylesheet" href="../../css/toggle_switch.css?v=<?= time() ?>">
 </head>
 <body>
-    <?php include('header_admin.php'); ?>
+    <?php include_once(__DIR__ . '/../includes/sidebar.php'); ?>
     <main>
         <fieldset>
 <form action="" method="post">

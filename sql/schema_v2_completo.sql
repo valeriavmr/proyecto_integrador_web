@@ -278,7 +278,7 @@ CREATE TABLE insumo (
 
  ALTER TABLE insumo
     ADD id_proveedor INT,
-    ADD CONSTRAINT fk_producto_proveedor
+    ADD CONSTRAINT fk_insumo_proveedor
     FOREIGN KEY (id_proveedor)
     REFERENCES proveedores(id_proveedor)
     ON UPDATE CASCADE;
@@ -562,7 +562,7 @@ FROM (
     -- Unión de todos los períodos con datos en alguna tabla
     SELECT DISTINCT YEAR(horario)     AS fecha FROM servicio  WHERE pagado = 1
     UNION
-    SELECT DISTINCT YEAR(fecha_venta)           FROM ventas
+    SELECT DISTINCT YEAR(fecha)           FROM ventas
     UNION
     SELECT DISTINCT YEAR(fecha_compra)          FROM compras
 ) AS ref_anio
@@ -579,8 +579,8 @@ INNER JOIN (
         MAKEDATE(YEAR(horario),1) + INTERVAL (MONTH(horario)-1) MONTH AS fecha
     FROM servicio WHERE pagado = 1
     UNION
-    SELECT DISTINCT YEAR(fecha_venta), MONTH(fecha_venta),
-        MAKEDATE(YEAR(fecha_venta),1) + INTERVAL (MONTH(fecha_venta)-1) MONTH
+    SELECT DISTINCT YEAR(fecha), MONTH(fecha),
+        MAKEDATE(YEAR(fecha),1) + INTERVAL (MONTH(fecha)-1) MONTH
     FROM ventas
     UNION
     SELECT DISTINCT YEAR(fecha_compra), MONTH(fecha_compra),
@@ -602,11 +602,11 @@ LEFT JOIN (
 -- Ingresos ventas del período
 LEFT JOIN (
     SELECT
-        YEAR(fecha_venta)  AS anio,
-        MONTH(fecha_venta) AS mes,
+        YEAR(fecha)  AS anio,
+        MONTH(fecha) AS mes,
         SUM(total)         AS total_ventas
     FROM ventas
-    GROUP BY YEAR(fecha_venta), MONTH(fecha_venta)
+    GROUP BY YEAR(fecha), MONTH(fecha)
 ) AS ing_vta ON ing_vta.anio = ref.anio AND ing_vta.mes = ref.mes
 
 -- Costos compras del período

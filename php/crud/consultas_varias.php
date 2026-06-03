@@ -877,84 +877,348 @@ function getProveedores($conn)
     return $proveedores;
 }
 
-function getProveedorNombre($conn, $id_proveedor)
-{
-    $sql = "SELECT nombre FROM proveedores WHERE id_proveedor = ?";
+// ================================================================
+// FUNCIONES DE RENTABILIDAD Y REPORTES (Módulo Rodrigo)
+// ================================================================
+
+/**
+ * Obtiene los datos de rentabilidad mensual desde la vista v_rentabilidad_mensual.
+ * Si no existe la vista (tabla vacía), construye los datos directamente.
+ */
+function getRentabilidadMensual($conn, $anio = null) {
+    if ($anio === null) {
+        $anio = date('Y');
+    }
+    
+    // Intentar usar la vista
+    $sql = "SELECT * FROM v_rentabilidad_mensual WHERE periodo_anio = ? ORDER BY periodo_mes ASC";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id_proveedor);
+    $stmt->bind_param("i", $anio);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['nombre'];
-    }
-    return null; // Si no hay resultados
-}
-
-
-function obtenerHistoriasClinicas($conn, $filtro = '', $valor = '')
-{
-    $historias = [];
-
-    $sql = "
-        SELECT
-            m.id_mascota,
-            m.nombre AS mascota,
-            m.raza,
-            p.nombre AS nombre_duenio,
-            p.apellido AS apellido_duenio,
-            h.id_historia,
-            h.fecha_apertura
-        FROM mascota m
-        INNER JOIN persona p
-            ON p.id_persona = m.id_persona
-        INNER JOIN historia_clinica h
-            ON h.id_mascota = m.id_mascota
-    ";
-
-    if (!empty($filtro) && !empty($valor)) {
-
-        $valorLower = strtolower(trim($valor));
-
-        if ($filtro === 'mascota') {
-            $sql .= " WHERE LOWER(m.nombre) LIKE ? ";
-            $param = '%' . $valorLower . '%';
-        } elseif ($filtro === 'duenio') {
-            $sql .= " WHERE LOWER(CONCAT(p.nombre, ' ', p.apellido)) LIKE ? ";
-            $param = '%' . $valorLower . '%';
-        } elseif ($filtro === 'raza') {
-            $sql .= " WHERE LOWER(m.raza) LIKE ? ";
-            $param = '%' . $valorLower . '%';
-        } elseif ($filtro === 'fecha_apertura') {
-            $sql .= " WHERE DATE(h.fecha_apertura) = ? ";
-            $param = $valor;
-        } else {
-            $param = null;
-        }
-
-        $sql .= " ORDER BY m.nombre";
-
-        $stmt = $conn->prepare($sql);
-
-        if (isset($param) && $param !== null) {
-            $stmt->bind_param("s", $param);
-        }
-
-        $stmt->execute();
-        $result = $stmt->get_result();
-    } else {
-
-        $sql .= " ORDER BY m.nombre";
-        $result = $conn->query($sql);
-    }
-
-    if ($result === false) {
-        die("Error SQL: " . $conn->error);
-    }
-
+    
+    $datos = [];
     while ($row = $result->fetch_assoc()) {
-        $historias[] = $row;
+        $datos[] = $row;
     }
-
-    return $historias;
+    $stmt->close();
+    
+    // Si la vista no devuelve datos, construir manualmente
+    if (empty($datos)) {
+        $datos = construirRentabilidadManual($conn, $anio);
+    }
+    
+    return $datos;
 }
+
+/**
+ * Construye datos de rentabilidad manualmente cuando la vista no tiene datos.
+ */
+function construirRentabilidadManual($conn, $anio) {
+    $datos = [];
+    
+    for ($mes = 1; $mes <= 12; $mes++) {
+        // Ingresos por servicios
+        $sql_srv = "SELECT COALESCE(SUM(monto), 0) AS total FROM servicio 
+                    WHERE pagado = 1 AND YEAR(horario) = ? AND MONTH(horario) = ?";
+        $stmt = $conn->prepare($sql_srv);
+        $stmt->bind_param("ii", $anio, $mes);
+        $stmt->execute();
+        $ing_srv = $stmt->get_result()->fetch_assoc()['total'];
+        $stmt->close();
+        
+        // Ingresos por ventas
+        $sql_vta = "SELECT COALESCE(SUM(total), 0) AS total FROM ventas 
+                    WHERE YEAR(fecha) = ? AND MONTH(fecha) = ?";
+        $stmt = $conn->prepare($sql_vta);
+        $stmt->bind_param("ii", $anio, $mes);
+        $stmt->execute();
+        $ing_vta = $stmt->get_result()->fetch_assoc()['total'];
+        $stmt->close();
+        
+        // Costos por compras
+        $sql_cmp = "SELECT COALESCE(SUM(total), 0) AS total FROM compras 
+                    WHERE YEAR(fecha_compra) = ? AND MONTH(fecha_compra) = ?";
+        $stmt = $conn->prepare($sql_cmp);
+        $stmt->bind_param("ii", $anio, $mes);
+        $stmt->execute();
+        $costo_compras = $stmt->get_result()->fetch_assoc()['total'];
+        $stmt->close();
+        
+        // Costos manuales
+        $sql_man = "SELECT COALESCE(costo_sueldos, 0) AS sueldos, COALESCE(costo_otros, 0) AS otros, notas 
+                    FROM rentabilidad WHERE periodo_anio = ? AND periodo_mes = ?";
+        $stmt = $conn->prepare($sql_man);
+        $stmt->bind_param("ii", $anio, $mes);
+        $stmt->execute();
+        $res_man = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        
+        $sueldos = $res_man ? floatval($res_man['sueldos']) : 0;
+        $otros = $res_man ? floatval($res_man['otros']) : 0;
+        $notas = $res_man ? $res_man['notas'] : null;
+        
+        $ing_total = floatval($ing_srv) + floatval($ing_vta);
+        $costo_total = floatval($costo_compras) + $sueldos + $otros;
+        $ganancia_bruta = $ing_total - floatval($costo_compras);
+        $ganancia_neta = $ing_total - $costo_total;
+        $margen = $ing_total > 0 ? round(($ganancia_neta / $ing_total) * 100, 2) : 0;
+        
+        // Solo incluir meses que tengan algún dato
+        if ($ing_total > 0 || $costo_total > 0) {
+            $datos[] = [
+                'periodo_anio' => $anio,
+                'periodo_mes' => $mes,
+                'ingresos_servicios' => number_format($ing_srv, 2, '.', ''),
+                'ingresos_ventas' => number_format($ing_vta, 2, '.', ''),
+                'ingresos_total' => number_format($ing_total, 2, '.', ''),
+                'costo_compras' => number_format($costo_compras, 2, '.', ''),
+                'costo_sueldos' => number_format($sueldos, 2, '.', ''),
+                'costo_otros' => number_format($otros, 2, '.', ''),
+                'costo_total' => number_format($costo_total, 2, '.', ''),
+                'ganancia_bruta' => number_format($ganancia_bruta, 2, '.', ''),
+                'ganancia_neta' => number_format($ganancia_neta, 2, '.', ''),
+                'margen_porcentaje' => $margen,
+                'notas' => $notas,
+                'generado_en' => null,
+                'actualizado_en' => null
+            ];
+        }
+    }
+    
+    return $datos;
+}
+
+/**
+ * Guarda o actualiza los costos manuales de un período.
+ */
+function guardarCostosManuales($conn, $anio, $mes, $sueldos, $otros, $notas) {
+    $sql = "INSERT INTO rentabilidad (periodo_anio, periodo_mes, costo_sueldos, costo_otros, notas)
+            VALUES (?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE 
+                costo_sueldos = VALUES(costo_sueldos),
+                costo_otros = VALUES(costo_otros),
+                notas = VALUES(notas)";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iidds", $anio, $mes, $sueldos, $otros, $notas);
+    $ok = $stmt->execute();
+    $stmt->close();
+    return $ok;
+}
+
+/**
+ * Obtiene los años disponibles con datos para el selector de rentabilidad.
+ */
+function getAniosConDatos($conn) {
+    $anios = [];
+    
+    $queries = [
+        "SELECT DISTINCT YEAR(horario) AS anio FROM servicio WHERE pagado = 1",
+        "SELECT DISTINCT YEAR(fecha) AS anio FROM ventas",
+        "SELECT DISTINCT YEAR(fecha_compra) AS anio FROM compras",
+        "SELECT DISTINCT periodo_anio AS anio FROM rentabilidad"
+    ];
+    
+    foreach ($queries as $sql) {
+        $result = $conn->query($sql);
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                if ($row['anio']) $anios[] = intval($row['anio']);
+            }
+        }
+    }
+    
+    $anios = array_unique($anios);
+    if (empty($anios)) $anios[] = intval(date('Y'));
+    rsort($anios);
+    return $anios;
+}
+
+/**
+ * Reporte de ventas con detalle por rango de fechas.
+ */
+function getReporteVentas($conn, $desde, $hasta) {
+    $sql = "SELECT 
+                v.id_venta,
+                v.fecha,
+                v.total,
+                COALESCE(CONCAT(p.nombre, ' ', p.apellido), 'Consumidor Final') AS cliente,
+                COALESCE(m.nombre, '-') AS mascota,
+                GROUP_CONCAT(CONCAT(dv.cantidad, 'x ', pr.nombre_producto) SEPARATOR ', ') AS productos
+            FROM ventas v
+            LEFT JOIN persona p ON v.id_persona = p.id_persona
+            LEFT JOIN mascota m ON v.id_mascota = m.id_mascota
+            INNER JOIN detalle_venta dv ON v.id_venta = dv.id_venta
+            INNER JOIN productos pr ON dv.id_producto = pr.id_producto
+            WHERE v.fecha BETWEEN ? AND ?
+            GROUP BY v.id_venta, v.fecha, v.total, cliente, mascota
+            ORDER BY v.fecha DESC";
+    
+    $stmt = $conn->prepare($sql);
+    $hasta_fin = $hasta . ' 23:59:59';
+    $stmt->bind_param("ss", $desde, $hasta_fin);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $ventas = [];
+    while ($row = $result->fetch_assoc()) {
+        $ventas[] = $row;
+    }
+    $stmt->close();
+    return $ventas;
+}
+
+/**
+ * Reporte de servicios agrupados por tipo, con totales pagados/no pagados.
+ */
+function getReporteServicios($conn, $desde, $hasta) {
+    $sql = "SELECT 
+                tipo_de_servicio,
+                COUNT(*) AS total_turnos,
+                SUM(CASE WHEN pagado = 1 THEN 1 ELSE 0 END) AS turnos_pagados,
+                SUM(CASE WHEN pagado = 0 THEN 1 ELSE 0 END) AS turnos_no_pagados,
+                COALESCE(SUM(CASE WHEN pagado = 1 THEN monto ELSE 0 END), 0) AS ingresos_cobrados,
+                COALESCE(SUM(CASE WHEN pagado = 0 THEN monto ELSE 0 END), 0) AS ingresos_pendientes,
+                COALESCE(SUM(monto), 0) AS ingresos_total
+            FROM servicio
+            WHERE horario BETWEEN ? AND ?
+            GROUP BY tipo_de_servicio
+            ORDER BY ingresos_total DESC";
+    
+    $stmt = $conn->prepare($sql);
+    $hasta_fin = $hasta . ' 23:59:59';
+    $stmt->bind_param("ss", $desde, $hasta_fin);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $servicios = [];
+    while ($row = $result->fetch_assoc()) {
+        $servicios[] = $row;
+    }
+    $stmt->close();
+    return $servicios;
+}
+
+/**
+ * Reporte de compras agrupadas por proveedor.
+ */
+function getReporteCompras($conn, $desde, $hasta) {
+    $sql = "SELECT 
+                c.id_compra,
+                c.fecha_compra,
+                c.total,
+                c.observaciones,
+                pv.nombre AS proveedor,
+                GROUP_CONCAT(CONCAT(cd.cantidad, 'x ', pr.nombre_producto, ' ($', FORMAT(cd.precio_unitario, 2), ')') SEPARATOR ', ') AS detalle
+            FROM compras c
+            INNER JOIN proveedores pv ON c.id_proveedor = pv.id_proveedor
+            LEFT JOIN compra_detalle cd ON c.id_compra = cd.id_compra
+            LEFT JOIN productos pr ON cd.id_producto = pr.id_producto
+            WHERE c.fecha_compra BETWEEN ? AND ?
+            GROUP BY c.id_compra, c.fecha_compra, c.total, c.observaciones, pv.nombre
+            ORDER BY c.fecha_compra DESC";
+    
+    $stmt = $conn->prepare($sql);
+    $hasta_fin = $hasta . ' 23:59:59';
+    $stmt->bind_param("ss", $desde, $hasta_fin);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $compras = [];
+    while ($row = $result->fetch_assoc()) {
+        $compras[] = $row;
+    }
+    $stmt->close();
+    return $compras;
+}
+
+/**
+ * Ranking de productos más vendidos por cantidad y monto.
+ */
+function getProductosTopVendidos($conn, $desde, $hasta, $limit = 10) {
+    $sql = "SELECT 
+                pr.id_producto,
+                pr.nombre_producto,
+                pr.precio_unitario AS precio_actual,
+                SUM(dv.cantidad) AS cantidad_vendida,
+                SUM(dv.subtotal) AS monto_total,
+                COUNT(DISTINCT dv.id_venta) AS num_ventas
+            FROM detalle_venta dv
+            INNER JOIN productos pr ON dv.id_producto = pr.id_producto
+            INNER JOIN ventas v ON dv.id_venta = v.id_venta
+            WHERE v.fecha BETWEEN ? AND ?
+            GROUP BY pr.id_producto, pr.nombre_producto, pr.precio_unitario
+            ORDER BY cantidad_vendida DESC
+            LIMIT ?";
+    
+    $stmt = $conn->prepare($sql);
+    $hasta_fin = $hasta . ' 23:59:59';
+    $stmt->bind_param("ssi", $desde, $hasta_fin, $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $productos = [];
+    while ($row = $result->fetch_assoc()) {
+        $productos[] = $row;
+    }
+    $stmt->close();
+    return $productos;
+}
+
+/**
+ * Obtiene resumen rápido de KPIs para el mes actual.
+ */
+function getKPIsMesActual($conn) {
+    $anio = date('Y');
+    $mes = date('n');
+    
+    // Ingresos servicios
+    $stmt = $conn->prepare("SELECT COALESCE(SUM(monto), 0) AS t FROM servicio WHERE pagado=1 AND YEAR(horario)=? AND MONTH(horario)=?");
+    $stmt->bind_param("ii", $anio, $mes);
+    $stmt->execute();
+    $ing_srv = floatval($stmt->get_result()->fetch_assoc()['t']);
+    $stmt->close();
+    
+    // Ingresos ventas
+    $stmt = $conn->prepare("SELECT COALESCE(SUM(total), 0) AS t FROM ventas WHERE YEAR(fecha)=? AND MONTH(fecha)=?");
+    $stmt->bind_param("ii", $anio, $mes);
+    $stmt->execute();
+    $ing_vta = floatval($stmt->get_result()->fetch_assoc()['t']);
+    $stmt->close();
+    
+    // Costos compras
+    $stmt = $conn->prepare("SELECT COALESCE(SUM(total), 0) AS t FROM compras WHERE YEAR(fecha_compra)=? AND MONTH(fecha_compra)=?");
+    $stmt->bind_param("ii", $anio, $mes);
+    $stmt->execute();
+    $costo_cmp = floatval($stmt->get_result()->fetch_assoc()['t']);
+    $stmt->close();
+    
+    // Costos manuales
+    $stmt = $conn->prepare("SELECT COALESCE(costo_sueldos,0) AS s, COALESCE(costo_otros,0) AS o FROM rentabilidad WHERE periodo_anio=? AND periodo_mes=?");
+    $stmt->bind_param("ii", $anio, $mes);
+    $stmt->execute();
+    $res = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    
+    $sueldos = $res ? floatval($res['s']) : 0;
+    $otros = $res ? floatval($res['o']) : 0;
+    
+    $ingresos = $ing_srv + $ing_vta;
+    $costos = $costo_cmp + $sueldos + $otros;
+    $ganancia = $ingresos - $costos;
+    $margen = $ingresos > 0 ? round(($ganancia / $ingresos) * 100, 1) : 0;
+    
+    return [
+        'ingresos' => $ingresos,
+        'costos' => $costos,
+        'ganancia' => $ganancia,
+        'margen' => $margen,
+        'ing_servicios' => $ing_srv,
+        'ing_ventas' => $ing_vta,
+        'costo_compras' => $costo_cmp,
+        'costo_sueldos' => $sueldos,
+        'costo_otros' => $otros
+    ];
+}
+?>

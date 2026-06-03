@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php include('header_admin.php'); ?>
+    <?php include_once(__DIR__ . '/../includes/sidebar.php'); ?>
 <main>
     <h1>Registrar nueva mascota</h1>
 

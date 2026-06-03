@@ -80,76 +80,34 @@ $detalle = mysqli_stmt_get_result($stmtDetalle);
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Detalle Venta #<?= $venta['id_venta'] ?></title>
 
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/style.css?v=<?= time() ?>">
 
     <style>
-
-        body{
-            font-family:'Segoe UI', Arial, sans-serif;
-            background:#f5f5f5;
-            margin:0;
-            padding:30px;
+        body { padding: 2rem; }
+        .card { max-width: 900px; margin: 0 auto; }
+        h1 { margin-top: 0; }
+        table { margin-top: 1.25rem; }
+        .total {
+            text-align: right;
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-top: 1.25rem;
+            font-variant-numeric: tabular-nums;
         }
-
-        .card{
-            background:white;
-            padding:25px;
-            border-radius:16px;
-            box-shadow:0 4px 12px rgba(0,0,0,0.08);
-            max-width:900px;
-            margin:auto;
+        .acciones {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
         }
-
-        h1{
-            margin-top:0;
+        .btn-secundario {
+            background: var(--ink-secondary);
         }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-            margin-top:20px;
-        }
-
-        th, td{
-            padding:12px;
-            border-bottom:1px solid #e5e7eb;
-            text-align:left;
-        }
-
-        th{
-            background:#f3f4f6;
-        }
-
-        .total{
-            text-align:right;
-            font-size:22px;
-            font-weight:bold;
-            margin-top:20px;
-        }
-
-        .acciones{
-            margin-top:25px;
-            display:flex;
-            gap:10px;
-        }
-
-        .btn{
-            background:#198754;
-            color:white;
-            border:none;
-            padding:10px 15px;
-            border-radius:8px;
-            text-decoration:none;
-            cursor:pointer;
-        }
-
-        .btn-secundario{
-            background:#374151;
-        }
-
     </style>
 
 </head>

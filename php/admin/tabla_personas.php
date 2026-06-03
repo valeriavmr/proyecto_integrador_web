@@ -19,7 +19,7 @@
     require_once('../../config.php');
 
     //Incluyo el header
-    include('header_admin.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
 
     [$datos_personas, $columnas] = selectAllPersonas($conn);
 

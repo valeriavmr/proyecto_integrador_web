@@ -18,7 +18,7 @@
 <body>
     <?php 
     require_once('auth.php');
-    include('header_admin.php'); 
+    include_once(__DIR__ . '/../includes/sidebar.php'); 
     
     $id_tipo_servicio = $_GET['id_tipo_servicio'] ?? null;
     if ($id_tipo_servicio) {

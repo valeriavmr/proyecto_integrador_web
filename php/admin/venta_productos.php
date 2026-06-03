@@ -122,88 +122,19 @@ $ventasRecientes = mysqli_query($conn, $sqlVentasRecientes);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Venta de Productos - Tahito</title>
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/clientes.css">
-    <link rel="stylesheet" href="../../css/sidebar.css">
-    <link rel="stylesheet" href="../../css/ticket.css">
-    <link rel="stylesheet" href="../../css/print.css">
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/clientes.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/sidebar.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/ticket.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/print.css?v=<?= time() ?>">
     
 </head>
 
 <body>
 
 <!-- SIDEBAR -->
-<div class="sidebar">
-    <div class="sidebar-top">
-     
-        <div class="logo-area">
-
-            <img src="../../recursos/logo_sidebar_white.png"
-            class="logo-sidebar">
-
-            <div>
-
-                <h2>Tahito</h2>
-
-                <span>
-                    Centro de Cuidado Canino
-                </span>
-
-             </div>
-
-         </div>
-
-        <ul class="menu">
-
-            <li><?php if($rol=='admin'):?>
-                <a href="main_admin.php">
-                <?php else: ?>
-                <a href="../gestor_inventario/main_gestor.php">
-                <?php endif;?>
-            🏠 Inicio</a></li>
-            <?php if($rol=='admin'):?>
-            <li><a href="add_turno_admin.php">📅 Turnos</a></li>
-            <li><a href="mascotas_admin.php">🐶 Pacientes</a></li>
-            <li><a href="#">📋 Historia Clínica</a></li>
-            <li><a href="servicios_admin.php">✂️ Servicios</a></li>
-            <?php endif;?>
-            <li><a href="../gestor_inventario/gestion_insumos.php">📦 Insumos</a></li>
-            <li><a href="../gestor_inventario/inventario_productos.php">🧾 Stock</a></li>
-
-            <li class="active">
-                <a href="#">🛒 Venta de Productos</a>
-            </li>
-
-            <li><a href="<?= BASE_URL ?>/php/admin/proveedores_admin.php">🚚 Proveedores</a></li>
-            <li><a href="#">💰 Gestión Económica</a></li>
-            <li><a href="#">📊 Reportes</a></li>
-            <?php if($rol=='admin'):?>
-            <li><a href="personas_admin.php">👤 Usuarios</a></li>
-            <li><a href="#">⚙️ Configuración</a></li>
-            <?php endif;?>
-        </ul>
-    </div>
-
-
- <!-- FOOTER -->
-<div class="sidebar-footer">
-
-        <div class="user-box">
-
-                <div class="user-avatar"></div>
-
-                <div>
-                    <strong>Administrador</strong>
-                    <br>
-                    <small>Rol: <?php echo $rol ?></small>
-                </div>
-        </div>
-
-    </div>
-
-</div>
-
-
+<?php include_once(__DIR__ . '/../includes/sidebar.php'); ?>
 
 <!-- CONTENIDO -->
 <div class="main-content">

@@ -22,7 +22,7 @@ $id_persona = $_GET['id_persona'] ?? $_POST['id_persona'] ?? null;
 
     //Inserto el header
     if($_SESSION['rol']=='admin'){
-        include('header_admin.php');
+        include_once(__DIR__ . '/../includes/sidebar.php');
     }else{
         if($_SESSION['rol']=='trabajador'){
             include('../trabajador/header_trabajador.php');

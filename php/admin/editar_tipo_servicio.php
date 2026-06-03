@@ -19,7 +19,7 @@
     // Incluir el archivo de conexión a la base de datos
     require('../crud/conexion.php');
     include_once('../crud/consultas_varias.php');
-    include('header_admin.php');
+    include_once(__DIR__ . '/../includes/sidebar.php');
 
     # Obtener el ID del tipo de servicio desde la URL
     $id_tipo_servicio = $_GET['id_tipo_servicio'] ?? null;
