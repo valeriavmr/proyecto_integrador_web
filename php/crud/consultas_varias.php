@@ -948,6 +948,10 @@ function obtenerHistoriasClinicas($conn, $filtro = '', $valor = '')
         $result = $conn->query($sql);
     }
 
+    if ($result === false) {
+        die("Error SQL: " . $conn->error);
+    }
+
     while ($row = $result->fetch_assoc()) {
         $historias[] = $row;
     }

@@ -45,7 +45,6 @@ $profesionales = $conn->query("
     SELECT id_persona, nombre, apellido
     FROM persona
     WHERE rol = 'trabajador'
-      AND activo = 1
     ORDER BY apellido, nombre
 ");
 

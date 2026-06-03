@@ -21,7 +21,7 @@
     ?>
 
     <main>
-
+        <br><br>
         <h1>Historia Clínica</h1>
 
         <section id="menu_gestion">

@@ -24,6 +24,7 @@ $historias = obtenerHistoriasClinicas($conn, $filtro, $valor);
 <body>
 
     <main>
+        <br><br>
         <h2>Listado de historias clínicas</h2>
         <section style="margin:20px 0; text-align:center;">
 
