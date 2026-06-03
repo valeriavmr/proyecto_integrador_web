@@ -564,7 +564,7 @@ $ventasRecientes = mysqli_query($conn, $sqlVentasRecientes);
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<!-- TU ARCHIVO DE LÓGICA -->
+
 <script src="ventas.js"></script>
 
 <script>
