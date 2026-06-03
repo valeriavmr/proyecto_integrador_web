@@ -65,7 +65,16 @@ $proveedores = $conn->query($sqlProv);
 
 <body>
 
-<?php include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php'); ?>
+<?php require_once(BASE_PATH . '/php/admin/auth.php');
+    $rol = $_SESSION['rol'];
+    if ($rol == 'admin') {
+        include_once(BASE_PATH . '/php/admin/header_admin.php');
+    } elseif ($rol == 'gestor') {
+        include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    } else {
+        header('Location: ' . BASE_URL . '/php/login.php');
+        exit();
+    } ?>
 
 <main>
 

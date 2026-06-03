@@ -20,6 +20,7 @@ $sql = "SELECT
             i.descripcion_insumo,
             i.tipo_insumo,
             i.costo_unidad,
+            i.id_proveedor,
             ii.cantidad_actual,
             ii.param_bajo_stock
         FROM inventario_insumo ii
@@ -35,7 +36,16 @@ $result = $conn->query($sql);
 ?>
 
 <?php
-include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+require_once(BASE_PATH . '/php/admin/auth.php');
+    $rol = $_SESSION['rol'];
+    if ($rol == 'admin') {
+        include_once(BASE_PATH . '/php/admin/header_admin.php');
+    } elseif ($rol == 'gestor') {
+        include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    } else {
+        header('Location: ' . BASE_URL . '/php/login.php');
+        exit();
+    }
 ?>
 
 

@@ -15,8 +15,17 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once('auth.php');
-include('header_admin.php');
+include_once __DIR__ . '\..\..\config.php';
+    require_once(BASE_PATH . '/php/admin/auth.php');
+    $rol = $_SESSION['rol'];
+    if ($rol == 'admin') {
+        include_once(BASE_PATH . '/php/admin/header_admin.php');
+    } elseif ($rol == 'gestor') {
+        include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    } else {
+        header('Location: ' . BASE_URL . '/php/login.php');
+        exit();
+    }
 require('../crud/conexion.php');
 
 /* ==========================
@@ -51,32 +60,44 @@ $compras = [];
 if (!empty($id_proveedor)) {
 
     $sql = "
-        SELECT
-            c.id_compra,
-            c.fecha_compra,
-            p.nombre AS proveedor,
-            pr.nombre_producto,
-            cd.cantidad,
-            cd.precio_unitario,
-            (cd.cantidad * cd.precio_unitario) AS subtotal,
-            c.total,
-            c.observaciones
-        FROM compras c
+    SELECT
+        c.id_compra,
+        c.fecha_compra,
+        p.nombre AS proveedor,
 
-        INNER JOIN proveedores p
-            ON c.id_proveedor = p.id_proveedor
+        CASE
+            WHEN cd.tipo_item = 'producto'
+                THEN pr.nombre_producto
+            WHEN cd.tipo_item = 'insumo'
+                THEN i.nombre_insumo
+        END AS item_nombre,
 
-        INNER JOIN compra_detalle cd
-            ON c.id_compra = cd.id_compra
+        cd.tipo_item,
+        cd.cantidad,
+        cd.precio_unitario,
+        (cd.cantidad * cd.precio_unitario) AS subtotal,
+        c.total,
+        c.observaciones
 
-        INNER JOIN productos pr
-            ON cd.id_producto = pr.id_producto
+    FROM compras c
 
-        WHERE c.id_proveedor = ?
+    INNER JOIN proveedores p
+        ON c.id_proveedor = p.id_proveedor
 
-        ORDER BY c.fecha_compra DESC,
-                 c.id_compra DESC
-    ";
+    INNER JOIN compra_detalle cd
+        ON c.id_compra = cd.id_compra
+
+    LEFT JOIN productos pr
+        ON cd.id_producto = pr.id_producto
+
+    LEFT JOIN insumo i
+        ON cd.id_insumo = i.id_insumo
+
+    WHERE c.id_proveedor = ?
+
+    ORDER BY c.fecha_compra DESC,
+             c.id_compra DESC
+";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_proveedor);
@@ -89,7 +110,7 @@ if (!empty($id_proveedor)) {
 ?>
 
 <main>
-
+    <br><br>
     <h1>Historial de Compras por Proveedor</h1>
 
     <form action="" method="POST">
@@ -133,7 +154,8 @@ if (!empty($id_proveedor)) {
                             <th>ID Compra</th>
                             <th>Fecha</th>
                             <th>Proveedor</th>
-                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Artículo</th>
                             <th>Cantidad</th>
                             <th>Precio Unitario</th>
                             <th>Subtotal</th>
@@ -161,7 +183,11 @@ if (!empty($id_proveedor)) {
                                 </td>
 
                                 <td>
-                                    <?= htmlspecialchars($compra['nombre_producto']) ?>
+                                    <?= ucfirst(htmlspecialchars($compra['tipo_item'])) ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($compra['item_nombre']) ?>
                                 </td>
 
                                 <td>
@@ -210,6 +236,13 @@ if (!empty($id_proveedor)) {
 
 </main>
 
+<?php if (isset($_SESSION['mensaje'])): ?>
+    <script>
+        alert("<?= htmlspecialchars($_SESSION['mensaje']) ?>");
+    </script>
+    <?php unset($_SESSION['mensaje']); ?>
+<?php endif; ?>
+    
 <?php include('../footer.php'); ?>
 
 </body>

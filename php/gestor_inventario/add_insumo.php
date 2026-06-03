@@ -15,8 +15,17 @@ require_once(BASE_PATH . '/php/admin/auth.php');
 </head>
 <body>
     <?php
-    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
     require_once(BASE_PATH . '/php/crud/conexion.php');
+    require_once(BASE_PATH . '/php/admin/auth.php');
+    $rol = $_SESSION['rol'];
+    if ($rol == 'admin') {
+        include_once(BASE_PATH . '/php/admin/header_admin.php');
+    } elseif ($rol == 'gestor') {
+        include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    } else {
+        header('Location: ' . BASE_URL . '/php/login.php');
+        exit();
+    }
     require_once(BASE_PATH . '/php/crud/consultas_varias.php');
     ?>
     <main>
@@ -51,7 +60,7 @@ require_once(BASE_PATH . '/php/admin/auth.php');
                 <?php
                 $proveedores = getProveedores($conn);
                 foreach ($proveedores as $proveedor) {
-                    echo "<option value=\"{$proveedor['id_proveedor']}\">" . htmlspecialchars($proveedor['nombre_proveedor']) . "</option>";
+                    echo "<option value=\"{$proveedor['id_proveedor']}\">" . htmlspecialchars($proveedor['nombre']) . "</option>";
                 }
                 ?>
             </select>

@@ -21,8 +21,6 @@
     <main>
         <h1>Gestión Económica</h1>
         <section id="menu_gestion">
-            <article class="opc_menu_ap"><a href="#">
-                <img src="../../recursos/img/comprar_productos_icon.png" alt=""> Realizar una compra</a></article>
         </section>
         <section id="volver_s">
             <a href="main_gestor.php" class="btn-volver-admin">Volver al menú principal</a>

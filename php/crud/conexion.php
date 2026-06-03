@@ -4,7 +4,7 @@ $host = "localhost";
 $dbname = "proyecto_db";
 $user = "root";
 $password ="";
-$port = 3307;
+$port = 3306;
 
 //Hosting
 /*$host = "localhost";

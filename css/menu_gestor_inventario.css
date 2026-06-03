@@ -246,7 +246,7 @@ main > #menu_gestion_gestor_inventario .opc_menu_ap > p > img{
     position: relative;
 }
 
-.card.alerta::after {
+.card.alerta.con-alerta::after {
     content: "";
     position: absolute;
     top: 10px;

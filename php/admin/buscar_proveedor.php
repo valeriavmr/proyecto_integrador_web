@@ -13,8 +13,17 @@
         session_start(); 
     }
 
-    require_once('auth.php');
-    include('header_admin.php');
+    include_once __DIR__ . '\..\..\config.php';
+    require_once(BASE_PATH . '/php/admin/auth.php');
+    $rol = $_SESSION['rol'];
+    if ($rol == 'admin') {
+        include_once(BASE_PATH . '/php/admin/header_admin.php');
+    } elseif ($rol == 'gestor') {
+        include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    } else {
+        header('Location: ' . BASE_URL . '/php/login.php');
+        exit();
+    }
 
     require('../crud/conexion.php');
 

@@ -16,7 +16,16 @@ require_once('../crud/conexion.php');
 </head>
 <body>
     <?php
-    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    require_once(BASE_PATH . '/php/admin/auth.php');
+    $rol = $_SESSION['rol'];
+    if ($rol == 'admin') {
+        include_once(BASE_PATH . '/php/admin/header_admin.php');
+    } elseif ($rol == 'gestor') {
+        include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    } else {
+        header('Location: ' . BASE_URL . '/php/login.php');
+        exit();
+    }
     $id_insumo = $_GET['id'] ?? null;
     if (!$id_insumo) {
         echo "<p>ID de insumo no proporcionado.</p>";
@@ -78,7 +87,7 @@ require_once('../crud/conexion.php');
                 $proveedores = getProveedores($conn);
                 foreach ($proveedores as $proveedor) {
                     $selected = ($row['id_proveedor'] == $proveedor['id_proveedor']) ? 'selected' : '';
-                    echo "<option value=\"{$proveedor['id_proveedor']}\" $selected>" . htmlspecialchars($proveedor['nombre_proveedor']) . "</option>";
+                    echo "<option value=\"{$proveedor['id_proveedor']}\" $selected>" . htmlspecialchars($proveedor['nombre']) . "</option>";
                 }
                 ?>
             </select>

@@ -15,6 +15,7 @@
     include('header_admin.php');
     ?>
     <main>
+    <br><br>
     <h1>Menú de gestión</h1>
     <section id="menu_gestion">
         <article class="opc_menu_ap"><a href="personas_admin.php">
@@ -44,6 +45,13 @@
             <a href="historia_clinica_admin.php">
                 <img src="../../recursos/mascotas_icon.png" alt="">
                 Historia clínica
+            </a>
+        </article>
+
+        <article class="opc_menu_ap">
+            <a href="../gestor_inventario/main_gestor.php">
+                <img src="../../recursos/img/gestion_productos_icon.png" alt="">
+                 Gestión de inventario
             </a>
         </article>
 

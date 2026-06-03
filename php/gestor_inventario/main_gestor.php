@@ -13,10 +13,23 @@
     <?php
     include_once __DIR__ . '\..\..\config.php';
     require_once(BASE_PATH . '/php/admin/auth.php');
-    include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    $rol = $_SESSION['rol'];
+    if ($rol == 'admin') {
+        include_once(BASE_PATH . '/php/admin/header_admin.php');
+    } elseif ($rol == 'gestor') {
+        include_once(BASE_PATH . '/php/gestor_inventario/header_gi.php');
+    } else {
+        header('Location: ' . BASE_URL . '/php/login.php');
+        exit();
+    }
     include_once(BASE_PATH . '/php/crud/consultas_varias.php');
     ?>
 <main class="dashboard">
+
+<?php
+$insumos_bajo_stock = count(obtenerInsumosConBajoStock($conn));
+$productos_bajo_stock = count(obtenerProductosConBajoStock($conn));
+?>
 
     <h1>Menú de gestión</h1>
 
@@ -38,19 +51,19 @@
         </div>
     </article>
 
-    <article class="card alerta">
+    <article class="card alerta <?= $insumos_bajo_stock > 0 ? 'con-alerta' : '' ?>">
         <div class="icono">⚠</div>
         <div class="info">
             <p class="titulo">Insumos con bajo stock</p>
-            <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_insumos.php?filtro=bajo_stock"><p class="valor"><?php echo count(obtenerInsumosConBajoStock($conn)); ?></p></a>
+            <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_insumos.php?filtro=bajo_stock"><p class="valor"><?php echo $insumos_bajo_stock; ?></p></a>
         </div>
     </article>
 
-    <article class="card alerta">
+    <article class="card alerta <?= $productos_bajo_stock > 0 ? 'con-alerta' : '' ?>">
         <div class="icono">⚠</div>
         <div class="info">
             <p class="titulo">Productos con bajo stock</p>
-            <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_productos.php?filtro=bajo_stock"><p class="valor"><?php echo count(obtenerProductosConBajoStock($conn)); ?></p></a>
+            <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_productos.php?filtro=bajo_stock"><p class="valor"><?php echo $productos_bajo_stock; ?></p></a>
         </div>
     </article>
 
@@ -79,7 +92,7 @@
         </article>
 
         <article class="opc_menu_ap">
-            <a href="#">
+            <a href="../admin/proveedores_admin.php">
                 <img src="../../recursos/personas_icon.png" alt="">
                 Gestión de proveedores
             </a>
@@ -101,6 +114,11 @@
 
     </section>
 
+    <?php if($rol == 'admin'): ?>
+    <section id="volver_s">
+            <a href="../admin/main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+    </section>
+    <?php endif; ?>
 </main>
     <?php
     include('../footer.php');

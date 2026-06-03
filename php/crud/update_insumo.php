@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descripcion = trim($_POST['descripcion']) ?? '';
     $tipo = trim($_POST['tipo']) ?? '';
     $costo = $_POST['costo_unidad'] ?? null;
+    $prov_id = $_POST['proveedor'] ?? null; // proveedor asociado
 
     // cantidad mínima aceptable
     $param_bajo_stock = $_POST['param_bajo_stock'] ?? null;
@@ -25,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         empty($nombre) ||
         empty($descripcion) ||
         empty($tipo) ||
-        !is_numeric($costo)
+        !is_numeric($costo) ||
+        !is_numeric($prov_id)
     ) {
         die("Datos inválidos.");
     }
@@ -47,16 +49,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 nombre_insumo = ?,
                 descripcion_insumo = ?,
                 tipo_insumo = ?,
-                costo_unidad = ?
+                costo_unidad = ?,
+                id_proveedor = ?
             WHERE id_insumo = ?
         ");
 
         $stmt->bind_param(
-            "sssdi",
+            "sssdii",
             $nombre,
             $descripcion,
             $tipo,
             $costo,
+            $prov_id,
             $_POST['id_insumo']
         );
 

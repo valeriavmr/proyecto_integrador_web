@@ -391,6 +391,18 @@ CREATE TABLE compra_detalle (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   COMMENT='Ítems detallados de cada compra (Bernardo)';
 
+ALTER TABLE compra_detalle
+DROP FOREIGN KEY fk_cd_producto;
+
+ALTER TABLE compra_detalle
+MODIFY COLUMN id_producto INT NULL;
+
+ALTER TABLE compra_detalle
+ADD COLUMN tipo_item ENUM('producto','insumo') NOT NULL AFTER id_compra;
+
+ALTER TABLE compra_detalle
+ADD COLUMN id_insumo INT NULL AFTER id_producto;
+
 
 -- ================================================================
 -- BLOQUE 6 — VENTAS DE PRODUCTOS (Yuske)
