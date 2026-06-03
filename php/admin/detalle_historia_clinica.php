@@ -93,7 +93,7 @@ if ($id_historia !== null) {
     $stmt->close();
 }
 
-include('header_admin.php');
+include_once(__DIR__ . '/../includes/sidebar.php');
 ?>
 
 <!DOCTYPE html>

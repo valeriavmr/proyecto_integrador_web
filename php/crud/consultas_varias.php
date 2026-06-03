@@ -1235,4 +1235,67 @@ function getKPIsMesActual($conn) {
         'costo_otros' => $otros
     ];
 }
+
+function obtenerHistoriasClinicas($conn, $filtro = '', $valor = '')
+{
+    $historias = [];
+
+    $sql = "
+        SELECT
+            m.id_mascota,
+            m.nombre AS mascota,
+            m.raza,
+            p.nombre AS nombre_duenio,
+            p.apellido AS apellido_duenio,
+            h.id_historia,
+            h.fecha_apertura
+        FROM mascota m
+        INNER JOIN persona p
+            ON p.id_persona = m.id_persona
+        INNER JOIN historia_clinica h
+            ON h.id_mascota = m.id_mascota
+    ";
+
+    if (!empty($filtro) && !empty($valor)) {
+
+        $valorLower = strtolower(trim($valor));
+
+        if ($filtro === 'mascota') {
+            $sql .= " WHERE LOWER(m.nombre) LIKE ? ";
+            $param = '%' . $valorLower . '%';
+        } elseif ($filtro === 'duenio') {
+            $sql .= " WHERE LOWER(CONCAT(p.nombre, ' ', p.apellido)) LIKE ? ";
+            $param = '%' . $valorLower . '%';
+        } elseif ($filtro === 'raza') {
+            $sql .= " WHERE LOWER(m.raza) LIKE ? ";
+            $param = '%' . $valorLower . '%';
+        } elseif ($filtro === 'fecha_apertura') {
+            $sql .= " WHERE DATE(h.fecha_apertura) = ? ";
+            $param = $valor;
+        } else {
+            $param = null;
+        }
+
+        $sql .= " ORDER BY m.nombre";
+
+        $stmt = $conn->prepare($sql);
+
+        if (isset($param) && $param !== null) {
+            $stmt->bind_param("s", $param);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+    } else {
+
+        $sql .= " ORDER BY m.nombre";
+        $result = $conn->query($sql);
+    }
+
+    while ($row = $result->fetch_assoc()) {
+        $historias[] = $row;
+    }
+
+    return $historias;
+}
 ?>

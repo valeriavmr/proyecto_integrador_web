@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 require_once('auth.php');
-include('header_admin.php');
+include_once(__DIR__ . '/../includes/sidebar.php');
 require('../crud/conexion.php');
 
 /* ==========================

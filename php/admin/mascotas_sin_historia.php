@@ -1,6 +1,6 @@
 <?php
 require_once('auth.php');
-include('header_admin.php');
+include_once(__DIR__ . '/../includes/sidebar.php');
 require_once('../crud/conexion.php');
 
 $filtro = $_POST['filtro'] ?? '';
