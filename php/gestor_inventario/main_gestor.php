@@ -23,9 +23,9 @@
 $insumos_bajo_stock = count(obtenerInsumosConBajoStock($conn));
 $productos_bajo_stock = count(obtenerProductosConBajoStock($conn));
 ?>
-
+<br><br>
     <h1>Menú de gestión</h1>
-
+<br>
 <section class="dashboard_cards">
 
     <article class="dashboard-card">
@@ -99,13 +99,6 @@ $productos_bajo_stock = count(obtenerProductosConBajoStock($conn));
             <a href="<?php echo BASE_URL; ?>/php/admin/reportes.php">
                 <img src="../../recursos/pdf_icon.png" alt="">
                 Reportes
-            </a>
-        </article>
-
-        <article class="opc_menu_ap">
-            <a href="gestion_economica.php">
-                <img src="../../recursos/img/gestion_economica_icon.png" alt="">
-                Gestión económica
             </a>
         </article>
 
