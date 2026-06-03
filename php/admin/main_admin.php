@@ -59,9 +59,6 @@
         <article class="opc_menu_ap"><a href="reportes.php">
             <img src="../../recursos/pdf_icon.png" alt=""> Reportes</a></article>
 
-        <article class="opc_menu_ap"><a href="rentabilidad.php">
-            <img src="../../recursos/balance_icono.png" alt=""> Rentabilidad</a></article>
-
     </section>
     </main>
     <?php

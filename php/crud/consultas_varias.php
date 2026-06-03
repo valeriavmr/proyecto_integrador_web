@@ -877,6 +877,20 @@ function getProveedores($conn)
     return $proveedores;
 }
 
+function getProveedorNombre($conn, $id_proveedor)
+{
+    $sql = "SELECT nombre FROM proveedores WHERE id_proveedor = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_proveedor);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['nombre'];
+    }
+    return null; // Si no hay resultados
+}
+
 // ================================================================
 // FUNCIONES DE RENTABILIDAD Y REPORTES (Módulo Rodrigo)
 // ================================================================
