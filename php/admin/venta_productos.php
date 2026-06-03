@@ -1,6 +1,7 @@
 <?php 
 include '../crud/conexion.php';
 include_once('auth.php');
+include_once __DIR__ . '\..\..\config.php';
 
 //Busco el rol del usuario
 $rol = $_SESSION['rol'];
@@ -173,7 +174,7 @@ $ventasRecientes = mysqli_query($conn, $sqlVentasRecientes);
                 <a href="#">🛒 Venta de Productos</a>
             </li>
 
-            <li><a href="#">🚚 Proveedores</a></li>
+            <li><a href="<?= BASE_URL ?>/php/admin/proveedores_admin.php">🚚 Proveedores</a></li>
             <li><a href="#">💰 Gestión Económica</a></li>
             <li><a href="#">📊 Reportes</a></li>
             <?php if($rol=='admin'):?>

@@ -9,6 +9,8 @@ require_once('../crud/conexion.php');
 // =======================
 
 $filtro = $_GET['filtro'] ?? null;
+$tipo = $_GET['tipo'] ?? null;
+$stock = $_GET['stock'] ?? null;
 
 // =======================
 // 2. Query base
@@ -33,6 +35,19 @@ $sql = "SELECT
 if ($filtro === 'bajo_stock') {
     $sql .= " WHERE i.cantidad_actual_producto <= i.param_bajo_stock";
 }
+
+//Ordenar por tipo
+if (!empty($tipo) && $filtro === null) {
+    $tipoSeguro = mysqli_real_escape_string($conn, $tipo);
+    $condiciones[] = "p.tipo = '$tipoSeguro'";
+}
+
+if (!empty($condiciones)) {
+    $sql .= " WHERE " . implode(" AND ", $condiciones);
+}
+
+$sql .= " ORDER BY p.nombre_producto ASC";
+
 
 $result = $conn->query($sql);
 ?>

@@ -68,6 +68,7 @@ require_once('auth.php');
         <li><a href="<?php echo BASE_URL; ?>/php/admin/servicios_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/servicio_icon.png" alt="" class="iconos">Servicios</a></li>
         <li><a href="<?php echo BASE_URL; ?>/php/admin/proveedores_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/personas_icon.png" alt="" class="iconos">Proveedores</a></li>
         <li><a href="<?php echo BASE_URL; ?>/php/admin/trabajadores_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/trabajador_icon.png" alt="" class="iconos">Trabajadores</a></li>
+        <li><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/main_gestor.php"><img src="<?php echo BASE_URL; ?>/recursos/img/gestion_productos_icon.png" alt="" class="iconos">Gestión de Inventario</a></li>
         <hr class="nav-divider">
         <li><a href="<?php echo BASE_URL; ?>/php/admin/main_admin.php"><img src="<?php echo BASE_URL; ?>/recursos/home_icon.png" alt="" class="iconos">Home</a></li>
         <li><a href="<?php echo BASE_URL; ?>/php/logout.php" id="link_logout_menu">

@@ -79,7 +79,6 @@ CREATE TABLE persona (
     rol                 ENUM('cliente','trabajador','admin') NOT NULL DEFAULT 'cliente',
     correo              VARCHAR(150) UNIQUE,
     telefono            VARCHAR(30),
-    activo              TINYINT(1)  NOT NULL DEFAULT 1,
     fecha_registro      DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   COMMENT='Usuarios del sistema: clientes, trabajadores y administradores';
