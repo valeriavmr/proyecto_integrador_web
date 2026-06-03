@@ -73,7 +73,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina de inicio</title>
+    <title>Inventario de Productos</title>
     <link rel="stylesheet" href="../../css/menu_gestor_inventario.css">
     <link rel="stylesheet" href="../../css/tablas_admin.css">
     <link rel="stylesheet" href="../../css/buscar_persona.css">
