@@ -32,6 +32,12 @@ $nombreMostrar = obtenerNombreUsuario($conn, $usuario) ?? $usuario;
                 <span class="menu-icon">🏠</span> <span class="menu-text">Inicio</span></a>
             </li>
 
+            <li>
+                <a href="<?php echo BASE_URL; ?>/php/crud/perfil.php">
+                    <span class="menu-icon">👤</span> <span class="menu-text">Perfil</span>
+                </a>
+            </li>
+
             <?php if($rol == 'admin'): ?>
             <li><a href="<?php echo BASE_URL; ?>/php/admin/add_turno_admin.php"><span class="menu-icon">📅</span> <span class="menu-text">Turnos</span></a></li>
             <li><a href="<?php echo BASE_URL; ?>/php/admin/mascotas_admin.php"><span class="menu-icon">🐶</span> <span class="menu-text">Pacientes</span></a></li>

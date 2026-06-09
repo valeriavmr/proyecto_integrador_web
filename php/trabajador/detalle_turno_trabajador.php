@@ -76,7 +76,7 @@
             $now = new DateTime();
             if($horarioTurno >= $now){
             echo "<button class='cancelar_turno_btn'><a href='../crud/eliminar_servicio.php?id_servicio=" . $servicio['id_servicio'] . "'>Cancelar turno</a></button>";}
-            echo "<a href="main_trabajador.php" class="btn-volver-admin">Volver al inicio</a>";
+            echo "<a href='main_trabajador.php' class='btn-volver-admin'>Volver al inicio</a>";
             echo "</article>";
         } else {
             echo "<p>No se encontró el servicio solicitado.</p>";

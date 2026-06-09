@@ -11,6 +11,10 @@ body {
 }
 
 /* Contenedor Principal */
+.main-content {
+    margin-left: var(--sidebar-width);
+}
+
 .perfil-container {
   max-width: 860px;
   margin: 2.5rem auto;

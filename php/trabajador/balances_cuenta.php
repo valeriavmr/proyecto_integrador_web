@@ -92,8 +92,9 @@ $tipos_servicio = obtenerTiposServicio($conn);
 </head>
 <body>
     <?php include('header_trabajador.php'); ?>
-    <main class="balance-container">
-        <h1>📊 Balance Mensual de Servicios</h1>
+    <main class="main-content">
+    <div class="balance-container">
+                <h1>📊 Balance Mensual de Servicios</h1>
 
         <form method="GET" action="balances_cuenta.php" class="filtro-form">
             <label for="mes">Filtrar por Mes/Año:</label>
@@ -156,6 +157,7 @@ $tipos_servicio = obtenerTiposServicio($conn);
             </div>
             
         <?php endif; ?>
+    </div>
         
     </main>
     

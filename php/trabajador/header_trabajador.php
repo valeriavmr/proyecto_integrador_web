@@ -10,45 +10,33 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $usuario = $_SESSION['username'] ?? null;
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/css/header_cliente.css?v=<?= time() ?>">
-</head>
-<body>
-    <header id="header_cliente">
-        <section>
-            <img src="<?= BASE_URL ?>/recursos/menu_img.png" id="nav_menu_icon" alt="">
-        </section>
 
-        <section id="nav_cuenta">
-            <a id="link_logout" href="<?= BASE_URL ?>/php/logout.php" title="Cerrar sesión">
-                <img src="<?= BASE_URL ?>/recursos/logout_img.png" alt="Cerrar sesión">
-            </a>
-        </section>
+<link rel="stylesheet" href="<?= BASE_URL ?>/css/theme.css?v=<?= time() ?>">
+<link rel="stylesheet" href="<?= BASE_URL ?>/css/header_cliente.css?v=<?= time() ?>">
 
-        <nav>
-            <ul id="nav_cliente">
-                <li>
-                    <img src="<?= BASE_URL ?>/recursos/logsinfondo.png" alt="">
-                </li>
+<header id="header_cliente">
+    <div class="header-toggle">
+        <img src="<?= BASE_URL ?>/recursos/menu_img.png" id="nav_menu_icon" alt="Menú">
+    </div>
+    <div class="header-logo">
+        <img src="<?= BASE_URL ?>/recursos/logsinfondo.png" alt="Tahito">
+    </div>
+    <div id="nav_cuenta">
+        <a id="link_logout" href="<?= BASE_URL ?>/php/logout.php" title="Cerrar sesión">
+            <img src="<?= BASE_URL ?>/recursos/logout_img.png" alt="Cerrar sesión">
+        </a>
+    </div>
+</header>
 
-                <li>
-                    <a href="#">
-                        <?= $usuario ? obtenerNombreUsuario($conn, $usuario) : 'Usuario' ?>
-                    </a>
-                </li>
-
-                <hr>
-
+<nav id="nav_sidebar">
+    <ul id="nav_cliente">
+        <li class="nav-user-name">
+            <?php       
+                if($usuario == null){ header("Location: no_autorizado.php"); exit; }
+                echo '<span>' . htmlspecialchars(obtenerNombreUsuario($conn, $usuario)) . '</span>';
+            ?>
+        </li>
+        <hr class="nav-divider">
                 <li>
                     <a href="<?= BASE_URL ?>/php/trabajador/perfil_trabajador.php">
                         <img src="<?= BASE_URL ?>/recursos/perfil_icon.png" alt="" class="iconos">Perfil
@@ -82,26 +70,24 @@ $usuario = $_SESSION['username'] ?? null;
                         <img src="<?= BASE_URL ?>/recursos/logout_img.png" alt="Cerrar sesión">
                     </a>
                 </li>
-            </ul>
+    </ul>
+</nav>
 
-            <h2>Perfil de Trabajador</h2>
-        </nav>
-    </header>
+<div id="nav_overlay"></div>
 
     <script>
-        let menu = document.getElementById("nav_cliente");
-        let icono = document.getElementById("nav_menu_icon");
+    const menu = document.getElementById("nav_sidebar");
+    const overlay = document.getElementById("nav_overlay");
+    const icono = document.getElementById("nav_menu_icon");
 
-        icono.addEventListener('click', (event) => {
-            event.stopPropagation();
-            menu.classList.toggle('menu_desplegado');
-        });
+    icono.addEventListener('click', (event) => {
+        event.stopPropagation();
+        menu.classList.toggle('menu_desplegado');
+        overlay.classList.toggle('visible');
+    });
 
-        document.addEventListener('click', (event) => {
-            if (!menu.contains(event.target) && event.target !== icono) {
-                menu.classList.remove('menu_desplegado');
-            }
-        });
+    overlay.addEventListener('click', () => {
+        menu.classList.remove('menu_desplegado');
+        overlay.classList.remove('visible');
+    });
     </script>
-</body>
-</html>

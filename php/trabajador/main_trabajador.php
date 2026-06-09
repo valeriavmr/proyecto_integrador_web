@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../../css/main_cliente_style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="../../css/servicios_cliente.css?v=<?= time() ?>">
     <link rel="stylesheet" href="../../css/menus_admin.css">
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/header_cliente.css?v=<?= time() ?>">
 </head>
 <body>
 <?php
