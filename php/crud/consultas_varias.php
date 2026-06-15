@@ -904,20 +904,23 @@ function getRentabilidadMensual($conn, $anio = null) {
         $anio = date('Y');
     }
     
+    $datos = [];
+    
     // Intentar usar la vista
     $sql = "SELECT * FROM v_rentabilidad_mensual WHERE periodo_anio = ? ORDER BY periodo_mes ASC";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $anio);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $datos = [];
-    while ($row = $result->fetch_assoc()) {
-        $datos[] = $row;
+    if ($stmt !== false) {
+        $stmt->bind_param("i", $anio);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        while ($row = $result->fetch_assoc()) {
+            $datos[] = $row;
+        }
+        $stmt->close();
     }
-    $stmt->close();
     
-    // Si la vista no devuelve datos, construir manualmente
+    // Si la vista no existe o no devuelve datos, construir manualmente
     if (empty($datos)) {
         $datos = construirRentabilidadManual($conn, $anio);
     }
