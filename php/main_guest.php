@@ -34,9 +34,9 @@
         <section id="hero" class="container">
             <article class="hero-split">
                 <div class="hero-content">
-                    <h1>Adiestramiento Canino <br/><span class="text-accent">Tahito</span></h1>
+                    <h1>Centro Veterinario <br/><span class="text-accent">Tahito</span></h1>
                     <p class="hero-subtitle">
-                        Técnicas modernas enfocadas en educación positiva y empatía para ti y tu mascota. Servicios a domicilio en CABA diseñados para transformar el comportamiento con cariño.
+                        El cuidado de tu mascota es nuestra prioridad. Ofrecemos servicios veterinarios integrales, adiestramiento y tambien contamos con productos para su mascota.
                     </p>
                     <a href="login.php" class="btn-primary mt-4">Comenzar ahora</a>
                 </div>
@@ -60,5 +60,16 @@
     <?php
     include('footer.php');
     ?>
+    <script>
+      // Sticky header scroll shadow
+      const mainHeader = document.querySelector('.main-header');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+          mainHeader.classList.add('scrolled');
+        } else {
+          mainHeader.classList.remove('scrolled');
+        }
+      }, { passive: true });
+    </script>
 </body>
 </html>

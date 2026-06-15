@@ -6,8 +6,8 @@ require_once(BASE_PATH . '/php/crud/consultas_varias.php');
 
 if (session_status() == PHP_SESSION_NONE) session_start();
 
-// Solo admin
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
+// Solo admin y gestor
+if (!isset($_SESSION['rol']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'gestor')) {
     http_response_code(403);
     echo json_encode(['error' => 'No autorizado']);
     exit;

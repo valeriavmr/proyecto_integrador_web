@@ -14,10 +14,52 @@
     <?php
     require_once('auth.php');
     include_once(__DIR__ . '/../includes/sidebar.php');
+    include_once(BASE_PATH . '/php/crud/consultas_varias.php');
     ?>
     <main>
     <br><br>
     <h1>Menú de gestión</h1>
+
+    <?php if($rol == 'gestor' || $rol == 'admin'): ?>
+    <br>
+    <section class="dashboard_cards">
+        <article class="dashboard-card">
+            <div class="card-top">
+                <div class="card-icon">💉</div>
+                <p class="card-title">Insumos en stock</p>
+            </div>
+            <p class="card-number"><?php echo getCantidadTotalInsumos($conn); ?></p>
+        </article>
+
+        <article class="dashboard-card">
+            <div class="card-top">
+                <div class="card-icon">🛍️</div>
+                <p class="card-title">Productos en stock</p>
+            </div>
+            <p class="card-number"><?php echo getCantidadTotalProductos($conn);?></p>
+        </article>
+
+        <article class="dashboard-card alerta">
+            <div class="card-top">
+                <div class="card-icon">⚠</div>
+                <p class="card-title">Insumos bajo stock</p>
+            </div>
+            <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_insumos.php?filtro=bajo_stock" class="card-link">
+                <p class="card-number"><?php echo count(obtenerInsumosConBajoStock($conn)); ?></p>
+            </a>
+        </article>
+
+        <article class="dashboard-card alerta">
+            <div class="card-top">
+                <div class="card-icon">⚠</div>
+                <p class="card-title">Productos bajo stock</p>
+            </div>
+            <a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_productos.php?filtro=bajo_stock" class="card-link">
+                <p class="card-number"><?php echo count(obtenerProductosConBajoStock($conn)); ?></p>
+            </a>
+        </article>
+    </section>
+    <?php endif; ?>
     <section id="menu_gestion">
         <article class="opc_menu_ap"><a href="personas_admin.php">
             <img src="../../recursos/perfil_icon.png" alt=""> Gestión de personas</a></article>
@@ -50,9 +92,16 @@
         </article>
 
         <article class="opc_menu_ap">
-            <a href="../gestor_inventario/main_gestor.php">
+            <a href="../gestor_inventario/gestion_insumos.php">
+                <img src="../../recursos/img/gestion_insumos_icon.png" alt="">
+                 Gestión de insumos
+            </a>
+        </article>
+
+        <article class="opc_menu_ap">
+            <a href="../gestor_inventario/gestion_productos.php">
                 <img src="../../recursos/img/gestion_productos_icon.png" alt="">
-                 Gestión de inventario
+                 Gestión de productos
             </a>
         </article>
 

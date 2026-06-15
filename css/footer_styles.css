@@ -1,16 +1,10 @@
-/* 
-  ===========================================
-  FOOTER COMPONENTS - STITCH DESIGN TASTE
-  ===========================================
-*/
-
 #footer {
   margin-top: 4rem;
-  padding: 4rem 2rem 2rem 2rem;
-  background-color: var(--pure-surface);
+  padding: 3rem 2rem 2rem 2rem;
+  background-color: var(--surface-muted);
   color: var(--charcoal-ink);
-  border-radius: 2rem 2rem 0 0;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
+  border-top: 1px solid var(--whisper-border-dark);
+  width: auto;
 }
 
 .footer-grid {
@@ -81,11 +75,11 @@
     text-align: left;
     align-items: end;
   }
-  
+
   .footer-links {
     align-items: flex-start;
   }
-  
+
   .footer-credits {
     text-align: right;
     border-top: none;

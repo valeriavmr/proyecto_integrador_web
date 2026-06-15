@@ -27,7 +27,7 @@
                 <img src="../../recursos/img/trazabilidad_insumo_icon.png" alt=""> Trazabilidad de un insumo</a></article>
         </section>
         <section id="volver_s">
-            <a href="main_gestor.php" class="btn-volver-admin">Volver al menú principal</a>
+            <a href="gestion_insumos.php" class="btn-volver-admin">Volver a gestión de insumos</a>
         </section>
     </main>
     <?php

@@ -1,16 +1,18 @@
 /* 
   ===================================================
-  BUSCAR — Admin Search Pages
-  Adiestramiento Tahito Design System (DESIGN.md)
-  DM Sans · Charcoal Ink · Terracotta Accent
+  Admin Search Pages
   ===================================================
 */
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 
 /* --- Base --- */
+body {
+  background-color: var(--surface-muted) !important;
+}
+
 main {
-  background-color: #FAFAFA;
+  background-color: var(--surface-muted);
   display: flex;
   flex: 1 0 auto;
   flex-direction: column;
@@ -21,7 +23,7 @@ main {
 }
 
 /* --- Page title --- */
-main > h1 {
+main>h1 {
   font-size: 2rem;
   font-weight: 700;
   color: #18181B;
@@ -103,7 +105,7 @@ form input[type="text"]:focus {
   width: 44px;
   height: 44px;
   padding: 0;
-  background-color: #2E6009;
+  background-color: var(--forest-mid);
   background-image: url('../recursos/search_icon.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -118,7 +120,7 @@ form input[type="text"]:focus {
 }
 
 #botonBuscar:hover {
-  background-color: #245007;
+  background-color: var(--forest-surface);
 }
 
 #botonBuscar:active {
@@ -126,13 +128,13 @@ form input[type="text"]:focus {
 }
 
 /* --- Results section --- */
-main > section {
+main>section {
   width: 100%;
   max-width: 960px;
   margin: 0 auto 1.5rem;
 }
 
-main > section > h3 {
+main>section>h3 {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -181,18 +183,18 @@ tbody tr:hover {
   background-color: #FAFAFA;
 }
 
-td > a {
+td>a {
   text-decoration: none;
   color: #18181B;
   transition: color 0.2s;
 }
 
-td > a:hover {
+td>a:hover {
   color: #E07A5F;
 }
 
 /* --- Empty / no results message --- */
-main > p {
+main>p {
   font-size: 0.95rem;
   color: #71717A;
   text-align: center;
@@ -205,29 +207,29 @@ main > p {
   text-align: center;
 }
 
-main > section.resultados-ancho {
+main>section.resultados-ancho {
   width: 90vw;
   max-width: none;
 }
 
-main > section.resultados-ancho > h3 {
+main>section.resultados-ancho>h3 {
   text-align: left;
 }
 
 .resultados-ancho table {
-    table-layout: auto;
+  table-layout: auto;
 }
 
 .resultados-ancho th,
 .resultados-ancho td {
-    text-align: left;
-    padding-left: 1rem;
+  text-align: left;
+  padding-left: 1rem;
 }
 
 .compra-nueva {
-    background-color: #fff3cd !important;
+  background-color: #fff3cd !important;
 }
 
 .compra-nueva td {
-    font-weight: 700;
+  font-weight: 700;
 }

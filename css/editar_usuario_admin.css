@@ -1,25 +1,20 @@
-/* 
-  ===================================================
-  ADMIN FORMS — Adiestramiento Tahito Design System
-  Following DESIGN.md: Cabinet Grotesk / Satoshi,
-  Terracotta Accent, Charcoal Ink, Whisper Border
-  ===================================================
-*/
-
 /* Google Fonts import */
 @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Fraunces:wght@600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
 
 /* --- Reset & Base --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
-  background-color: #FAFAFA;
+  background-color: var(--surface-muted);
   color: #18181B;
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 16px;
@@ -59,7 +54,7 @@ main {
   flex-direction: column;
   align-items: center;
   padding: 1.5rem 1rem 3rem;
-  background-color: #FAFAFA;
+  background-color: var(--surface-muted);
 }
 
 /* --- Fieldset as modern card --- */
@@ -71,7 +66,7 @@ fieldset {
   border-radius: 1.25rem;
   padding: 2rem 2rem 1.5rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 2px 12px rgba(24,24,27,0.05);
+  box-shadow: 0 2px 12px rgba(24, 24, 27, 0.05);
 }
 
 legend {
@@ -152,8 +147,8 @@ textarea:focus {
 }
 
 /* --- Fieldset's bare inputs (no .campo-form wrapper) --- */
-fieldset > input,
-fieldset > select {
+fieldset>input,
+fieldset>select {
   width: 100%;
   max-width: 100%;
   margin: 0 0 1.1rem 0;
@@ -168,8 +163,8 @@ fieldset > select {
   outline: none;
 }
 
-fieldset > input:focus,
-fieldset > select:focus {
+fieldset>input:focus,
+fieldset>select:focus {
   border-color: #E07A5F;
   background: #FFFFFF;
   box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.15);
@@ -185,7 +180,7 @@ button[type="submit"],
   width: 100%;
   max-width: 100%;
   padding: 0.85rem 2rem;
-  background-color: #2E6009;
+  background-color: var(--forest-mid);
   color: #FFFFFF;
   border: none;
   border-radius: 0.65rem;
@@ -204,7 +199,7 @@ button[type="submit"]:hover,
 #btn_guardar_direccion:hover,
 #btn_guardar_trabajador:hover,
 .btn-primario:hover {
-  background-color: #245007;
+  background-color: var(--forest-surface);
 }
 
 input[type="submit"]:active,
@@ -217,7 +212,7 @@ button[type="submit"]:active,
 }
 
 /* --- Section wrapper para inputs sueltos (legado) --- */
-main > section {
+main>section {
   display: flex;
   flex-direction: column;
   align-items: center;

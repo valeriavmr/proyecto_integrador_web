@@ -5,7 +5,7 @@
  */
 require_once __DIR__ . '/../../config.php';
 require_once(BASE_PATH . '/php/admin/auth.php');
-if ($_SESSION['rol'] !== 'admin') { header("Location: ../no_autorizado.php"); exit; }
+if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'gestor') { header("Location: ../no_autorizado.php"); exit; }
 
 require_once(BASE_PATH . '/php/crud/conexion.php');
 require_once(BASE_PATH . '/php/crud/consultas_varias.php');

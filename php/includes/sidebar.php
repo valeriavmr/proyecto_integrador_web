@@ -28,7 +28,7 @@ $nombreMostrar = obtenerNombreUsuario($conn, $usuario) ?? $usuario;
 
         <ul class="menu">
             <li>
-                <a href="<?php echo $rol == 'admin' ? BASE_URL . '/php/admin/main_admin.php' : BASE_URL . '/php/gestor_inventario/main_gestor.php'; ?>">
+                <a href="<?php echo BASE_URL . '/php/admin/main_admin.php'; ?>">
                 <span class="menu-icon">🏠</span> <span class="menu-text">Inicio</span></a>
             </li>
 
@@ -38,7 +38,7 @@ $nombreMostrar = obtenerNombreUsuario($conn, $usuario) ?? $usuario;
                 </a>
             </li>
 
-            <?php if($rol == 'admin'): ?>
+            <?php if($rol == 'admin' || $rol == 'gestor'): ?>
             <li><a href="<?php echo BASE_URL; ?>/php/admin/add_turno_admin.php"><span class="menu-icon">📅</span> <span class="menu-text">Turnos</span></a></li>
             <li><a href="<?php echo BASE_URL; ?>/php/admin/mascotas_admin.php"><span class="menu-icon">🐶</span> <span class="menu-text">Pacientes</span></a></li>
             <li><a href="#"><span class="menu-icon">📋</span> <span class="menu-text">Historia Clínica</span></a></li>
@@ -51,13 +51,10 @@ $nombreMostrar = obtenerNombreUsuario($conn, $usuario) ?? $usuario;
             <li><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/gestion_insumos.php"><span class="menu-icon">📦</span> <span class="menu-text">Insumos</span></a></li>
             <li><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/inventario_productos.php"><span class="menu-icon">🧾</span> <span class="menu-text">Stock</span></a></li>
             <li><a href="<?php echo BASE_URL; ?>/php/admin/venta_productos.php"><span class="menu-icon">🛒</span> <span class="menu-text">Venta de Productos</span></a></li>
-            <li><a href="#"><span class="menu-icon">🚚</span> <span class="menu-text">Proveedores</span></a></li>
-            <li><a href="<?php echo BASE_URL; ?>/php/gestor_inventario/gestion_economica.php"><span class="menu-icon">💰</span> <span class="menu-text">Gestión Económica</span></a></li>
             <?php endif; ?>
 
-            <?php if($rol == 'admin'): ?>
+            <?php if($rol == 'admin' || $rol == 'gestor'): ?>
             <li><a href="<?php echo BASE_URL; ?>/php/admin/personas_admin.php"><span class="menu-icon">👤</span> <span class="menu-text">Usuarios</span></a></li>
-            <li><a href="#"><span class="menu-icon">⚙️</span> <span class="menu-text">Configuración</span></a></li>
             <?php endif; ?>
         </ul>
     </div>

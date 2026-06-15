@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../config.php';
 require_once(BASE_PATH . '/php/admin/auth.php');
 
 // Restricción extra: solo admin
-if ($_SESSION['rol'] !== 'admin') {
+if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'gestor') {
     header("Location: ../no_autorizado.php");
     exit;
 }

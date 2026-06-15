@@ -118,7 +118,7 @@ $pdf->AddPage();
 $pdf->SetFont('helvetica', '', 12);
 
 $html = '
-<h2 style="color:#2E6009;">Datos de la Mascota</h2>
+<h2 style="color:#14532D;">Datos de la Mascota</h2>
 <style>
 .celda_foto {
     text-align: center; 

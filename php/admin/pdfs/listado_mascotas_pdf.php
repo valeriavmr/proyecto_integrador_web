@@ -82,7 +82,7 @@ $html = '
 
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
-        <tr style="background-color:#2E6009; text-align:center;">
+        <tr style="background-color:#14532D; color:#FFFFFF; text-align:center;">
             <th><b>ID</b></th>
             <th><b>Nombre</b></th>
             <th><b>Dueño</b></th>

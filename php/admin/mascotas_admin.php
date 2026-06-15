@@ -19,6 +19,9 @@
         <article class="opc_menu_ap"><a href="agregar_mascota.php" id="agregar_mascota_op"><img src="../../recursos/add_mascota.png" alt=""> Agregar Mascota</a></article>
         <article class="opc_menu_ap"><a href="buscar_mascota.php" id="buscar_mascota_op"><img src="../../recursos/person_search_icon.png" alt=""> Buscar Mascota</a></article>
     </section>
+    <section id="volver_s">
+        <a href="main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+    </section>
     </main>
     <?php
     include('../footer.php');

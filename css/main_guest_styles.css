@@ -1,8 +1,6 @@
-/* 
-  ===========================================
-  MAIN GUEST STYLES - STITCH DESIGN TASTE
-  ===========================================
-*/
+html {
+  overflow-y: scroll;
+}
 
 /* Base alignment */
 body {
@@ -10,21 +8,34 @@ body {
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
+  overflow-y: visible;
+  background-color: var(--surface-muted);
 }
 
 main {
-  background-color: var(--canvas-alabaster);
+  background-color: var(--surface-muted);
   flex: 1;
 }
 
-/* Header */
+/* Header — sticky */
 .main-header {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   padding: 1.5rem 2rem;
-  background-color: var(--canvas-alabaster);
+  background-color: rgba(244, 246, 248, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--whisper-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.main-header.scrolled {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.07);
+  background-color: rgba(244, 246, 248, 0.97);
 }
 
 .main-header .img img {
@@ -70,7 +81,7 @@ nav ul a:hover {
 }
 
 .nav-link:hover {
-  color: var(--terracotta-accent);
+  color: var(--emerald-muted);
 }
 
 /* Hero Section */
@@ -91,7 +102,7 @@ nav ul a:hover {
 }
 
 .text-accent {
-  color: var(--terracotta-accent);
+  color: var(--emerald-glow);
 }
 
 .hero-subtitle {
@@ -158,7 +169,8 @@ nav ul a:hover {
 
 .service-card:hover {
   transform: translateY(-8px);
-  border-color: var(--terracotta-accent);
+  border-color: var(--emerald-glow);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.12);
 }
 
 .service-card>a {
@@ -170,10 +182,13 @@ nav ul a:hover {
 /* Image area */
 .service-card-img {
   width: 100%;
-  height: 140px;
+  height: 180px;
   overflow: hidden;
-  padding: 2rem 2rem 0 2rem;
+  padding: 1.5rem 2.5rem 0 2.5rem;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .service-card-img img {
@@ -181,6 +196,7 @@ nav ul a:hover {
   height: 100%;
   object-fit: contain;
   transition: transform var(--spring-duration) var(--spring-easing);
+  filter: opacity(0.85);
 }
 
 .service-card:hover .service-card-img img {
@@ -211,7 +227,7 @@ nav ul a:hover {
   font-family: var(--font-display);
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--terracotta-accent);
+  color: var(--emerald-muted);
   transition: letter-spacing 0.2s;
 }
 

@@ -12,14 +12,14 @@ h1{
     font-family: 'Montserrat', 'sans-serif';
     font-size: 28px;
     text-align: center;
-    color:#2E6009;
+    color: var(--forest-mid);
 }
 
 h2{
     font-family: 'Montserrat', 'sans-serif';
     font-size: 20px;
     text-align: center;
-    color:#2E6009;
+    color: var(--forest-mid);
 }
 
 html, body {
@@ -33,13 +33,13 @@ html, body {
 body {
   min-height: 100vh;
   color: #4b4b4b;
-  background-color: #F4F4F4;
+  background-color: var(--surface-muted);
 }
 
 main{
     display: grid;
     grid-template-columns: repeat(1,70vw);
-    background-color: #F4F4F4;
+    background-color: var(--surface-muted);
     justify-content: center;
 }
 
@@ -74,7 +74,7 @@ table {
 }
 
 thead{
-  background-color:#2E6009;
+  background-color: var(--forest-mid);
   color: #F4F4F4;
 }
 
@@ -106,7 +106,7 @@ font-weight: bold;
 border-radius: 1rem;
 padding: 0.5rem;
 display: inline-block;
-background-color: #2E6009;}
+background-color: var(--forest-mid);}
 
 main > section > article > a:hover{
     background-color: #4b4b4b;

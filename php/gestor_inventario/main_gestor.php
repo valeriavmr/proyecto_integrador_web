@@ -1,3 +1,14 @@
+<?php
+include_once __DIR__ . '/../../config.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$rol = $_SESSION['rol'] ?? '';
+if ($rol == 'admin' || $rol == 'gestor') {
+    header('Location: ' . BASE_URL . '/php/admin/main_admin.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -39,11 +39,11 @@
 
 /* Color cuando está pagado (activo) */
 input:checked + .slider {
-    background-color: var(--color-primario, #2E6009); 
+    background-color: var(--forest-mid); 
 }
 
 input:focus + .slider {
-    box-shadow: 0 0 1px var(--color-primario, #2E6009);
+    box-shadow: 0 0 1px var(--forest-mid);
 }
 
 input:checked + .slider:before {
@@ -103,7 +103,7 @@ input:checked + .slider:before {
 }
 
 .tabla-container table thead th {
-    background-color: var(--color-primario, #2E6009); 
+    background-color: var(--forest-mid); 
     color: white; 
     padding: 12px 15px; 
     text-align: left; 
@@ -153,7 +153,7 @@ input:checked + .slider:before {
 
 
 .btn-filtrar {
-    background-color: var(--color-primario, #2E6009);
+    background-color: var(--forest-mid);
     color: white;
     padding: 10px 18px; 
     border: none;
@@ -163,13 +163,13 @@ input:checked + .slider:before {
 }
 
 .btn-filtrar:hover {
-    background-color: #1f4007;
+    background-color: var(--forest-surface);
 }
 
 .btn-limpiar {
-    color: var(--color-primario, #2E6009);
+    color: var(--forest-mid);
     text-decoration: none;
-    border: 1px solid var(--color-primario, #2E6009);
+    border: 1px solid var(--forest-mid);
     background-color: transparent;
     padding: 9px 18px; /* Ajustado para alineación vertical con el otro botón */
     border-radius: 6px;

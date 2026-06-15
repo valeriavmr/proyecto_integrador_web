@@ -1,22 +1,25 @@
-/* 
-  ===================================================
-  SOLICITAR TURNO / FORMULARIOS ADMIN
-  Adiestramiento Tahito Design System (DESIGN.md)
-  ===================================================
-*/
-
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 
 /* Basic reset for main elements to avoid breaking global sidebar */
-html, body, main, fieldset, legend, form, input, select, textarea, button {
+html,
+body,
+main,
+fieldset,
+legend,
+form,
+input,
+select,
+textarea,
+button {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   min-height: 100%;
-  background-color: #FAFAFA;
+  background-color: var(--surface-muted);
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 16px;
   color: #18181B;
@@ -35,7 +38,7 @@ main {
   align-items: center;
   flex: 1;
   padding: 2rem 1rem 3rem;
-  background-color: #FAFAFA;
+  background-color: var(--surface-muted);
 }
 
 /* --- Headings --- */
@@ -149,7 +152,7 @@ input#add_proveedor_btn,
   width: 100%;
   padding: 0.85rem 2rem;
   margin: 0.5rem 0 0;
-  background-color: #2E6009;
+  background-color: var(--forest-mid);
   color: #FFFFFF;
   border: none;
   border-radius: 0.65rem;
@@ -169,7 +172,7 @@ input#add_insumo_btn:hover,
 input#add_producto_btn:hover,
 input#add_proveedor_btn:hover,
 .act_btn:hover {
-  background-color: #245007;
+  background-color: var(--forest-surface);
 }
 
 input[type="submit"]:active,
@@ -197,13 +200,13 @@ p[style*="color: red"] {
   text-align: center;
 }
 
-#back_section > a {
+#back_section>a {
   text-decoration: none;
-  color: #2E6009;
+  color: var(--forest-mid);
   font-weight: 600;
 }
 
-#back_section > a:hover {
+#back_section>a:hover {
   text-decoration: none;
   color: white;
   font-weight: 600;

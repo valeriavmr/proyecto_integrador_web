@@ -64,9 +64,10 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario de Productos</title>
-    <link rel="stylesheet" href="../../css/menu_gestor_inventario.css">
-    <link rel="stylesheet" href="../../css/tablas_admin.css">
-    <link rel="stylesheet" href="../../css/buscar_persona.css">
+    <link rel="stylesheet" href="../../css/theme.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/menu_gestor_inventario.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/tablas_admin.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../../css/buscar_persona.css?v=<?= time() ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="../../favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
@@ -81,9 +82,9 @@ $result = $conn->query($sql);
     <h2>⚠ Productos con bajo stock</h2>
     <a href="inventario_productos.php" class="btn-volver-admin">Ver todos</a>
 <?php endif; ?>
-<section>
+<section style="width:100%; padding:0 1rem; box-sizing:border-box;">
 
-<table border="1" cellpadding="10" cellspacing="0">
+<table>
     <thead>
         <tr>
             <th>Imagen</th>
