@@ -28,7 +28,7 @@
     function resolverImagenServicio($nombre, $img_map, $fallback) {
         $nombre_lower = mb_strtolower($nombre, 'UTF-8');
         foreach ($img_map as $keyword => $ruta) {
-            if (str_contains($nombre_lower, $keyword)) {
+            if (strpos($nombre_lower, $keyword) !== false) {
                 return $ruta;
             }
         }
@@ -48,7 +48,7 @@
         $nombre_lower = mb_strtolower($servicio['tipo_de_servicio'], 'UTF-8');
         $titulo_card = $servicio['tipo_de_servicio'];
         $desc_card   = $servicio['descripcion'];
-        if (str_contains($nombre_lower, 'guarder')) {
+        if (strpos($nombre_lower, 'guarder') !== false) {
             $titulo_card = 'Productos de Mascotas';
             $desc_card   = 'Encontrá los mejores productos seleccionados para su bienestar.';
         }
