@@ -1,0 +1,34 @@
+INSERT INTO persona
+(
+    nombre,
+    apellido,
+    nombre_de_usuario,
+    password,
+    rol,
+    correo
+)
+VALUES
+(
+    'Administrador',
+    'Sistema',
+    'admin',
+    '$2y$12$UvX7YdpTYBs5lyPxOMuPrO551MmimTmbdCeM2P5kcz726CO433OWG',
+    'admin',
+    'admin@tahito.local'
+),
+(
+    'Gestor',
+    'Inventario',
+    'gestor',
+    '$2y$12$.VnaogqOVSKP0tLTiRio2ulQ/470HfJvyS/JP9nWai34BIq7MDOsW',
+    'gestor',
+    'gestor@tahito.local'
+),
+(
+    'Trabajador',
+    'Prueba',
+    'trabajador',
+    '$2y$12$/0.FkBuUSys0R2eI.SyKKutMcWttpqCX8aGZtZavzIofb1bBf2GDm',
+    'trabajador',
+    'trabajador@tahito.local'
+);

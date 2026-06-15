@@ -9,104 +9,155 @@
 </head>
 <body>
 <?php
-    if (session_status() == PHP_SESSION_NONE) { 
-        session_start(); 
-    }
+if (session_status() == PHP_SESSION_NONE) { 
+    session_start(); 
+}
 
-    include_once __DIR__ . '\..\..\config.php';
-    require_once(BASE_PATH . '/php/admin/auth.php');
-    include_once(__DIR__ . '/../includes/sidebar.php');
+include_once __DIR__ . '\..\..\config.php';
+require_once(BASE_PATH . '/php/admin/auth.php');
+include_once(__DIR__ . '/../includes/sidebar.php');
+require('../crud/conexion.php');
 
-    require('../crud/conexion.php');
+$busqueda = trim($_POST['busqueda'] ?? $_GET['busqueda'] ?? '');
+$estado = $_POST['estado'] ?? $_GET['estado'] ?? '';
 
-    $queryCols = "SHOW COLUMNS FROM proveedores";
-    $colsResult = $conn->query($queryCols);
-    $columnNames = [];
+$sql = "
+    SELECT
+        id_proveedor,
+        nombre,
+        cuit,
+        telefono,
+        correo,
+        direccion,
+        activo,
+        fecha_alta
+    FROM proveedores
+    WHERE 1 = 1
+";
 
-    while ($col = $colsResult->fetch_assoc()) {
-        if ($col['Field'] !== 'id_proveedor') {
-            $columnNames[] = $col['Field'];
-        }
-    }
+$tipos = "";
+$params = [];
 
-    $resultados = [];
+if ($busqueda !== '') {
+    $sql .= "
+        AND (
+            LOWER(nombre) LIKE ?
+            OR LOWER(cuit) LIKE ?
+            OR LOWER(telefono) LIKE ?
+            OR LOWER(correo) LIKE ?
+            OR LOWER(direccion) LIKE ?
+        )
+    ";
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filtro']) && isset($_POST['valor'])) {
-        $campo_proveedor = $_POST['filtro'] ?? '';
-        $valor_campo = $_POST['valor'] ?? '';
+    $like = '%' . strtolower($busqueda) . '%';
 
-        if (in_array($campo_proveedor, $columnNames)) {
-            $sql = "SELECT * FROM proveedores WHERE LOWER($campo_proveedor) LIKE ?";
-            $stmt = $conn->prepare($sql);
-            $param = '%' . strtolower($valor_campo) . '%';
-            $stmt->bind_param("s", $param);
+    $tipos .= "sssss";
+    $params[] = $like;
+    $params[] = $like;
+    $params[] = $like;
+    $params[] = $like;
+    $params[] = $like;
+}
 
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $resultados = $result->fetch_all(MYSQLI_ASSOC);
-        }
-    }
+if ($estado !== '') {
+    $sql .= " AND activo = ? ";
+    $tipos .= "i";
+    $params[] = (int)$estado;
+}
+
+$sql .= " ORDER BY nombre ASC";
+
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("Error al preparar la consulta: " . $conn->error);
+}
+
+if (!empty($params)) {
+    $stmt->bind_param($tipos, ...$params);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+$resultados = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 ?>
 
 <main>
+    <br><br>
     <h1>Buscar Proveedor</h1>
 
     <form action="" method="post">
-        <label for="filtro"></label>
-        <select name="filtro" id="filtro" required>
-            <option value="" disabled selected>Seleccione el filtro de búsqueda</option>
-            <?php foreach($columnNames as $column): ?>
-                <option value="<?= htmlspecialchars($column) ?>">
-                    <?= ucfirst(str_replace('_', ' ', $column)) ?>
-                </option>
-            <?php endforeach; ?>
+
+        <input
+            type="text"
+            name="busqueda"
+            id="busqueda"
+            placeholder="Buscar por nombre, CUIT, teléfono, correo o dirección"
+            value="<?= htmlspecialchars($busqueda) ?>"
+        >
+
+        <select name="estado" id="estado">
+            <option value="">Todos los estados</option>
+            <option value="1" <?= $estado === '1' ? 'selected' : '' ?>>Activos</option>
+            <option value="0" <?= $estado === '0' ? 'selected' : '' ?>>Inactivos</option>
         </select>
 
-        <label for="valor"></label>
-        <input type="text" name="valor" id="valor" placeholder="Ingrese el valor de búsqueda" required size="50">
-
         <input type="submit" value="Buscar" id="botonBuscar">
+
     </form>
 
     <?php if (!empty($resultados)): ?>
         <section class="resultados-ancho">
-            <h2>Resultados:</h2>
+            <h2>Proveedores encontrados</h2>
+
             <table>
                 <thead>
                     <tr>
-                        <?php foreach (array_keys($resultados[0]) as $col): ?>
-                            <th><?= ucfirst(str_replace('_', ' ', $col)) ?></th>
-                        <?php endforeach; ?>
+                        <th>ID proveedor</th>
+                        <th>Nombre</th>
+                        <th>CUIT</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Dirección</th>
+                        <th>Estado</th>
+                        <th>Fecha alta</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <?php foreach ($resultados as $fila): ?>
                         <tr>
-                            <?php foreach ($fila as $clave => $valor): ?>
-                                <td style="max-width: 200px;">
-                                    <a href="detalle_proveedor.php?id_proveedor=<?= htmlspecialchars($fila['id_proveedor']) ?>">
-                                        <?php
-                                            if ($clave === 'activo') {
-                                                echo $valor ? 'Sí' : 'No';
-                                            } else {
-                                                echo htmlspecialchars($valor ?? '');
-                                            }
-                                        ?>
-                                    </a>
-                                </td>
-                            <?php endforeach; ?>
+                            <td>
+                                <a href="detalle_proveedor.php?id_proveedor=<?= htmlspecialchars($fila['id_proveedor']) ?>">
+                                    <?= htmlspecialchars($fila['id_proveedor']) ?>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="detalle_proveedor.php?id_proveedor=<?= htmlspecialchars($fila['id_proveedor']) ?>">
+                                    <?= htmlspecialchars($fila['nombre']) ?>
+                                </a>
+                            </td>
+                            <td><?= htmlspecialchars($fila['cuit'] ?? '') ?></td>
+                            <td><?= htmlspecialchars($fila['telefono'] ?? '') ?></td>
+                            <td><?= htmlspecialchars($fila['correo'] ?? '') ?></td>
+                            <td><?= htmlspecialchars($fila['direccion'] ?? '') ?></td>
+                            <td><?= $fila['activo'] ? 'Activo' : 'Inactivo' ?></td>
+                            <td><?= htmlspecialchars($fila['fecha_alta']) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </section>
-    <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filtro'])): ?>
-        <p>No se encontraron resultados.</p>
+
+    <?php else: ?>
+        <p>No se encontraron proveedores con los filtros seleccionados.</p>
     <?php endif; ?>
 
     <section id="volver_s">
-        <a href="proveedores_admin.php" class="btn-volver-admin">Volver a Gestión de Proveedores</a>
+        <a href="proveedores_admin.php" class="btn-volver-admin">
+            Volver a Gestión de Proveedores
+        </a>
     </section>
 </main>
 

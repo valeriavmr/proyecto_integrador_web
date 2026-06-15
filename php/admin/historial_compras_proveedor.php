@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historial de Compras por Proveedor</title>
+    <title>Historial de Compras</title>
 
     <link rel="stylesheet" href="../../css/tablas_admin.css?v=<?= time() ?>">
     <link rel="stylesheet" href="../../css/buscar_persona.css?v=<?= time() ?>">
@@ -16,8 +16,8 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 include_once __DIR__ . '\..\..\config.php';
-    require_once(BASE_PATH . '/php/admin/auth.php');
-    include_once(__DIR__ . '/../includes/sidebar.php');
+require_once(BASE_PATH . '/php/admin/auth.php');
+include_once(__DIR__ . '/../includes/sidebar.php');
 require('../crud/conexion.php');
 
 /* ==========================
@@ -27,9 +27,7 @@ require('../crud/conexion.php');
 $proveedores = [];
 
 $sql_proveedores = "
-    SELECT
-        id_proveedor,
-        nombre
+    SELECT id_proveedor, nombre
     FROM proveedores
     ORDER BY nombre ASC
 ";
@@ -41,17 +39,22 @@ while ($row = $resultado_proveedores->fetch_assoc()) {
 }
 
 /* ==========================
-   Búsqueda
+   Filtros
 ========================== */
 
 $id_proveedor = $_POST['id_proveedor'] ?? $_GET['id_proveedor'] ?? '';
+$tipo_item = $_POST['tipo_item'] ?? $_GET['tipo_item'] ?? '';
+$fecha_desde = $_POST['fecha_desde'] ?? $_GET['fecha_desde'] ?? '';
+$fecha_hasta = $_POST['fecha_hasta'] ?? $_GET['fecha_hasta'] ?? '';
 $id_compra_nueva = $_GET['id_compra_nueva'] ?? null;
+
+/* ==========================
+   Consulta dinámica
+========================== */
 
 $compras = [];
 
-if (!empty($id_proveedor)) {
-
-    $sql = "
+$sql = "
     SELECT
         c.id_compra,
         c.fecha_compra,
@@ -62,6 +65,7 @@ if (!empty($id_proveedor)) {
                 THEN pr.nombre_producto
             WHEN cd.tipo_item = 'insumo'
                 THEN i.nombre_insumo
+            ELSE 'Sin identificar'
         END AS item_nombre,
 
         cd.tipo_item,
@@ -85,32 +89,65 @@ if (!empty($id_proveedor)) {
     LEFT JOIN insumo i
         ON cd.id_insumo = i.id_insumo
 
-    WHERE c.id_proveedor = ?
+    WHERE 1 = 1
+";
 
+$tipos = "";
+$params = [];
+
+if (!empty($id_proveedor)) {
+    $sql .= " AND c.id_proveedor = ? ";
+    $tipos .= "i";
+    $params[] = $id_proveedor;
+}
+
+if (!empty($tipo_item)) {
+    $sql .= " AND cd.tipo_item = ? ";
+    $tipos .= "s";
+    $params[] = $tipo_item;
+}
+
+if (!empty($fecha_desde)) {
+    $sql .= " AND DATE(c.fecha_compra) >= ? ";
+    $tipos .= "s";
+    $params[] = $fecha_desde;
+}
+
+if (!empty($fecha_hasta)) {
+    $sql .= " AND DATE(c.fecha_compra) <= ? ";
+    $tipos .= "s";
+    $params[] = $fecha_hasta;
+}
+
+$sql .= "
     ORDER BY c.fecha_compra DESC,
              c.id_compra DESC
 ";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id_proveedor);
-    $stmt->execute();
+$stmt = $conn->prepare($sql);
 
-    $resultado = $stmt->get_result();
-
-    $compras = $resultado->fetch_all(MYSQLI_ASSOC);
+if (!$stmt) {
+    die("Error al preparar la consulta: " . $conn->error);
 }
+
+if (!empty($params)) {
+    $stmt->bind_param($tipos, ...$params);
+}
+
+$stmt->execute();
+$resultado = $stmt->get_result();
+$compras = $resultado->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 ?>
 
 <main>
     <br><br>
-    <h1>Historial de Compras por Proveedor</h1>
+    <h1>Historial de Compras</h1>
 
     <form action="" method="POST">
 
-        <select name="id_proveedor" id="id_proveedor" required>
-            <option value="" disabled <?= empty($id_proveedor) ? 'selected' : '' ?>>
-                Seleccione un proveedor
-            </option>
+        <select name="id_proveedor" id="id_proveedor">
+            <option value="">Todos los proveedores</option>
 
             <?php foreach ($proveedores as $proveedor): ?>
                 <option
@@ -120,8 +157,31 @@ if (!empty($id_proveedor)) {
                     <?= htmlspecialchars($proveedor['nombre']) ?>
                 </option>
             <?php endforeach; ?>
-
         </select>
+
+        <select name="tipo_item" id="tipo_item">
+            <option value="">Todos los tipos</option>
+            <option value="producto" <?= $tipo_item === 'producto' ? 'selected' : '' ?>>
+                Producto
+            </option>
+            <option value="insumo" <?= $tipo_item === 'insumo' ? 'selected' : '' ?>>
+                Insumo
+            </option>
+        </select>
+
+        <input
+            type="date"
+            name="fecha_desde"
+            value="<?= htmlspecialchars($fecha_desde) ?>"
+            title="Fecha desde"
+        >
+
+        <input
+            type="date"
+            name="fecha_hasta"
+            value="<?= htmlspecialchars($fecha_hasta) ?>"
+            title="Fecha hasta"
+        >
 
         <input
             type="submit"
@@ -131,92 +191,55 @@ if (!empty($id_proveedor)) {
 
     </form>
 
-    <?php if (!empty($id_proveedor)): ?>
+    <?php if (!empty($compras)): ?>
 
-        <?php if (!empty($compras)): ?>
+        <section class="resultados-ancho">
 
-            <section class="resultados-ancho">
+            <h3>Compras registradas</h3>
 
-                <h3>Compras registradas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Compra</th>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Tipo</th>
+                        <th>Artículo</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                        <th>Total Compra</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
 
-                <table>
+                <tbody>
+                    <?php foreach ($compras as $compra): ?>
 
-                    <thead>
-                        <tr>
-                            <th>ID Compra</th>
-                            <th>Fecha</th>
-                            <th>Proveedor</th>
-                            <th>Tipo</th>
-                            <th>Artículo</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>Subtotal</th>
-                            <th>Total Compra</th>
-                            <th>Observaciones</th>
+                        <tr class="<?= ($id_compra_nueva == $compra['id_compra']) ? 'compra-nueva' : '' ?>">
+
+                            <td><?= htmlspecialchars($compra['id_compra']) ?></td>
+                            <td><?= htmlspecialchars($compra['fecha_compra']) ?></td>
+                            <td><?= htmlspecialchars($compra['proveedor']) ?></td>
+                            <td><?= ucfirst(htmlspecialchars($compra['tipo_item'])) ?></td>
+                            <td><?= htmlspecialchars($compra['item_nombre']) ?></td>
+                            <td><?= htmlspecialchars($compra['cantidad']) ?></td>
+                            <td>$<?= number_format($compra['precio_unitario'], 2, ',', '.') ?></td>
+                            <td>$<?= number_format($compra['subtotal'], 2, ',', '.') ?></td>
+                            <td>$<?= number_format($compra['total'], 2, ',', '.') ?></td>
+                            <td><?= htmlspecialchars($compra['observaciones'] ?? '') ?></td>
+
                         </tr>
-                    </thead>
 
-                    <tbody>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
 
-                        <?php foreach ($compras as $compra): ?>
+        </section>
 
-                            <tr class="<?= ($id_compra_nueva == $compra['id_compra']) ? 'compra-nueva' : '' ?>">
+    <?php else: ?>
 
-                                <td>
-                                    <?= htmlspecialchars($compra['id_compra']) ?>
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars($compra['fecha_compra']) ?>
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars($compra['proveedor']) ?>
-                                </td>
-
-                                <td>
-                                    <?= ucfirst(htmlspecialchars($compra['tipo_item'])) ?>
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars($compra['item_nombre']) ?>
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars($compra['cantidad']) ?>
-                                </td>
-
-                                <td>
-                                    $<?= number_format($compra['precio_unitario'], 2, ',', '.') ?>
-                                </td>
-
-                                <td>
-                                    $<?= number_format($compra['subtotal'], 2, ',', '.') ?>
-                                </td>
-
-                                <td>
-                                    $<?= number_format($compra['total'], 2, ',', '.') ?>
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars($compra['observaciones'] ?? '') ?>
-                                </td>
-
-                            </tr>
-
-                        <?php endforeach; ?>
-
-                    </tbody>
-
-                </table>
-
-            </section>
-
-        <?php else: ?>
-
-            <p>No existen compras registradas para este proveedor.</p>
-
-        <?php endif; ?>
+        <p>No existen compras registradas con los filtros seleccionados.</p>
 
     <?php endif; ?>
 
@@ -234,7 +257,7 @@ if (!empty($id_proveedor)) {
     </script>
     <?php unset($_SESSION['mensaje']); ?>
 <?php endif; ?>
-    
+
 <?php include('../footer.php'); ?>
 
 </body>

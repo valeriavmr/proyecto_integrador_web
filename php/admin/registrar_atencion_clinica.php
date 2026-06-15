@@ -64,7 +64,8 @@ $profesionales = $conn->query("
 
 <body>
 
-<?php include('header_admin.php'); ?>
+<?php require_once dirname(__DIR__, 2) . '/config.php';
+include_once(BASE_PATH . '/php/includes/sidebar.php');?>
 
 <main>
 

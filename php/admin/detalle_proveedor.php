@@ -11,8 +11,9 @@
 </head>
 <body>
 <?php
+require_once dirname(__DIR__, 2) . '/config.php';
 require_once('auth.php');
-include('header_admin.php');
+include_once(BASE_PATH . '/php/includes/sidebar.php');
 require_once('../crud/conexion.php');
 
 $id_proveedor = $_GET['id_proveedor'] ?? null;

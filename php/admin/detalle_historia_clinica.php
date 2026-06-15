@@ -93,7 +93,7 @@ if ($id_historia !== null) {
     $stmt->close();
 }
 
-include_once(__DIR__ . '/../includes/sidebar.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -105,9 +105,39 @@ include_once(__DIR__ . '/../includes/sidebar.php');
     <link rel="stylesheet" href="../../css/tablas_admin.css?v=<?= time() ?>">
     <link rel="stylesheet" href="../../css/menus_admin.css">
     <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        html,
+        body {
+            min-height: 100%;
+            height: auto !important;
+        }
+
+        body {
+            min-height: 100vh !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        main {
+            flex: 1 0 auto !important;
+            height: auto !important;
+            min-height: calc(100vh - 180px);
+            overflow: visible !important;
+            padding-bottom: 2rem;
+        }
+
+        footer {
+            margin-top: auto !important;
+            position: relative !important;
+            bottom: auto !important;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
+
+    <?php include_once(__DIR__ . '/../includes/sidebar.php'); ?>
 
     <main>
 
