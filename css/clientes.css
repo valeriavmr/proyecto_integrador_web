@@ -1,10 +1,3 @@
-/* 
-   ===============================================
-   CLIENTES — STITCH DESIGN SYSTEM
-   Autocomplete & client selection
-   ===============================================
-*/
-
 /* ── Client Search Box ── */
 .cliente-box {
   display: flex;
@@ -41,8 +34,8 @@
   font-size: 0.9rem;
   color: var(--ink-secondary);
   transition: background-color var(--transition-fast),
-              color var(--transition-fast),
-              padding-left var(--transition-fast);
+    color var(--transition-fast),
+    padding-left var(--transition-fast);
 }
 
 .item-cliente:last-child {

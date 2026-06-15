@@ -20,6 +20,9 @@
         <article class="opc_menu_ap"><a href="tabla_trabajadores.php" id="lista_personas_op"><img src="../../recursos/lista_personas_icon.png" alt=""> Lista de trabajadores registradas</a></article>
         <article class="opc_menu_ap"><a href="buscar_trabajador.php"><img src="../../recursos/person_search_icon.png" alt=""> Buscar trabajador</a></article>
     </section>
+    <section id="volver_s">
+        <a href="main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+    </section>
     </main>
     <?php
     include('../footer.php');

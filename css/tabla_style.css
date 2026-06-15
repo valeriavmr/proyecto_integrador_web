@@ -1,16 +1,11 @@
-/* 
-  ===========================================
-  TABLES - STITCH DESIGN TASTE
-  ===========================================
-*/
-
 .tabla-container {
   margin-top: 3rem;
   border-top: 1px solid var(--whisper-border);
   padding-top: 2rem;
 }
 
-.tabla-container h2, main > h1 {
+.tabla-container h2,
+main>h1 {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -28,7 +23,8 @@ table {
   display: table;
 }
 
-th, td {
+th,
+td {
   padding: 1rem 1.2rem;
   text-align: left;
   border-bottom: 1px solid var(--whisper-border);
@@ -174,7 +170,7 @@ td.acciones {
 }
 
 .btn-primario {
-  background: #2E6009;
+  background: var(--forest-mid);
   color: #FFFFFF;
   padding: 0.78rem 1.6rem;
   border: none;
@@ -189,7 +185,7 @@ td.acciones {
 }
 
 .btn-primario:hover {
-  background: #245007;
+  background: var(--forest-surface);
 }
 
 .btn-primario:active {
@@ -221,4 +217,3 @@ td.acciones {
   margin-top: 0.75rem;
   font-weight: 600;
 }
-

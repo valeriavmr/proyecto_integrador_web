@@ -11,14 +11,14 @@ h1{
     font-family: 'Montserrat', 'sans-serif';
     font-size: 28px;
     text-align: center;
-    color:#2E6009;
+    color: var(--forest-mid);
 }
 
 h2{
     font-family: 'Montserrat', 'sans-serif';
     font-size: 20px;
     text-align: center;
-    color:#2E6009;
+    color: var(--forest-mid);
 }
 
 html, body {
@@ -49,7 +49,7 @@ main {
 }
 
 #solicitar_turno_btn{
-    background-color: #2E6009;
+    background-color: var(--forest-mid);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -95,7 +95,7 @@ main section{
 
 .servicio > a{
     text-decoration: none;
-    color: #2E6009;
+    color: var(--forest-mid);
     font-weight: bold;
 }
 
@@ -117,7 +117,7 @@ main section{
 
 .tabla_servicios tr td a{
     text-decoration: none;
-    color:#2E6009;
+    color: var(--forest-mid);
     font-weight: bold;
 }
 

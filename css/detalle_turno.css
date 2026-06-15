@@ -18,6 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: var(--surface-muted) !important;
 }
 
 main {
@@ -26,6 +27,7 @@ main {
   justify-content: center;
   align-items: center;
   flex: 1;
+  background-color: var(--surface-muted);
 }
 
 /*Titulos y subtitulos*/
@@ -35,14 +37,14 @@ h1{
     font-size: 28px;
     text-align: center;
     padding: 0.5rem;
-    color:#2E6009;
+    color: var(--forest-mid);
 }
 
 h2{
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     text-align: center;
-    color:#2E6009;
+    color: var(--forest-mid);
 }
 
 /*Detalles del turno*/
@@ -65,7 +67,7 @@ main > .servicio_detalle, .detalle_tipo_servicio{
 .servicio_detalle > a{
     text-decoration: none;
     font-weight: bold;
-    color: #2E6009;
+    color: var(--forest-mid);
 }
 
 .servicio_detalle > a:hover{
@@ -73,7 +75,7 @@ main > .servicio_detalle, .detalle_tipo_servicio{
 }
 
 .editar_turno_btn{
-    background-color: #2E6009;
+    background-color: var(--forest-mid);
     border: none;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;

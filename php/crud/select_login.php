@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
         header('Location: ../trabajador/main_trabajador.php');
     }elseif($rol=='gestor'){
         $_SESSION['rol']='gestor';
-        header('Location: ../gestor_inventario/main_gestor.php');
+        header('Location: ../admin/main_admin.php');
     }
     exit;
     }else {

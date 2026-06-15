@@ -32,7 +32,7 @@
                 <img src="../../recursos/img/buscar_producto_icon.png" alt=""> Buscar un producto</a></article>
         </section>
         <section id="volver_s">
-            <a href="main_gestor.php" class="btn-volver-admin">Volver al menú principal</a>
+            <a href="../admin/main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
         </section>
     </main>
     <?php

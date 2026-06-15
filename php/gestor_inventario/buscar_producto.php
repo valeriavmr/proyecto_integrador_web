@@ -189,6 +189,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php endif; ?>
 
+    <section id="volver_s">
+        <a href="gestion_productos.php" class="btn-volver-admin">
+            Volver a Gestión de productos
+        </a>
+    </section>
+
 </main>
 
 <script>
@@ -241,6 +247,8 @@ filtro.addEventListener('change', function() {
 });
 
 </script>
+
+<?php include_once(BASE_PATH . '/php/footer.php'); ?>
 
 </body>
 </html>

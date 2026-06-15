@@ -33,6 +33,9 @@
         }
         ?>
     </section>
+    <section id="volver_s">
+        <a href="main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+    </section>
     </main>
     <?php
     include('../footer.php');

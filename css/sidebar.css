@@ -1,26 +1,24 @@
-/* 
-   ===============================================
-   SIDEBAR — STITCH DESIGN SYSTEM
-   Panel admin + ventas sidebar
-   ===============================================
-*/
-
 /* ── Base Body ── */
+html,
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: var(--surface-muted);
+  background-color: var(--surface-muted) !important;
 }
 
 /* Bulletproof the sidebar from external CSS pollution */
 .sidebar {
   font-family: var(--font-body) !important;
 }
+
 .sidebar * {
   font-family: inherit;
   box-sizing: border-box;
 }
-.sidebar h1, .sidebar h2, .sidebar h3 {
+
+.sidebar h1,
+.sidebar h2,
+.sidebar h3 {
   font-family: var(--font-display) !important;
   text-align: center !important;
 }
@@ -34,12 +32,10 @@ body {
   top: 0;
   z-index: 100;
 
-  background: linear-gradient(
-    175deg,
-    var(--forest-deep) 0%,
-    var(--forest-mid) 60%,
-    var(--forest-surface) 100%
-  );
+  background: linear-gradient(175deg,
+      var(--forest-deep) 0%,
+      var(--forest-mid) 60%,
+      var(--forest-surface) 100%);
 
   color: rgba(255, 255, 255, 0.92);
   display: flex;
@@ -64,9 +60,11 @@ body {
 .sidebar-top::-webkit-scrollbar {
   width: 4px;
 }
+
 .sidebar-top::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .sidebar-top::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 100px;
@@ -131,7 +129,7 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
   transition: color var(--transition-fast),
-              background-color var(--transition-fast);
+    background-color var(--transition-fast);
   position: relative;
 }
 
@@ -228,12 +226,15 @@ body {
   transition: margin-left var(--transition-spring);
 }
 
-main.main-content, div.main-content, main {
+main.main-content,
+div.main-content,
+main {
   margin-left: var(--sidebar-width);
   transition: margin-left var(--transition-spring);
 }
 
-.main-content h1, main > h1:first-child {
+.main-content h1,
+main>h1:first-child {
   font-family: var(--font-display);
   font-size: 1.75rem;
   font-weight: 700;
@@ -298,27 +299,38 @@ main.main-content, div.main-content, main {
   padding: 0.7rem 0;
 }
 
-.sidebar.collapsed .menu a:hover {
-}
+.sidebar.collapsed .menu a:hover {}
 
 .sidebar.collapsed .sidebar-footer {
   justify-content: center;
   padding: 1.25rem 0;
 }
 
-body.sidebar-collapsed .main-content, 
+body.sidebar-collapsed .main-content,
 body.sidebar-collapsed main {
   margin-left: 80px;
 }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
-  .sidebar { width: 220px; }
-  .main-content, main { margin-left: 220px; padding: 1.5rem; }
-  
-  .sidebar.collapsed { width: 80px; }
-  body.sidebar-collapsed .main-content, 
-  body.sidebar-collapsed main { margin-left: 80px; }
+  .sidebar {
+    width: 220px;
+  }
+
+  .main-content,
+  main {
+    margin-left: 220px;
+    padding: 1.5rem;
+  }
+
+  .sidebar.collapsed {
+    width: 80px;
+  }
+
+  body.sidebar-collapsed .main-content,
+  body.sidebar-collapsed main {
+    margin-left: 80px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -326,30 +338,57 @@ body.sidebar-collapsed main {
     transform: translateX(-100%);
     width: 280px;
   }
+
   .sidebar.collapsed {
     transform: translateX(0);
     width: 280px;
   }
-  
+
   .sidebar.collapsed .logo-text,
   .sidebar.collapsed .menu-text,
   .sidebar.collapsed .user-info-text,
   .sidebar.collapsed .btn-logout,
   .sidebar.collapsed .logo-sidebar {
-    display: block; /* Restaura visibilidad en mobile */
+    display: block;
+    /* Restaura visibilidad en mobile */
   }
-  
+
   .sidebar.collapsed .logo-area,
   .sidebar.collapsed .sidebar-footer {
     justify-content: space-between;
     padding: 1.5rem 1.25rem;
   }
+
   .sidebar.collapsed .menu a {
     justify-content: flex-start;
     padding: 0.7rem 0.9rem;
   }
-  
-  .main-content, main { margin-left: 0 !important; padding: 1rem; }
-  body.sidebar-collapsed .main-content, 
-  body.sidebar-collapsed main { margin-left: 0 !important; }
+
+  .main-content,
+  main {
+    margin-left: 0 !important;
+    padding: 1rem;
+  }
+
+  body.sidebar-collapsed .main-content,
+  body.sidebar-collapsed main {
+    margin-left: 0 !important;
+  }
+}
+
+/* ── Footer Sidebar Layout Adjustments ── */
+footer {
+  margin-left: 0 !important;
+  padding-left: var(--sidebar-width) !important;
+  transition: padding-left var(--transition-spring);
+}
+
+body.sidebar-collapsed footer {
+  padding-left: 80px !important;
+}
+
+@media (max-width: 640px) {
+  footer {
+    padding-left: 0 !important;
+  }
 }

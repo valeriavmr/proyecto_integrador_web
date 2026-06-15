@@ -22,6 +22,9 @@
         <article class="opc_menu_ap"><a href="crear_usuario.php"><img src="../../recursos/person_add_icon.png" alt="">Agregar persona</a></article>
         <article class="opc_menu_ap"><a href="buscar_persona.php"><img src="../../recursos/person_search_icon.png" alt="">Buscar persona</a></article>
     </section>
+    <section id="volver_s">
+        <a href="main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+    </section>
     </main>
     <?php
     include('../footer.php');
