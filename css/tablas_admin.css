@@ -1,19 +1,19 @@
 body {
-  background-color: var(--surface-muted) !important;
+    background-color: var(--surface-muted) !important;
 }
 
 main {
-  flex: 1 0 auto;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  min-height: calc(100vh - 200px);
-  padding-bottom: 1rem;
-  color: #4b4b4b;
-  background-color: var(--surface-muted);
+    flex: 1 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    min-height: calc(100vh - 200px);
+    padding-bottom: 1rem;
+    color: #4b4b4b;
+    background-color: var(--surface-muted);
 }
 
-main > section{
+main>section {
     margin: 1rem 0;
 }
 
@@ -23,18 +23,18 @@ table {
     table-layout: auto;
     border-collapse: collapse;
     background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
     overflow: hidden;
 }
 
-thead{
-  background-color: var(--forest-mid);
-  color: #F4F4F4;
+thead {
+    background-color: var(--forest-mid);
+    color: #F4F4F4;
 }
 
-tbody{
-  color: #4b4b4b;
+tbody {
+    color: #4b4b4b;
 }
 
 /* --- Filas del Cuerpo de la Tabla (tbody) --- */
@@ -46,31 +46,33 @@ tbody tr:hover {
     background-color: #f1f1f1;
 }
 
-th,td {
-  white-space: normal;
-  word-wrap: break-word;
-  font-size: 13px;
-  text-align: center;
-  padding: 10px 8px;
+th,
+td {
+    white-space: normal;
+    word-wrap: break-word;
+    font-size: 13px;
+    text-align: center;
+    padding: 10px 8px;
 }
 
-.acciones{
-  display: flex;
-  flex-direction: row;
-  justify-items: center;
-  align-items: center;
+.acciones {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
 }
 
-.edit_btn, .delete_btn{
+.edit_btn,
+.delete_btn {
     border-style: none;
     background-color: transparent;
     cursor: pointer;
     text-decoration: none;
 }
 
-td > a{
+td>a {
     text-decoration: none;
-    color:#4b4b4b;
+    color: #4b4b4b;
 }
 
 .boton_excel {
@@ -81,6 +83,7 @@ td > a{
     border-radius: 6px;
     cursor: pointer;
 }
+
 .boton_excel:hover {
     background-color: var(--forest-surface);
 }
@@ -119,7 +122,7 @@ td > a{
     border-radius: 10px;
     padding: 20px 24px;
     margin-bottom: 24px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 .atencion-header {
@@ -203,4 +206,30 @@ td > a{
 
 .dato-resumen span {
     color: #333;
+}
+
+.filtro-productos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.filtro-productos label {
+    font-weight: 600;
+}
+
+.input-filtro {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    min-width: 180px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.input-filtro:focus {
+    outline: none;
+    border-color: #2563eb;
 }

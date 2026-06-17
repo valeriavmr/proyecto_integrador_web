@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../favicon_io/favicon-16x16.png">
 </head>
+
 <body>
     <?php
     include_once __DIR__ . '\..\..\config.php';
@@ -16,7 +18,7 @@
     ?>
 
     <main>
-    <br><br>
+        <br><br>
         <h2>Gestión de Proveedores</h2>
 
         <section id="menu_gestion">
@@ -47,18 +49,20 @@
                     Historial de compras
                 </a>
             </article>
-            
+
             <article class="opc_menu_ap">
                 <a href="registrar_compra_proveedor.php">
                     <img src="../../recursos/lista_servicios_icon.png" alt="">
                     Registrar compra
                 </a>
             </article>
+
+
         </section>
         <section id="volver_s">
-        <?php if($rol == 'admin'): ?><a href="../admin/main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
-        <?php elseif($rol == 'gestor'): ?><a href="../admin/main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
-        <?php endif; ?>
+            <?php if ($rol == 'admin'): ?><a href="../admin/main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+            <?php elseif ($rol == 'gestor'): ?><a href="../admin/main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+            <?php endif; ?>
         </section>
     </main>
 
@@ -66,4 +70,5 @@
     include('../footer.php');
     ?>
 </body>
+
 </html>
