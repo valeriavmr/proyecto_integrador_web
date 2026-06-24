@@ -32,7 +32,9 @@
                 <img src="../../recursos/img/buscar_insumo_icon.png" alt=""> Buscar un insumo</a></article>
         </section>
         <section id="volver_s">
-            <a href="../admin/main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+        <?php if($rol == 'admin'): ?><a href="../admin/main_admin.php" class="btn-volver-admin">Volver al menú principal</a>
+        <?php elseif($rol == 'gestor'): ?><a href="../gestor_inventario/main_gestor.php" class="btn-volver-admin">Volver al menú principal</a>
+        <?php endif; ?>
         </section>
     </main>
     <?php

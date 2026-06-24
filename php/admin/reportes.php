@@ -81,7 +81,11 @@ if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'gestor') {
         </div>
 
         <div style="margin-top:2rem; text-align:center;">
-            <a href="main_admin.php" class="btn-volver-admin">← Volver al menú</a>
+            <?php if($rol == 'admin'): ?>
+                <a href="main_admin.php" class="btn-volver-admin">← Volver al menú</a>
+            <?php elseif($rol == 'gestor'): ?>
+                <a href="../gestor_inventario/main_gestor.php" class="btn-volver-admin">← Volver al menú</a>
+            <?php endif; ?>
         </div>
     </div>
 

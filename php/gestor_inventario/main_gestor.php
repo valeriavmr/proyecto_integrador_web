@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $rol = $_SESSION['rol'] ?? '';
-if ($rol == 'admin' || $rol == 'gestor') {
+if ($rol == 'admin') {
     header('Location: ' . BASE_URL . '/php/admin/main_admin.php');
     exit;
 }
@@ -34,9 +34,8 @@ if ($rol == 'admin' || $rol == 'gestor') {
 $insumos_bajo_stock = count(obtenerInsumosConBajoStock($conn));
 $productos_bajo_stock = count(obtenerProductosConBajoStock($conn));
 ?>
-<br><br>
-    <h1>Menú de gestión</h1>
 <br>
+    <h1>Menú de gestión</h1>
 <section class="dashboard_cards">
 
     <article class="dashboard-card">
