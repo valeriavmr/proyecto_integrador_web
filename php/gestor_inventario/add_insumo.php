@@ -19,6 +19,7 @@ require_once(BASE_PATH . '/php/admin/auth.php');
     require_once(BASE_PATH . '/php/crud/conexion.php');
     require_once(BASE_PATH . '/php/admin/auth.php');
     include_once(__DIR__ . '/../includes/sidebar.php');
+    ?>
     <main>
         <h1>Agregar Insumo</h1>
         <fieldset>

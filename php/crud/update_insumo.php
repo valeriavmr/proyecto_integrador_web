@@ -68,6 +68,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Error al actualizar insumo: " . $stmt->error);
         }
 
+        // Actualizar parámetro de bajo stock
+        $stmt2 = $conn->prepare("
+            UPDATE inventario_insumo
+            SET param_bajo_stock = ?
+            WHERE id_insumo = ?
+        ");
+
+        $stmt2->bind_param(
+            "ii",
+            $param_bajo_stock,
+            $_POST['id_insumo']
+        );
+
+        $stmt2->execute();
+
         // =========================
         // Confirmar transacción
         // =========================
